@@ -1,9 +1,10 @@
+import MainPage from './pages/mainpage'
 
 
 function App() {
   return (
     <>
-      <h1>Hello! Welcome to puttipeli!</h1>
+      <MainPage/>
     </>
   )
 }
