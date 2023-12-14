@@ -1,5 +1,14 @@
+import './logostyles.css'
+
 const Logo = () => {
-    return <div>Hello! I am logo</div>
+  return (
+    <>
+      <div id='logocontainer'>
+        <div id="MainLogo"/>
+        <h1 id='MainHeader'>Puttipeli</h1>
+      </div>
+    </>
+  )
 }
 
 export default Logo
