@@ -1,0 +1,15 @@
+.mainpageButton {
+  width: 75%;
+  text-align: center;
+  margin-top: 1em;
+  background-color: white;
+  padding: 15px;
+  border-radius: 10px;
+  transition: 0.5 all;
+}
+
+.mainpageButton:hover {
+  transition: 0.5 all;
+  background-color: rgb(212, 87, 3);
+  transform: scale(1.05);
+}

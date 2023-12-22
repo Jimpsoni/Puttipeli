@@ -1,23 +1,23 @@
 #logocontainer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-image: url('../../../../assets/mainpage-blob.svg');
-    background-size: 100%;
-    background-repeat: no-repeat;
-    padding-top: 120px;
-    
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-image: url("../../../../assets/mainpage-blob.svg");
+  background-size: 100%;
+  background-repeat: no-repeat;
+  padding-top: 120px;
 }
 
 #MainLogo {
-    aspect-ratio: 1/1;
-    position: relative;
-    background-image: url('../../../../assets/basket.png');
-    background-repeat: no-repeat;
-    background-size: 100%;
-    width: 50%;
+  aspect-ratio: 1/1;
+  position: relative;
+  background-image: url("../../../../assets/basket.png");
+  background-repeat: no-repeat;
+  background-size: 100%;
+  width: 50%;
 }
 
 #MainHeader {
-    margin: 0;
+  margin: 0;
+  font-weight: 600;
 }
