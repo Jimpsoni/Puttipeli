@@ -7,7 +7,7 @@ interface ButtonProps {
 
 const Button = (props: ButtonProps) => {
   return (
-    <div onClick={() => props.action} className='mainpageButton'>
+    <div onClick={props.action} className='mainpageButton'>
       {props.header}
     </div>
   )
