@@ -10,21 +10,18 @@ const MainPage = () => {
     // Redirect user to the login page
     console.log("Redirecting to the login page...")
     navigate('/login')
-    return null
   }
 
   const createUser = () => {
     // Redirect user to the new user page
     console.log("Redirecting to the create new user page...")
     navigate('/register')
-    return null
   }
 
   const continueWithoutSignin = () => {
     // Redirect user to the game
     console.log("Going to mainpage without sign in...")
     navigate('/puttipeli')
-    return null
   }
 
   return (

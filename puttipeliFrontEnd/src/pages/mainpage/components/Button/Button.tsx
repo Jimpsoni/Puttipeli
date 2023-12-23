@@ -2,7 +2,7 @@ import "./buttonstyles.css"
 
 interface ButtonProps {
   header: string
-  action: () => null
+  action: () => void
 }
 
 const Button = (props: ButtonProps) => {
