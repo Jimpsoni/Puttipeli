@@ -1,0 +1,22 @@
+#loginMaincontainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #ff914d;
+  margin:0;
+}
+
+#loginpageHeader {
+  margin: 0;
+}
+
+#loginForm {
+    width: 65%;
+    padding: 20px;
+    
+    border-radius: 25px;
+    background-color: #e46c21;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
