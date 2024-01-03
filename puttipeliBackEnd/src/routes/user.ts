@@ -1,29 +1,21 @@
 // all of the user logic here
 import express from "express"
-import { User } from "./types"
+import { getByID } from "../services/userService"
 
 const router = express.Router()
 
-// Mock data
-const users = [
-  {
-    name: "Jimi",
-    dob: new Date("2001-04-17"),
-    registered: "1.1.2024",
-    games: [],
-  },
-]
-
 router.get("/", (_req, res) => {
-  res.send("This is the user router")
+  res.send("This is the user router. use /:id to get users")
 })
 
 router.get("/:id", (req, res) => {
   const id = req.params.id
 
-  // Send user data
-  if (users[Number(id)] != null) {
-    res.json(users[Number(id)])
+  // Get user from database
+  const user = getByID(id)
+
+  if (user) {
+    res.json(user)
   }
 
   // No user case
