@@ -31,7 +31,7 @@ const MainPage = () => {
         <div id='buttonContainer'>
           <Button header={"Kirjaudu sisään"} action={login} />
           <Button header={"Luo Käyttäjätili"} action={createUser} />
-          <Button header={"Kirjaudu sisään"} action={continueWithoutSignin} />
+          <Button header={"Jatka kirjautumatta"} action={continueWithoutSignin} />
         </div>
       </div>
     </>
