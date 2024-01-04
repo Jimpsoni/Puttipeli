@@ -1,5 +1,7 @@
 export interface User {
-    name: string
+    id: string
+    username: string
+    passwordHash: string
     dob: Date
     registered: Date
     games: Game[]
