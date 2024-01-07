@@ -1,6 +1,6 @@
 // all of the login logic here
 import express from "express"
-import { checkLoginCredit } from "../services/loginService"
+import { checkLoginCredit } from "../services/loginService/loginService"
 
 const router = express.Router()
 
@@ -9,6 +9,7 @@ router.get("/info", (_req, res) => {
 })
 
 router.put("/", (req, res) => {
+  console.log("New login request")
   const username = req.body.username
   const password = req.body.password
 
