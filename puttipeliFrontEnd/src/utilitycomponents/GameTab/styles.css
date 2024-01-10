@@ -1,0 +1,18 @@
+.gameList {
+  list-style: none;
+  padding-left: 15px;
+}
+
+.gameContainer {
+  background: rgb(255, 244, 120);
+  background: linear-gradient(
+    125deg,
+    rgba(255, 244, 120, 1) 0%,
+    rgba(255, 145, 77, 1) 100%
+  );
+
+  width: 75%;
+
+  text-align: left;
+  font-weight: 300;
+}

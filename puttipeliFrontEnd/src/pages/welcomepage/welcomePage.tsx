@@ -1,4 +1,5 @@
 import Header from '../../utilitycomponents/Header'  // Utility component
+import GameTab from '../../utilitycomponents/GameTab/GameTab'
 import React from "react"
 import "./styles.css"
 
@@ -11,6 +12,22 @@ import "./styles.css"
     - Viikon parhaat pisteet laatikkoon saa itse valita minkä ajan parhaat pisteet haluaa
       siihen (vko, kk, vv, alltime)?
 */
+
+
+
+const recentGame = {
+  date: new Date(),
+  points: 339,
+  hitpercent: 59
+}
+
+const bestGame = {
+  date: new Date(),
+  points: 459,
+  hitpercent: 76
+}
+
+
 
 const WelcomePage = () => {
   const currentUser = "Admin"
@@ -26,14 +43,8 @@ const WelcomePage = () => {
       </div>
 
       <div className='tabContainer games'>
-        <div className="game">
-          <ul>
-            <li>14.12.23 klo 13:35</li>
-            <li>Pisteet: 339</li>
-            <li>Osumis %: 45</li>
-          </ul>
-        </div>
-        <div className="game">Tähän viikon parhaat pisteet</div>
+        <GameTab data={recentGame}/>
+        <GameTab data={bestGame}/>
       </div>
     </div>
   )
