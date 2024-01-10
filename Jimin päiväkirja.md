@@ -13,4 +13,4 @@
 1h   7.1 Welcomepage init, tyylittelyä, loginpagen tekemistä, testien tekemistä<br>
 1,5h 10.1 Welcomepage hyvään kuntoon, Headerin tekeminen, GameTabin tekeminen<br>
 
-Yhteensä 16,5h
+Yhteensä 17h
