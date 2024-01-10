@@ -6,10 +6,10 @@
   height: 90vh;
 }
 
-.button, .game {
+.button {
   background-color: #ff914d;
-  width: 70%;
-  padding: 12px;
+  width: 75%;
+  padding: 15px 0 15px 0;
 
   text-align: center;
   font-weight: 300;
@@ -23,11 +23,6 @@
   transform: scale(1.04);
 }
 
-.game {
-  background: rgb(255,244,120);
-  background: linear-gradient(125deg, rgba(255,244,120,1) 0%, rgba(255,145,77,1) 100%);
-}
-
 .tabContainer {
   display: flex;
   flex-direction: column;
@@ -35,7 +30,7 @@
   width: 100%;
 }
 
-.tabContainer .button:first-child, .game:first-child {
+.tabContainer .button:first-child, div:first-child {
   margin-bottom: 15px;
 }
 
