@@ -43,7 +43,9 @@ const WelcomePage = () => {
       </div>
 
       <div className='tabContainer games'>
+        <h3 className='gamesSubHeader'>Viimeisin</h3>
         <GameTab data={recentGame}/>
+        <h3 className='gamesSubHeader'>Viikon paras</h3>
         <GameTab data={bestGame}/>
       </div>
     </div>

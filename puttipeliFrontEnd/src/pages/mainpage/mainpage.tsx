@@ -30,6 +30,7 @@ const MainPage = () => {
         <Logo />
         <div id='buttonContainer'>
           <Button header={"Kirjaudu sisään"} action={login} />
+          <h3 id='mainpageSubHeader'>Uusi pelaaja?</h3>
           <Button header={"Luo Käyttäjätili"} action={createUser} />
           <Button header={"Jatka kirjautumatta"} action={continueWithoutSignin} />
         </div>

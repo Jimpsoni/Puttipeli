@@ -37,3 +37,9 @@
 .games {
   margin-top: auto;
 }
+
+.gamesSubHeader {
+  margin: 0;
+  margin-left: 15%;
+  align-self: flex-start;
+}
