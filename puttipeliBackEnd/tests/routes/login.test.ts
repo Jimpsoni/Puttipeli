@@ -14,7 +14,7 @@ describe("Login to app", () => {
 
   it("Trying to log in without password", async () => {
     const data = {
-        username: "admin",
+      username: "admin",
     }
 
     const res = await request(app).post("/api/login/").send(data)
@@ -24,8 +24,8 @@ describe("Login to app", () => {
 
   it("Trying to log in with incorrect credential", async () => {
     const data = {
-        username: "VääräKäyttäjäNimi",
-        password: "salasana"
+      username: "VääräKäyttäjäNimi",
+      password: "salasana",
     }
 
     const res = await request(app).post("/api/login/").send(data)
@@ -35,8 +35,8 @@ describe("Login to app", () => {
 
   it("Log in with correct credentials", async () => {
     const data = {
-        username: "admin",
-        password: "salasana"
+      username: "admin",
+      password: "salasana",
     }
 
     const res = await request(app).post("/api/login/").send(data)
