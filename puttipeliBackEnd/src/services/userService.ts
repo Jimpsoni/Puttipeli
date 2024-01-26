@@ -1,4 +1,3 @@
-// Database logic
 import { User } from "../types"
 
 // Mock data
@@ -15,7 +14,7 @@ const users = [
 
 export const getByID = (id: string): null | User => {
   // TODO fetch from database
-  let user = users.find((o) => o.id === id)
+  const user = users.find((o) => o.id === id)
 
   if (user) {
     return user
