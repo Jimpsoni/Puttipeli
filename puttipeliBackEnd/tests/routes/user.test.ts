@@ -12,7 +12,7 @@ describe("Get user", () => {
 
     expect(res.body).toEqual({
       id: "1",
-      name: "Jimi",
+      username: "Jimi",
       dob: new Date("2001-04-17"),
       registered: new Date("2024-01-01"),
       games: [],
