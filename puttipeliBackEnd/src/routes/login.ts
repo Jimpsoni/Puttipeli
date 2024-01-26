@@ -4,27 +4,27 @@ import { checkLoginCredit } from "../services/loginService/loginService"
 
 const router = express.Router()
 
-router.get("/info", (_req, res) => {
+router.get("/", (_req, res) => {
   res.send("This is the login router")
 })
 
-router.put("/", (req, res) => {
+router.post("/", (req, res) => {
   console.log("New login request")
   const username = req.body.username
   const password = req.body.password
 
   if (!username) {
-    res.status(400).send("Missing username")
+    res.status(401).json("Missing username")
     return
   }
 
   if (!password) {
-    res.status(400).send("Missing password")
+    res.status(401).json("Missing password")
     return
   }
 
   if (!checkLoginCredit(username, password)) {
-    res.status(400).send("Incorrect username or password")
+    res.status(401).json("Incorrect username or password")
     return
   }
 
