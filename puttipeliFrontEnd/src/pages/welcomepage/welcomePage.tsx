@@ -1,6 +1,6 @@
 import Header from '../../utilitycomponents/Header'  // Utility component
 import GameTab from '../../utilitycomponents/GameTab/GameTab'
-import React from "react"
+import { useNavigate } from 'react-router-dom'
 import "./styles.css"
 
 /*
@@ -31,6 +31,12 @@ const bestGame = {
 
 const WelcomePage = () => {
   const currentUser = "Admin"
+  const nav = useNavigate()
+
+
+  const StartNewGame = () => {
+    nav('/uusi_peli')
+  }
 
   return (
     <div id='mainContainer'>
@@ -39,7 +45,7 @@ const WelcomePage = () => {
 
       <div className='tabContainer'>
         <div className="button">Aiemmat pelit</div>
-        <div className="button">Aloita uusi peli</div>
+        <div className="button" onClick={StartNewGame}>Aloita uusi peli</div>
       </div>
 
       <div className='tabContainer games'>
