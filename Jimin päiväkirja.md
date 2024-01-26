@@ -11,6 +11,7 @@
 1,5h 3.1 User.ts testien alustaminen ja refactor, jestin ja supertestin alustus, Login sivun toiminnallisuuden tekemistä<br>
 1,5h 4.1 Pakettejen lisäämistä projektiin, kirjautumistoiminnon tekemistä. Tietokannan ja tietokanta skeeman luomista<br>
 1h   7.1 Welcomepage init, tyylittelyä, loginpagen tekemistä, testien tekemistä<br>
-1,5h 10.1 Welcomepage hyvään kuntoon, Headerin tekeminen, GameTabin tekeminen<br>
-
-Yhteensä 17h
+1h 10.1 Welcomepage hyvään kuntoon, Headerin tekeminen, GameTabin tekeminen<br>
+1h 14.1 Game page alustus ja logiikka peliin<br>
+1h    21.1  Tallentaminen fronttissa ja sen debuggausta
+Yhteensä 18,5h
