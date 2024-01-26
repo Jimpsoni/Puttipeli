@@ -9,13 +9,12 @@ describe("Get user", () => {
 
   it("response has data with it", async () => {
     const res = await request(app).get("/api/user/1")
-
-    expect(res.body).toEqual({
-      id: "1",
-      username: "Jimi",
-      dob: new Date("2001-04-17"),
-      registered: new Date("2024-01-01"),
-      games: [],
-    })
+    console.log(res.body)
+    expect(res.body.id).toEqual("1")
+    expect(res.body.username).toEqual("Jimi")
+    expect(res.body.passwordHash).toEqual("salasana")
+    expect(res.body.games).toEqual([])
+    expect(res.body.dob).toEqual("2001-04-17T00:00:00.000Z")
+    expect(res.body.registered).toEqual("2024-01-01T00:00:00.000Z")
   })
 })
