@@ -1,4 +1,5 @@
-import { User } from "../types"
+import { User } from './userSchema'
+import { UserType } from "../../types"
 
 // Mock data
 const users = [
@@ -12,7 +13,7 @@ const users = [
   },
 ]
 
-export const getByID = (id: string): null | User => {
+export const getByID = (id: string): null | UserType => {
   // TODO fetch from database
   const user = users.find((o) => o.id === id)
 
@@ -21,4 +22,13 @@ export const getByID = (id: string): null | User => {
   }
 
   return null
+}
+
+export const checkLoginCredit = (
+  username: string,
+  passwordHash: string
+): boolean => {
+  console.log(`Logging in: ${username}, ${passwordHash}`)
+  return true
+
 }

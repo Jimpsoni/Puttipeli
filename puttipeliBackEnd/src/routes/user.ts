@@ -1,6 +1,6 @@
 // all of the user logic here
 import express from "express"
-import { getByID } from "../services/userService"
+import { getByID } from "../services/UserService/userService"
 
 const router = express.Router()
 
