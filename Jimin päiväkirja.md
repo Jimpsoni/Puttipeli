@@ -13,7 +13,7 @@
 1h   7.1 Welcomepage init, tyylittelyä, loginpagen tekemistä, testien tekemistä<br>
 1h 10.1 Welcomepage hyvään kuntoon, Headerin tekeminen, GameTabin tekeminen<br>
 1h 14.1 Game page alustus ja logiikka peliin<br>
-1h    21.1  Tallentaminen fronttissa ja sen debuggausta
+1h    21.1  Tallentaminen fronttissa ja sen debuggausta <br>
 1,5h  26.1  Testien tekoa ja vikojen korjausta, että testit menee läpi
 
 10h
