@@ -18,6 +18,6 @@
 
 10h
 
+1h 2.2 Rekisteröimisen tekemistä
 
-
-Yhteensä 20h
+Yhteensä 21h
