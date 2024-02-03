@@ -1,0 +1,31 @@
+name: Check backend integrity
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize]
+
+jobs:
+  simple_deployment_pipeline:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./puttipeliBackEnd
+
+    if: ${{ !contains( join( toJson(github.event.commits.*.message) ), '#skip' ) && github.event_name == 'push'}}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+      - name: Install dependencies 
+        run: npm install  
+
+      - name: Check style
+        run: npm run eslint
+        
+      - name: run tests
+        run: npm run test

@@ -1,0 +1,13 @@
+# Placeholder for when app goes live
+name: Healthcheck pipeline
+
+on:
+  schedule:
+    - cron: '50 15 * * *'
+
+jobs:
+  Healthcheck:
+    runs-on: ubuntu-latest
+    steps:
+      - name: basic healthcheck 
+        run: exit 1
