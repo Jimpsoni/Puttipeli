@@ -19,6 +19,6 @@
 10h
 
 1h 2.2 Rekisteröimisen tekemistä
-0,5h 3.2 CI/CD putken tekemistä, "main" branchin suojaus
+1h 3.2 CI/CD putken tekemistä, "main" branchin suojaus, Tyylien korjausta
 
-Yhteensä 21,5h
+Yhteensä 22h
