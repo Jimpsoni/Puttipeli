@@ -19,5 +19,6 @@
 10h
 
 1h 2.2 Rekisteröimisen tekemistä
+0,5h 3.2 CI/CD putken tekemistä, "main" branchin suojaus
 
-Yhteensä 21h
+Yhteensä 21,5h
