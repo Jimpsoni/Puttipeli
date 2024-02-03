@@ -29,6 +29,6 @@ export const checkLoginCredit = (
   passwordHash: string
 ): boolean => {
   console.log(`Logging in: ${username}, ${passwordHash}`)
-  return true
-
+  if (username == "admin" && passwordHash == "salasana") return true
+  return false
 }

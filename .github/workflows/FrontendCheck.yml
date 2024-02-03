@@ -9,7 +9,7 @@ on:
     types: [opened, synchronize]
 
 jobs:
-  simple_deployment_pipeline:
+  Check_tests_and_style:
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -26,6 +26,7 @@ jobs:
 
       - name: Check style
         run: npm run lint
-        
-      - name: run tests
-        run: npm run test
+
+# Nämä kommentista pois kun frontilla on testejä olemassa
+#     - name: run tests
+#       run: npm run test

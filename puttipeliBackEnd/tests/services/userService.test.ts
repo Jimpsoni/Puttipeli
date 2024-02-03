@@ -1,4 +1,4 @@
-import { getByID } from "../../src/services/userService"
+import { getByID } from "../../src/services/UserService/userService"
 
 // Mock tests, real tests when userService is implemented
 describe("userService", () => {
