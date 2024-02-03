@@ -1,1 +1,1 @@
-import { default } from './GameTab.tsx'
+export { default } from "./GameTab"

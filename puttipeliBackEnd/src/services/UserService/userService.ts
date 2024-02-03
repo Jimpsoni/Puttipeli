@@ -1,4 +1,4 @@
-import { User } from './userSchema'
+// import { User } from './userSchema'
 import { UserType } from "../../types"
 
 // Mock data
