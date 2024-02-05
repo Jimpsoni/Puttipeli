@@ -16,4 +16,9 @@ app.get("/ping", (_req, res) => {
   res.send("pong")
 })
 
+// HealthCheck
+app.get("/health", (_req, res) => {
+  res.send("A OK!")
+})
+
 export default app
