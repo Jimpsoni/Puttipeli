@@ -3,11 +3,14 @@ name: Healthcheck pipeline
 
 on:
   schedule:
-    - cron: '50 15 * * *'
+    # Everyday at 16:00
+    - cron: "0 16 * * *"
 
 jobs:
   Healthcheck:
     runs-on: ubuntu-latest
     steps:
-      - name: basic healthcheck 
-        run: exit 0
+      - name: basic healthcheck
+        uses: jtalk/url-health-check-action@v3
+        with:
+          url: https://puttipeli.onrender.com/health
