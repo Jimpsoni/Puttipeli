@@ -44,6 +44,11 @@ jobs:
       
       - name: Check style
         run: npm run lint
-
-
-    
+  
+  Deploy:
+    needs: [Check_backend_tests_and_style, Check_frontend_tests_and_style]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Deploy to Render
+        run: curl ${{ secrets.RENDER_DEPLOY_HOOK }}
