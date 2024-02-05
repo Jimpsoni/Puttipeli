@@ -19,6 +19,8 @@
 10h
 
 1h 2.2 Rekisteröimisen tekemistä<br>
-1h 3.2 CI/CD putken tekemistä, "main" branchin suojaus, Tyylien korjausta
+1h 3.2 CI/CD putken tekemistä, "main" branchin suojaus, Tyylien korjausta<br>
+1h 6.2 Backend Renderiin ja CICD putken muokkaus ajantasalle<br>
+<br>
 
-Yhteensä 22h
+Yhteensä 23h
