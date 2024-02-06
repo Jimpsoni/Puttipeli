@@ -1,4 +1,3 @@
-import React from "react"
 import "./styles.css"
 
 interface GameTabProps {
@@ -12,7 +11,7 @@ interface GameTabProps {
 const GameTab = (props: GameTabProps) => {
   const data = props.data
   return (
-    <div className="gameContainer">
+    <div className='gameContainer'>
       <ul className='gameList'>
         <li>14.12.23 klo 13:35</li>
         <li>pisteet: {data.points}</li>

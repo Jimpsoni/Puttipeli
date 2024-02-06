@@ -1,17 +1,22 @@
 import { useNavigate } from "react-router-dom"
 import "./styles.css"
-import { React, useState } from "react"
+import { Dispatch, useState } from "react"
 
 const saveScoreToUser = () => {
   console.log("Sending scores to database")
 }
 
-const Modal = ({ open, setOpen }) => {
+interface ModalTypes {
+  open: boolean,
+  setOpen: Dispatch<boolean>
+}
+
+const Modal = (props: ModalTypes) => {
   console.log("Open modal")
-  if (!open) return
+  if (!props.open) return
 
   const closeModal = () => {
-    setOpen(false)
+    props.setOpen(false)
   }
 
   return (
@@ -30,7 +35,7 @@ const Game = () => {
   const [distance, setDistance] = useState(10)
   const [points, setPoints] = useState(0)
   const [current, setCurrent] = useState(0)
-  const [modal, openModal] = useState(false)
+  const [modal, openModal] = useState<boolean>(false)
   const nav = useNavigate()
 
   const defaultDistance = 5
