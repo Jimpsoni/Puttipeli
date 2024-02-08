@@ -3,8 +3,14 @@ import uniqueValidator from 'mongoose-unique-validator'
 
 /*
 Username: atleast 3 chars, unique, required
-password: atleast 6 chars, required
+email: Validated by validateEmail function
 */
+
+const validateEmail = function(email: string): boolean {
+  var re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+  return re.test(email)
+};
+
 
 const userSchema = new mongoose.Schema({
   username: {
@@ -16,12 +22,20 @@ const userSchema = new mongoose.Schema({
 
   passwordHash: {
     type: String,
-    minlength: 6,
     required: true,
   },
 
-  dob: Date,
-  registered: Date,
+  email: {
+    type: String,
+    unique: true,
+    lowercase: true,
+    validate: [validateEmail, 'Please fill a valid email address'],
+  },
+
+  registered: {
+    type: Date,
+    default: Date.now
+  },
   games: [],
 })
 
@@ -33,6 +47,8 @@ userSchema.set("toJSON", {
     delete returnedObject.passwordHash
   },
 })
+
+
 
 userSchema.plugin(uniqueValidator)
 export const User = mongoose.model("User", userSchema)
