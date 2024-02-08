@@ -21,7 +21,7 @@
 1h 2.2 Rekisteröimisen tekemistä<br>
 1h 3.2 CI/CD putken tekemistä, "main" branchin suojaus, Tyylien korjausta<br>
 1h 6.2 Backend Renderiin ja CICD putken muokkaus ajantasalle<br>
-1h 6.2 Frontin Buildi ja Backend nyt yhdistää suoraan fronttiin renderissä
-<br>
+1h 6.2 Frontin Buildi ja Backend nyt yhdistää suoraan fronttiin renderissä<br>
+2,5h 8.2 uusi branchi, backendin yhdistämistä mongoDB:seen<br>
 
-Yhteensä 24h
+Yhteensä 26,5h
