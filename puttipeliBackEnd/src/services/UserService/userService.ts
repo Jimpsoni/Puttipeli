@@ -1,34 +1,36 @@
-// import { User } from './userSchema'
+import { User } from "./userSchema"
 import { UserType } from "../../types"
+import mongoose from "mongoose"
 
-// Mock data
-const users = [
-  {
-    id: "1",
-    username: "Jimi",
-    passwordHash: "salasana",
-    dob: new Date("2001-04-17"),
-    registered: new Date("2024-01-01"),
-    games: [],
-  },
-]
+mongoose.set("strictQuery", false)
 
-export const getByID = (id: string): null | UserType => {
-  // TODO fetch from database
-  const user = users.find((o) => o.id === id)
+export const AddNewUser = async (NewUserProps: UserType) => {
+  mongoose.connect(process.env.DB_URI as string)
+  const new_user = new User({
+    ...NewUserProps,
+  })
 
-  if (user) {
-    return user
-  }
+  // @ts-ignore
+  new_user.save().catch((e: Error) => console.log(e.message))
+}
 
-  return null
+export const getAllUsers = async (): Promise<any[]> => {
+  mongoose.connect(process.env.DB_URI as string)
+
+  // @ts-ignore:
+  await User.find({}).then((users) => {
+    console.log(users)
+    mongoose.connection.close()
+  })
+
+  return []
 }
 
 export const checkLoginCredit = (
   username: string,
   passwordHash: string
 ): boolean => {
-  console.log(`Logging in: ${username}, ${passwordHash}`)
-  if (username == "admin" && passwordHash == "salasana") return true
-  return false
+  console.log(username)
+  console.log(passwordHash)
+  return true
 }
