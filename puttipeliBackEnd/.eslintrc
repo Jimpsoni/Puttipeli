@@ -27,6 +27,6 @@
   "parserOptions": {
     "project": "./tsconfig.json"
     // "tsconfigRootDir": "./puttipeliBackEnd"
-  }
-  // "eslint.workingDirectories": ["./src"]
+  },
+  "workingDirectories": ["./puttipeliBackEnd"]
 }
