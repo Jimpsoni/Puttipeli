@@ -1,16 +1,10 @@
 import mongoose from "mongoose"
 import uniqueValidator from 'mongoose-unique-validator'
 
-/*
-Username: atleast 3 chars, unique, required
-email: Validated by validateEmail function
-*/
-
 const validateEmail = function(email: string): boolean {
   var re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
   return re.test(email)
 };
-
 
 const userSchema = new mongoose.Schema({
   username: {
@@ -29,15 +23,17 @@ const userSchema = new mongoose.Schema({
     type: String,
     unique: true,
     lowercase: true,
-    validate: [validateEmail, 'Please fill a valid email address'],
+    validate: [validateEmail, 'Invalid Email address'],
   },
 
   registered: {
     type: Date,
     default: Date.now
   },
-  games: [],
+
+  games: []
 })
+
 
 userSchema.set("toJSON", {
   transform: (_document, returnedObject) => {
