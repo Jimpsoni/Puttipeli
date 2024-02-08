@@ -1,17 +1,49 @@
+// @ts-nocheck 
 import { User } from "./userSchema"
 import { UserType } from "../../types"
 import mongoose from "mongoose"
 
 mongoose.set("strictQuery", false)
+type Result<T> = { status: "ok" } | { status: "error"; errors: T[] }
 
-export const AddNewUser = async (NewUserProps: UserType) => {
+
+export const AddNewUser = async ( NewUserProps: UserType ): Promise<Result<string>> => {
   mongoose.connect(process.env.DB_URI as string)
-  const new_user = new User({
-    ...NewUserProps,
-  })
+  const new_user = new User({ ...NewUserProps })
 
-  // @ts-ignore
-  new_user.save().catch((e: Error) => console.log(e.message))
+  try {
+    await new_user.save()
+    return { status: "ok" }
+  } catch (e) {
+    const errors = [] as string[]
+
+    // Check the username
+    if (e.errors.username) {
+      if (e.errors.username.kind === "minlength")
+        errors.push("Username not long enough")
+      else if (e.errors.username.kind === "unique")
+        errors.push("Username not unique")
+      else if (e.errors.username.kind === "required") 
+        errors.push("Username is required")
+    }
+
+    // Check password
+    if (e.errors.passwordHash) {
+      if (e.errors.username.passwordHash === "required") 
+        errors.push("Password is required")
+    }
+
+    // Check email
+    if (e.errors.email) {
+      if (e.errors.email.properties.message === "Invalid Email address")
+        errors.push("Invalid Email address")
+
+      if (e.errors.email.kind === "unique") 
+        errors.push("Email Already in use")
+    }
+
+    return { status: "error", errors }
+  }
 }
 
 export const getAllUsers = async (): Promise<any[]> => {
