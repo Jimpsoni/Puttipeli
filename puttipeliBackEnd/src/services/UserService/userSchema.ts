@@ -1,12 +1,13 @@
 import mongoose from "mongoose"
 import uniqueValidator from 'mongoose-unique-validator'
+import { UserType } from "../../types";
 
 const validateEmail = function(email: string): boolean {
   var re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
   return re.test(email)
 };
 
-const userSchema = new mongoose.Schema({
+const userSchema = new mongoose.Schema<UserType>({
   username: {
     type: String,
     minlength: 3,
