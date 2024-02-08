@@ -24,4 +24,4 @@
 1h 6.2 Frontin Buildi ja Backend nyt yhdistää suoraan fronttiin renderissä<br>
 3,5h 8.2 uusi branchi, backendin yhdistämistä mongoDB:seen, uusien käyttäjien luonti ja niiden validointi<br>
 
-Yhteensä 27h
+Yhteensä 27,5h
