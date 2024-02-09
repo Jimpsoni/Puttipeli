@@ -12,7 +12,7 @@ beforeAll(async () => {
 describe("Registering a new user to app", () => {
   it("Can't create user without username", async () => {
     const data = {
-      passwordHash: "salasana",
+      password: "salasana",
       email: "testi@gmail.com",
     }
 
@@ -24,7 +24,7 @@ describe("Registering a new user to app", () => {
   it("Can't create user with too short username", async () => {
     const data = {
       username: "ji",
-      passwordHash: "salasana",
+      password: "salasana",
       email: "testi@gmail.com",
     }
 
@@ -47,7 +47,7 @@ describe("Registering a new user to app", () => {
   it("Can't create user without email", async () => {
     const data = {
       username: "Testikäyttäjä",
-      passwordHash: "salasana",
+      password: "salasana",
     }
 
     const res = await request(app).post("/api/register/").send(data)
@@ -58,7 +58,7 @@ describe("Registering a new user to app", () => {
   it("Can't create user with invalid email address", async () => {
     const data = {
       username: "Testikäyttäjä",
-      passwordHash: "salasana",
+      password: "salasana",
       email: "sähköposti",
     }
 
@@ -70,7 +70,7 @@ describe("Registering a new user to app", () => {
   it("With Correct data, create user", async () => {
     const data = {
       username: "Testikäyttäjä",
-      passwordHash: "salasana",
+      password: "salasana",
       email: "testi@gmail.com",
     }
 
@@ -83,13 +83,13 @@ describe("Can't create duplicates", () => {
   it("Can't create user with same username", async () => {
     const data1 = {
       username: "Testaaja",
-      passwordHash: "salasana",
+      password: "salasana",
       email: "testi123@gmail.com",
     }
 
     const data2 = {
       username: "Testaaja",
-      passwordHash: "salasana",
+      password: "salasana",
       email: "testi1123@gmail.com",
     }
 
@@ -106,13 +106,13 @@ describe("Can't create duplicates", () => {
   it("Can't create user with same email", async () => {
     const data1 = {
       username: "Testeri",
-      passwordHash: "salasana",
+      password: "salasana",
       email: "testi321@gmail.com",
     }
 
     const data2 = {
       username: "Testeri123",
-      passwordHash: "salasana",
+      password: "salasana",
       email: "testi321@gmail.com",
     }
 
