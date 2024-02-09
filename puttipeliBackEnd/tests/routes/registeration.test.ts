@@ -1,5 +1,13 @@
 import request from "supertest"
 import app from "../../src/app"
+import mongoose from "mongoose"
+import { User } from "../../src/services/UserService/userSchema"
+
+beforeAll(async () => {
+  // Clean up the test db
+  await mongoose.connect(process.env.DB_URI as string)
+  await User.collection.drop()
+})
 
 describe("Registering a new user to app", () => {
   it("Can't create user without username", async () => {
@@ -68,5 +76,53 @@ describe("Registering a new user to app", () => {
 
     const res = await request(app).post("/api/register/").send(data)
     expect(res.status).toEqual(201)
+  })
+})
+
+describe("Can't create duplicates", () => {
+  it("Can't create user with same username", async () => {
+    const data1 = {
+      username: "Testaaja",
+      passwordHash: "salasana",
+      email: "testi123@gmail.com",
+    }
+
+    const data2 = {
+      username: "Testaaja",
+      passwordHash: "salasana",
+      email: "testi1123@gmail.com",
+    }
+
+    const first_res = await request(app).post("/api/register/").send(data1)
+    expect(first_res.status).toEqual(201)
+
+    const second_res = await request(app).post("/api/register/").send(data2)
+    expect(second_res.status).toEqual(400)
+    expect(second_res.body).toEqual({
+      errors: ["Username already in use"],
+    })
+  })
+
+  it("Can't create user with same email", async () => {
+    const data1 = {
+      username: "Testeri",
+      passwordHash: "salasana",
+      email: "testi321@gmail.com",
+    }
+
+    const data2 = {
+      username: "Testeri123",
+      passwordHash: "salasana",
+      email: "testi321@gmail.com",
+    }
+
+    const first_res = await request(app).post("/api/register/").send(data1)
+    expect(first_res.status).toEqual(201)
+
+    const second_res = await request(app).post("/api/register/").send(data2)
+    expect(second_res.status).toEqual(400)
+    expect(second_res.body).toEqual({
+      errors: ["Email Already in use"],
+    })
   })
 })
