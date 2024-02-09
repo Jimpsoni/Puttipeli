@@ -27,7 +27,7 @@ jobs:
         run: npm run lint
         
       - name: run tests
-        run: npm run test
+        run: npm run test -- --runInBand
   
   Check_frontend_tests_and_style:
     runs-on: ubuntu-latest
