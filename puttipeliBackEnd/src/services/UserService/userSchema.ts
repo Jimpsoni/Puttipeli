@@ -24,6 +24,7 @@ const userSchema = new mongoose.Schema<UserType>({
     type: String,
     unique: true,
     lowercase: true,
+    required: true,
     validate: [validateEmail, 'Invalid Email address'],
   },
 
@@ -31,7 +32,7 @@ const userSchema = new mongoose.Schema<UserType>({
     type: Date,
     default: Date.now
   },
-
+  
   games: []
 })
 
