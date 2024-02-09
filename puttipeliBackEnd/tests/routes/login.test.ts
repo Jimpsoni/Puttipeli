@@ -1,45 +1,64 @@
 import request from "supertest"
 import app from "../../src/app"
+import mongoose from "mongoose"
+import { User } from "../../src/services/UserService/userSchema"
+import { AddNewUser } from "../../src/services/UserService/userService"
+
+beforeAll(async () => {
+  // Add user to database
+  const user = {
+    username: "Jimi",
+    password: "salainen",
+    email: "validemail@gmail.com",
+  }
+  try {
+    await mongoose.connect(process.env.DB_URI as string)
+    await User.collection.drop()
+    await AddNewUser({ ...user })
+  } catch (e) {
+    throw Error('Something wrong with MongoDB')
+  }
+})
 
 describe("Login to app", () => {
   it("Trying to log in without username", async () => {
-    const data = {
-      password: "salasana",
+    const creds = {
+      password: "salainen",
     }
 
-    const res = await request(app).post("/api/login/").send(data)
+    const res = await request(app).post("/api/login/").send(creds)
     expect(res.status).toEqual(401)
-    expect(res.body).toEqual("Missing username")
+    expect(res.body).toEqual({ error: "Missing username" })
   })
 
   it("Trying to log in without password", async () => {
-    const data = {
-      username: "admin",
+    const creds = {
+      username: "Jimi",
     }
 
-    const res = await request(app).post("/api/login/").send(data)
+    const res = await request(app).post("/api/login/").send(creds)
     expect(res.status).toEqual(401)
-    expect(res.body).toEqual("Missing password")
+    expect(res.body).toEqual({ error: "Missing password" })
   })
 
-  it("Trying to log in with incorrect credential", async () => {
-    const data = {
-      username: "VääräKäyttäjäNimi",
-      password: "salasana",
+  it("Trying to log in with incorrect credentials", async () => {
+    const creds = {
+      username: "Pelle Peloton",
+      password: "EiNiinSalainen",
     }
 
-    const res = await request(app).post("/api/login/").send(data)
+    const res = await request(app).post("/api/login/").send(creds)
     expect(res.status).toEqual(401)
-    expect(res.body).toEqual("Incorrect username or password")
+    expect(res.body).toEqual({ error: "Incorrect username or password" })
   })
 
   it("Log in with correct credentials", async () => {
-    const data = {
-      username: "admin",
-      password: "salasana",
+    const creds = {
+      username: "Jimi",
+      password: "salainen",
     }
 
-    const res = await request(app).post("/api/login/").send(data)
+    const res = await request(app).post("/api/login/").send(creds)
     expect(res.status).toEqual(200)
   })
 })
