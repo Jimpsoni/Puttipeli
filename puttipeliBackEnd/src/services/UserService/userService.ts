@@ -1,6 +1,6 @@
 // @ts-nocheck
 import { User } from "./userSchema"
-import { NewUserType } from "../../types"
+import { NewUserType, UserType } from "../../types"
 import mongoose from "mongoose"
 
 mongoose.set("strictQuery", false)
@@ -51,14 +51,20 @@ export const AddNewUser = async (
   }
 }
 
-export const getAllUsers = async (): Promise<any[]> => {
-  mongoose.connect(process.env.DB_URI as string)
+export const getAllUsers = async (): Promise<UserType[]> => {
+  await mongoose.connect(process.env.DB_URI as string)
+  let users = []
 
-  // @ts-ignore:
-  await User.find({}).then((users) => {
-    console.log(users)
+  try {
+    users = await User.find({})
+  } 
+  catch (e) {
+    console.log("Something wrong with mongo")
+    console.log(e)
+  } 
+  finally {
     mongoose.connection.close()
-  })
-
-  return []
+  }
+  
+  return users
 }
