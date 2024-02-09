@@ -1,9 +1,6 @@
-// all of the login logic here
 import express from "express"
-import {
-  checkLoginCredit,
-  getAllUsers,
-} from "../services/UserService/userService"
+import { getAllUsers } from "../services/UserService/userService"
+import { checkLoginCredit } from "../services/UserService/loginService"
 
 const router = express.Router()
 
@@ -12,26 +9,35 @@ router.get("/", (_req, res) => {
   getAllUsers()
 })
 
-router.post("/", (req, res) => {
+router.post("/", async (req, res) => {
   const username = req.body.username as string
   const password = req.body.password as string
 
   if (!username) {
-    res.status(401).json("Missing username")
+    res.status(401).json({ error: "Missing username" })
     return
   }
 
   if (!password) {
-    res.status(401).json("Missing password")
+    res.status(401).json({ error: "Missing password" })
     return
   }
 
-  if (!checkLoginCredit(username, password)) {
-    res.status(401).json("Incorrect username or password")
+
+  let isCorrectCreds
+  try {
+    isCorrectCreds = await checkLoginCredit(username, password)
+  } catch {
+    res.status(500).json({error: 'Something wrong with server'})
     return
   }
 
-  res.sendStatus(200)
+  if (isCorrectCreds) {
+    res.sendStatus(200)
+  } else {
+    res.status(401).json({ error: "Incorrect username or password" })
+    return
+  }
 })
 
 export default router
