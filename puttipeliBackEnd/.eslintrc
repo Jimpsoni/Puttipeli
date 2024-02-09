@@ -27,6 +27,5 @@
   "parserOptions": {
     "project": "./tsconfig.json"
     // "tsconfigRootDir": "./puttipeliBackEnd"
-  },
-  "workingDirectories": ["./puttipeliBackEnd"]
+  }
 }
