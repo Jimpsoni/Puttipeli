@@ -23,5 +23,11 @@
 1h 6.2 Backend Renderiin ja CICD putken muokkaus ajantasalle<br>
 1h 6.2 Frontin Buildi ja Backend nyt yhdistää suoraan fronttiin renderissä<br>
 3,5h 8.2 uusi branchi, backendin yhdistämistä mongoDB:seen, uusien käyttäjien luonti ja niiden validointi<br>
+2,5h 9.2 Testien tekoa Registeration Routelle ja Login routen teko ja sen testaus<br>
 
-Yhteensä 27,5h
+10h
+
+1,5h 9.2 "User" Routen tekoa ja sen testaaminen, päivitys CICD Putkeen<br>
+
+
+Yhteensä 31,5h
