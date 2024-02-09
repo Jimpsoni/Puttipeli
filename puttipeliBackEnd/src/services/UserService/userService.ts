@@ -1,13 +1,13 @@
 // @ts-nocheck
 import { User } from "./userSchema"
-import { UserType } from "../../types"
+import { NewUserType } from "../../types"
 import mongoose from "mongoose"
 
 mongoose.set("strictQuery", false)
 type Result<T> = { status: "ok" } | { status: "error"; errors: T[] }
 
 export const AddNewUser = async (
-  NewUserProps: UserType
+  NewUserProps: NewUserType
 ): Promise<Result<string>> => {
   await mongoose.connect(process.env.DB_URI as string)
   await mongoose.connection.syncIndexes()
@@ -32,8 +32,8 @@ export const AddNewUser = async (
     }
 
     // Check password
-    if (e.errors.passwordHash) {
-      if (e.errors.passwordHash.kind === "required")
+    if (e.errors.password) {
+      if (e.errors.password.kind === "required")
         errors.push("Password is required")
     }
 
@@ -61,13 +61,4 @@ export const getAllUsers = async (): Promise<any[]> => {
   })
 
   return []
-}
-
-export const checkLoginCredit = (
-  username: string,
-  passwordHash: string
-): boolean => {
-  console.log(username)
-  console.log(passwordHash)
-  return true
 }

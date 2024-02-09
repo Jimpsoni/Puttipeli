@@ -15,7 +15,7 @@ const userSchema = new mongoose.Schema<UserType>({
     unique: true
   },
 
-  passwordHash: {
+  password: {
     type: String,
     required: true,
   },
@@ -32,17 +32,16 @@ const userSchema = new mongoose.Schema<UserType>({
     type: Date,
     default: Date.now
   },
-  
+
   games: []
 })
 
 
 userSchema.set("toJSON", {
   transform: (_document, returnedObject) => {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
     returnedObject.id = returnedObject._id.toString()
     delete returnedObject._id
-    delete returnedObject.passwordHash
+    delete returnedObject.password
   },
 })
 
