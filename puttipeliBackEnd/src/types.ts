@@ -1,7 +1,7 @@
 export interface UserType {
   id: string
   username: string
-  passwordHash: string
+  password: string
   email: string
   registered: Date
   games: Game[]
@@ -9,7 +9,7 @@ export interface UserType {
 
 export interface NewUserType {
   username: string
-  passwordHash: string
+  password: string
   email: string
 }
 
