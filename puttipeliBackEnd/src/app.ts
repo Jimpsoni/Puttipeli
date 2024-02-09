@@ -4,7 +4,7 @@ import path from "path"
 
 // Routes
 import loginRouter from "./routes/login"
-import userRouter from "./routes/user"
+import userRouter from "./routes/users"
 import registerRoute from "./routes/registeration"
 
 // To use env variables
@@ -21,13 +21,8 @@ app.use(cors())
 
 // All of the routes
 app.use("/api/login", loginRouter)
-app.use("/api/user", userRouter)
+app.use("/api/users", userRouter)
 app.use("/api/register", registerRoute)
-
-// testing
-app.get("/ping", (_req, res) => {
-  res.send("pong")
-})
 
 // HealthCheck
 app.get("/health", (_req, res) => {
