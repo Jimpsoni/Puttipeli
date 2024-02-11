@@ -8,9 +8,10 @@ router.get("/", (_req, res) => {
   res.send("This is the user router. use /:id to get users")
 })
 
-router.get("/all", async (_req, res) => {
-  const users = await getAllUsers()
-  res.status(200).json(users)
+router.get("/all", (_req, res) => {
+  getAllUsers()
+    .then(users => res.status(200).json(users))
+    .catch(() => res.status(500).send('Internal Server Error'))
 })
 
 router.get("/:id", (req, res) => {

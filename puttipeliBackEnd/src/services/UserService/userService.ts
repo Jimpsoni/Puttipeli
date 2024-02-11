@@ -15,8 +15,9 @@ export const AddNewUser = async (
   const new_user = new User({ ...NewUserProps })
 
   try {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
     await new_user.save()
-    mongoose.connection.close()
+    await mongoose.connection.close()
     return { status: "ok" }
   } catch (e) {
     const errors = [] as string[]
@@ -46,14 +47,14 @@ export const AddNewUser = async (
         errors.push("Email Already in use")
     }
 
-    mongoose.connection.close()
+    await mongoose.connection.close()
     return { status: "error", errors }
   }
 }
 
 export const getAllUsers = async (): Promise<UserType[]> => {
   await mongoose.connect(process.env.DB_URI as string)
-  let users = []
+  let users = [] as UserType[]
 
   try {
     users = await User.find({})
@@ -63,7 +64,7 @@ export const getAllUsers = async (): Promise<UserType[]> => {
     console.log(e)
   } 
   finally {
-    mongoose.connection.close()
+    await mongoose.connection.close()
   }
   
   return users
