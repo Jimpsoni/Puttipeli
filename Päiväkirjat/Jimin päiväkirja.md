@@ -28,6 +28,6 @@
 10h
 
 1,5h 9.2 "User" Routen tekoa ja sen testaaminen, päivitys CICD Putkeen<br>
+1h 10.2 Yritin saada lintiä menemään register branchissa läpi
 
-
-Yhteensä 31,5h
+Yhteensä 32,5h
