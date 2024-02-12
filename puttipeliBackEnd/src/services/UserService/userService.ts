@@ -15,6 +15,7 @@ export const AddNewUser = async (
 
   try {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+    // @ts-ignore
     await new_user.save()
     await mongoose.connection.close()
     return { status: "ok" }
@@ -71,7 +72,7 @@ export const AddNewUser = async (
           errors.push("Email Already in use")
     }
 
-    await mongoose.connection.close()
+    mongoose.connection.close()
     return { status: "error", errors }
   }
 }
