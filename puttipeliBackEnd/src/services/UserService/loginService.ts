@@ -1,29 +1,29 @@
 import { User } from "./userSchema"
 import mongoose from "mongoose"
+import { UserType } from "../../types"
 
 export const checkLoginCredit = async (
   username: string,
   password: string
 ): Promise<boolean> => {
   await mongoose.connect(process.env.DB_URI as string)
+  return User.findOne({ username: `${username}` })
+    .then( async (user: UserType | undefined) => {
+      if (!user) {
+        await mongoose.connection.close()
+        return false
+      }
 
-  try {
-    const user = await User.findOne({ username: `${username}` })
+      if (user.password === password) {
+        await mongoose.connection.close()
+        return true
+      }
 
-    if (!user) {
-      mongoose.connection.close()
+      await mongoose.connection.close()
       return false
-    }
-
-    // @ts-ignore   User must have passwordHash in DB
-    if (user.password === password) {
-      mongoose.connection.close()
-      return true
-    }
-
-    mongoose.connection.close()
-    return false
-  } catch (e) {
-    return false
-  }
+    })
+    .catch(async () => {
+      await mongoose.connection.close()
+      return false
+    })
 }
