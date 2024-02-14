@@ -14,8 +14,6 @@ jobs:
     defaults:
       run:
         working-directory: ./puttipeliBackEnd
-    env:
-      DB_URI: ${{ secrets.MONGO_URI }}
 
     steps:
       - uses: actions/checkout@v3
