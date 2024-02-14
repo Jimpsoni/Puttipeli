@@ -25,7 +25,7 @@ jobs:
       - name: Create .env file
         uses: SpicyPizza/create-envfile@v2.0
         with:
-          envkey_DB_URI: ${{ secrets.MONGO_URI }}
+          envkey_DB_URI: "${{ secrets.MONGO_URI }}"
           directory: puttipeliBackEnd
       
       - name: Check style
