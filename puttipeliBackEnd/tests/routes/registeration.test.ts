@@ -72,15 +72,15 @@ describe("Can't create duplicates", () => {
 
   it("Can't create user with same email", async () => {
     const data1 = {
-      username: "Testeri",
+      username: "TestaajaTesteri",
       password: "salasana",
-      email: "testi321@gmail.com",
+      email: "testi32111@gmail.com",
     }
 
     const data2 = {
-      username: "Testeri123",
+      username: "Testeri123123123",
       password: "salasana",
-      email: "testi321@gmail.com",
+      email: "testi32111@gmail.com",
     }
 
     const first_res = await request(app).post("/api/register/").send(data1)
