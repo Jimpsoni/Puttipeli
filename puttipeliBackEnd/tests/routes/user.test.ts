@@ -5,6 +5,7 @@ import { User } from "../../src/services/UserService/userSchema"
 import { AddNewUser } from "../../src/services/UserService/userService"
 
 beforeAll(async () => {
+  console.log('Starting out')
   // Add user to database
   const user = {
     username: "Jimi",
