@@ -22,7 +22,11 @@ jobs:
           node-version: '20'
       - name: Install dependencies 
         run: npm install  
-
+      - name: Create .env file
+        run: touch .env
+             echo DB_URI = ${{ secrets.MONGO_URI }} >> .env
+             cat .env
+      
       - name: Check style
         run: npm run lint
         
