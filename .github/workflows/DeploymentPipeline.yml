@@ -21,18 +21,17 @@ jobs:
         with:
           node-version: '20'
       - name: Install dependencies 
-        run: npm install
-        
+        run: npm install  
       - name: Create .env file
         uses: SpicyPizza/create-envfile@v2.0
         with:
           envkey_DB_URI: ${{ secrets.MONGO_URI }}
-
+      
       - name: Check style
         run: npm run lint
         
       - name: run tests
-        run: npm run test
+        run: npm run test -- --runInBand
   
   Check_frontend_tests_and_style:
     runs-on: ubuntu-latest
