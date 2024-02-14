@@ -27,7 +27,6 @@ jobs:
         with:
           envkey_DB_URI: ${{ secrets.MONGO_URI }}
           directory: puttipeliBackEnd
-
       
       - name: Check style
         run: npm run lint
