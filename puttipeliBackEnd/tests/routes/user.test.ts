@@ -13,6 +13,7 @@ beforeAll(async () => {
   }
   try {
     console.log("waiting mongo...")
+    console.log(process.env.TEST_VAR)
     await mongoose.connect(process.env.DB_URI as string)
     console.log("Mongo responded")
     await User.collection.drop()
