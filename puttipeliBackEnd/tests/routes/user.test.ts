@@ -12,7 +12,9 @@ beforeAll(async () => {
     email: "validemail@gmail.com",
   }
   try {
+    console.log("waiting mongo...")
     await mongoose.connect(process.env.DB_URI as string)
+    console.log("Mongo responded")
     await User.collection.drop()
     await AddNewUser({ ...user })
   } catch (e) {
@@ -22,8 +24,9 @@ beforeAll(async () => {
 
 describe("Returning users from Database", () => {
   test("Get all users", async () => {
+    console.log('We are requesting app')
     const res = await request(app).get("/api/users/all")
-
+    console.log('request returned')
     expect(res.status).toEqual(200)
     expect(res.body[0].username).toEqual("Jimi")
     expect(res.body[0].email).toEqual("validemail@gmail.com")
