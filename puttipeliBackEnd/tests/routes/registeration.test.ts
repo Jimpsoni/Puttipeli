@@ -5,6 +5,7 @@ import { User } from "../../src/services/UserService/userSchema"
 
 beforeAll(async () => {
   // Clean up the test db
+  console.log(process.env.DB_URI)
   await mongoose.connect(process.env.DB_URI as string)
   await User.collection.drop()
 })
