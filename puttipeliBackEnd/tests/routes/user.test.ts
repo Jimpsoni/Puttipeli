@@ -15,6 +15,7 @@ beforeAll(async () => {
     console.log("waiting mongo...")
     console.log("With this: " + process.env.DB_URI)
     await mongoose.connect(process.env.DB_URI as string)
+    console.log("Mongo responded")
     await User.collection.drop()
     await AddNewUser({ ...user })
   } catch (e) {
