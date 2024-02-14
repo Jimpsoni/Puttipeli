@@ -23,9 +23,9 @@ jobs:
       - name: Install dependencies 
         run: npm install  
       - name: Create .env file
-        run: touch .env
-             echo DB_URI = ${{ secrets.MONGO_URI }} >> .env
-             cat .env
+        uses: SpicyPizza/create-envfile@v2.0
+        with:
+          envkey_DB_URI: ${{ secrets.MONGO_URI }}
       
       - name: Check style
         run: npm run lint
