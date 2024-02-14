@@ -15,6 +15,8 @@ export const AddNewUser = async (
 
   try {
     // eslint-disable-next-line
+    // @ts-ignore
+    // eslint-disable-next-line
     await new_user.save()
     await mongoose.connection.close()
     return { status: "ok" }
