@@ -12,7 +12,6 @@ beforeAll(async () => {
     email: "validemail@gmail.com",
   }
   try {
-    console.log(process.env.DB_URI)
     await mongoose.connect(process.env.DB_URI as string)
     await User.collection.drop()
     await AddNewUser({ ...user })
