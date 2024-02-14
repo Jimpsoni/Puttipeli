@@ -5,7 +5,6 @@ import { User } from "../../src/services/UserService/userSchema"
 import { AddNewUser } from "../../src/services/UserService/userService"
 
 beforeAll(async () => {
-  console.log('Starting out')
   // Add user to database
   const user = {
     username: "Jimi",
@@ -13,12 +12,11 @@ beforeAll(async () => {
     email: "validemail@gmail.com",
   }
   try {
+    console.log("waiting mongo...")
+    console.log("With this: " + process.env.DB_URI)
     await mongoose.connect(process.env.DB_URI as string)
-    console.log('We have made connection')
     await User.collection.drop()
-    console.log('Dropped user table')
     await AddNewUser({ ...user })
-    console.log('Added new user')
   } catch (e) {
     throw Error("Something wrong with MongoDB")
   }
