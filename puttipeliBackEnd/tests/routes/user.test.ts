@@ -1,20 +1,30 @@
 import request from "supertest"
 import app from "../../src/app"
+import mongoose from "mongoose"
+import { User } from "../../src/services/UserService/userSchema"
+import { AddNewUser } from "../../src/services/UserService/userService"
 
-describe("Get user", () => {
-  it("returns 200 if user found", async () => {
-    const res = await request(app).get("/api/user/1")
+beforeAll(async () => {
+  // Add user to database
+  const user = {
+    username: "Jimi",
+    password: "salainen",
+    email: "validemail@gmail.com",
+  }
+  try {
+    await mongoose.connect(process.env.DB_URI as string)
+    await User.collection.drop()
+    await AddNewUser({ ...user })
+  } catch (e) {
+    throw Error("Something wrong with MongoDB")
+  }
+})
+
+describe("Returning users from Database", () => {
+  test("Get all users", async () => {
+    const res = await request(app).get("/api/users/all")
     expect(res.status).toEqual(200)
-  })
-
-  it("response has data with it", async () => {
-    const res = await request(app).get("/api/user/1")
-    console.log(res.body)
-    expect(res.body.id).toEqual("1")
-    expect(res.body.username).toEqual("Jimi")
-    expect(res.body.passwordHash).toEqual("salasana")
-    expect(res.body.games).toEqual([])
-    expect(res.body.dob).toEqual("2001-04-17T00:00:00.000Z")
-    expect(res.body.registered).toEqual("2024-01-01T00:00:00.000Z")
-  })
+    expect(res.body[0].username).toEqual("Jimi")
+    expect(res.body[0].email).toEqual("validemail@gmail.com")
+  }, 10000)
 })

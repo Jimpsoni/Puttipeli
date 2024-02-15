@@ -1,12 +1,14 @@
 import mongoose from "mongoose"
 import uniqueValidator from 'mongoose-unique-validator'
+import { UserType } from "../../types";
 
-/*
-Username: atleast 3 chars, unique, required
-password: atleast 6 chars, required
-*/
+const validateEmail = function(email: string): boolean {
+  // eslint-disable-next-line
+  const re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+  return re.test(email)
+};
 
-const userSchema = new mongoose.Schema({
+const userSchema = new mongoose.Schema<UserType>({
   username: {
     type: String,
     minlength: 3,
@@ -14,25 +16,39 @@ const userSchema = new mongoose.Schema({
     unique: true
   },
 
-  passwordHash: {
+  password: {
     type: String,
-    minlength: 6,
     required: true,
   },
 
-  dob: Date,
-  registered: Date,
-  games: [],
+  email: {
+    type: String,
+    unique: true,
+    lowercase: true,
+    required: true,
+    validate: [validateEmail, 'Invalid Email address'],
+  },
+
+  registered: {
+    type: Date,
+    default: Date.now
+  },
+
+  games: []
 })
+
 
 userSchema.set("toJSON", {
   transform: (_document, returnedObject) => {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
+    // eslint-disable-next-line
     returnedObject.id = returnedObject._id.toString()
     delete returnedObject._id
-    delete returnedObject.passwordHash
+    delete returnedObject.password
+    delete returnedObject.__v
   },
 })
+
+
 
 userSchema.plugin(uniqueValidator)
 export const User = mongoose.model("User", userSchema)

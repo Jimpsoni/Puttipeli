@@ -21,7 +21,15 @@
 1h 2.2 Rekisteröimisen tekemistä<br>
 1h 3.2 CI/CD putken tekemistä, "main" branchin suojaus, Tyylien korjausta<br>
 1h 6.2 Backend Renderiin ja CICD putken muokkaus ajantasalle<br>
-1h 6.2 Frontin Buildi ja Backend nyt yhdistää suoraan fronttiin renderissä
-<br>
+1h 6.2 Frontin Buildi ja Backend nyt yhdistää suoraan fronttiin renderissä<br>
+3,5h 8.2 uusi branchi, backendin yhdistämistä mongoDB:seen, uusien käyttäjien luonti ja niiden validointi<br>
+2,5h 9.2 Testien tekoa Registeration Routelle ja Login routen teko ja sen testaus<br>
 
-Yhteensä 24h
+10h
+
+1,5h 9.2 "User" Routen tekoa ja sen testaaminen, päivitys CICD Putkeen<br>
+1h 10.2 Yritin saada lintiä menemään register branchissa läpi<br>
+1,5h 12.2 Yritin saada pull requestia menemään register branchissa läpi<br>
+1,5h 14.2 Yritin saada .env toimimaan github actionissa<br>
+1h 15.2 Jonkin syyn takia testit menee läpi lokaalisti, muttei github actionissa, tämän selvittämistä
+Yhteensä 37h

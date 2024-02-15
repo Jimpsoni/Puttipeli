@@ -1,6 +1,5 @@
-// all of the login logic here
 import express from "express"
-import { checkLoginCredit } from "../services/UserService/userService"
+import { checkLoginCredit } from "../services/UserService/loginService"
 
 const router = express.Router()
 
@@ -9,31 +8,25 @@ router.get("/", (_req, res) => {
 })
 
 router.post("/", (req, res) => {
-  console.log("New login request")
-
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const username = req.body.username
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const password = req.body.password
-
+  const username = req.body.username as string
+  const password = req.body.password as string
 
   if (!username) {
-    res.status(401).json("Missing username")
+    res.status(401).json({ error: "Missing username" })
     return
   }
 
   if (!password) {
-    res.status(401).json("Missing password")
+    res.status(401).json({ error: "Missing password" })
     return
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-  if (!checkLoginCredit(username, password)) {
-    res.status(401).json("Incorrect username or password")
-    return
-  }
-
-  res.sendStatus(200)
+  checkLoginCredit(username, password)
+    .then(credsCorrect => {
+      if (credsCorrect) res.sendStatus(200)
+      else res.status(401).json({ error: "Incorrect username or password" })
+    })
+    .catch(() => res.status(500).json({ error: "Something wrong with server" }))
 })
 
 export default router
