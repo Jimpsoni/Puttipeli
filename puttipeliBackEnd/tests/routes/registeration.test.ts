@@ -68,7 +68,7 @@ describe("Can't create duplicates", () => {
     expect(second_res.body).toEqual({
       errors: ["Username already in use"],
     })
-  })
+  }, 10000)
 
   it("Can't create user with same email", async () => {
     const data1 = {

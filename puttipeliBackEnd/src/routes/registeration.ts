@@ -41,8 +41,8 @@ router.post("/", (req, res) => {
   try {
     data = ValidateRequest(req.body)
   } catch (e) {
-    if (e instanceof Error && "message" in e) res.status(400).send(e.message)
-    else res.status(400).send()
+    if (e instanceof Error && "message" in e) res.status(400).json({error: e.message}).send()
+    else res.status(400).json({error: 'Something happened while parsing request'}).send()
     return
   }
 
