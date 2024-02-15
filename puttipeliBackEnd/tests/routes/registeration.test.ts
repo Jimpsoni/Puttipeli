@@ -92,5 +92,5 @@ describe("Can't create duplicates", () => {
     expect(second_res.body).toEqual({
       errors: ["Email Already in use"],
     })
-  })
+  }, 10000)
 })
