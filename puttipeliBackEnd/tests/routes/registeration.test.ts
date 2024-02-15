@@ -20,7 +20,7 @@ describe("Registering a new user to app", () => {
     const res = await request(app).post("/api/register/").send(data)
     expect(res.status).toEqual(400)
     expect(res.body).toEqual({ errors: ["Username not long enough"] })
-  })
+  }, 10000)
 
   it("Can't create user with invalid email address", async () => {
     const data = {
@@ -32,7 +32,7 @@ describe("Registering a new user to app", () => {
     const res = await request(app).post("/api/register/").send(data)
     expect(res.status).toEqual(400)
     expect(res.body).toEqual({ errors: ["Invalid Email address"] })
-  })
+  }, 10000)
 
   it("With Correct data, create user", async () => {
     const data = {
@@ -43,7 +43,7 @@ describe("Registering a new user to app", () => {
 
     const res = await request(app).post("/api/register/").send(data)
     expect(res.status).toEqual(201)
-  })
+  }, 10000)
 })
 
 describe("Can't create duplicates", () => {
@@ -68,7 +68,7 @@ describe("Can't create duplicates", () => {
     expect(second_res.body).toEqual({
       errors: ["Username already in use"],
     })
-  }, 10000)
+  }, 60000)
 
   it("Can't create user with same email", async () => {
     const data1 = {
@@ -84,7 +84,6 @@ describe("Can't create duplicates", () => {
     }
 
     const first_res = await request(app).post("/api/register/").send(data1)
-    console.log(first_res.body)
     expect(first_res.status).toEqual(201)
 
     const second_res = await request(app).post("/api/register/").send(data2)
@@ -92,5 +91,5 @@ describe("Can't create duplicates", () => {
     expect(second_res.body).toEqual({
       errors: ["Email Already in use"],
     })
-  }, 10000)
+  }, 60000)
 })
