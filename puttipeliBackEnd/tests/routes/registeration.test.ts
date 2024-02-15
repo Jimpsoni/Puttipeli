@@ -84,6 +84,7 @@ describe("Can't create duplicates", () => {
     }
 
     const first_res = await request(app).post("/api/register/").send(data1)
+    console.log(first_res.body)
     expect(first_res.status).toEqual(201)
 
     const second_res = await request(app).post("/api/register/").send(data2)

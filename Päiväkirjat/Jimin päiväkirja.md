@@ -30,6 +30,6 @@
 1,5h 9.2 "User" Routen tekoa ja sen testaaminen, päivitys CICD Putkeen<br>
 1h 10.2 Yritin saada lintiä menemään register branchissa läpi<br>
 1,5h 12.2 Yritin saada pull requestia menemään register branchissa läpi<br>
-2h 12.2 Yritin saada .env toimimaan github actionissa<br>
-
-Yhteensä 36h
+1,5h 14.2 Yritin saada .env toimimaan github actionissa<br>
+1h 15.2 Jonkin syyn takia testit menee läpi lokaalisti, muttei github actionissa, tämän selvittämistä
+Yhteensä 37h
