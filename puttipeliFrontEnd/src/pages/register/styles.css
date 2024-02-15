@@ -1,3 +1,27 @@
 #passwordInput {
-    margin-top: 10px;
+  margin-top: 0px;
+}
+
+#RegisterMainContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #ff914d;
+  margin: 0;
+  height: 100vh;
+  padding: 0 50px 0 50px;
+}
+
+#registerForm {
+  padding: 20px 40px 20px 40px;
+  border-radius: 25px;
+  background-color: #e46c21;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.error {
+  background-color: rgb(255, 179, 179);
 }
