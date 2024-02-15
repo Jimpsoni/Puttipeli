@@ -31,5 +31,8 @@
 1h 10.2 Yritin saada lintiä menemään register branchissa läpi<br>
 1,5h 12.2 Yritin saada pull requestia menemään register branchissa läpi<br>
 1,5h 14.2 Yritin saada .env toimimaan github actionissa<br>
-1h 15.2 Jonkin syyn takia testit menee läpi lokaalisti, muttei github actionissa, tämän selvittämistä
-Yhteensä 37h
+1h 15.2 Jonkin syyn takia testit menee läpi lokaalisti, muttei github actionissa, tämän selvittämistä<br>
+1h 15.2 Sain korjattua, Registeration branchin merge Mainiin
+<br>
+
+Yhteensä 37,5h
