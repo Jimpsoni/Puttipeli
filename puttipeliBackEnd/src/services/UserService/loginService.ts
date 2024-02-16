@@ -1,4 +1,5 @@
 import { User } from "./userSchema"
+import { checkPassword } from "../helperFunctions"
 import mongoose from "mongoose"
 
 export const checkLoginCredit = async (
@@ -13,8 +14,8 @@ export const checkLoginCredit = async (
         return false
       }
 
-      if (typeof user ==='object' && 'password' in user) {
-        if (user.password === password) {
+      if (typeof user ==='object' && 'password' in user && typeof user.password == 'string') {
+        if (await checkPassword(user.password, password)) {
           await mongoose.connection.close()
           return true
         }

@@ -29,7 +29,7 @@ describe("Login to app", () => {
     const res = await request(app).post("/api/login/").send(creds)
     expect(res.status).toEqual(401)
     expect(res.body).toEqual({ error: "Missing username" })
-  })
+  }, 10000)
 
   it("Trying to log in without password", async () => {
     const creds = {
@@ -39,7 +39,7 @@ describe("Login to app", () => {
     const res = await request(app).post("/api/login/").send(creds)
     expect(res.status).toEqual(401)
     expect(res.body).toEqual({ error: "Missing password" })
-  })
+  }, 10000)
 
   it("Trying to log in with incorrect credentials", async () => {
     const creds = {
@@ -50,7 +50,7 @@ describe("Login to app", () => {
     const res = await request(app).post("/api/login/").send(creds)
     expect(res.status).toEqual(401)
     expect(res.body).toEqual({ error: "Incorrect username or password" })
-  })
+  }, 10000)
 
   it("Log in with correct credentials", async () => {
     const creds = {
@@ -60,5 +60,5 @@ describe("Login to app", () => {
 
     const res = await request(app).post("/api/login/").send(creds)
     expect(res.status).toEqual(200)
-  })
+  }, 10000)
 })

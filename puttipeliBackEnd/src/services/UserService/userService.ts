@@ -1,6 +1,7 @@
 import { User } from "./userSchema"
 import { NewUserType, UserType } from "../../types"
 import mongoose from "mongoose"
+import { HashPassword } from "../helperFunctions"
 
 mongoose.set("strictQuery", false)
 type Result<T> = { status: "ok" } | { status: "error"; errors: T[] }
@@ -8,12 +9,12 @@ type Result<T> = { status: "ok" } | { status: "error"; errors: T[] }
 export const AddNewUser = async (
   NewUserProps: NewUserType
 ): Promise<Result<string>> => {
-  await mongoose.connect(process.env.DB_URI as string)
-  await mongoose.connection.syncIndexes()
-
-  const new_user = new User({ ...NewUserProps })
-
   try {
+    await mongoose.connect(process.env.DB_URI as string)
+    await mongoose.connection.syncIndexes()
+    NewUserProps.password = await HashPassword(NewUserProps.password)
+    const new_user = new User({ ...NewUserProps })
+
     // eslint-disable-next-line
     // @ts-ignore
     // eslint-disable-next-line
