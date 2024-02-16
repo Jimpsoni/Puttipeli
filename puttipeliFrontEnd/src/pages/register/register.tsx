@@ -1,62 +1,113 @@
 import { useState } from "react"
-import './styles.css'
-
+import "./styles.css"
+import axios from "axios"
 
 const Register = () => {
-  const registerNewUser = () => {
-    console.log("New user registered")
+  const [username, setUsername] = useState("")
+  const [password, setPassword] = useState("")
+  const [passwordAgain, setPasswordAgain] = useState("")
+  const [email, setEmail] = useState("")
+
+  function NotifyField(id: string) {
+    const elem = document.getElementById(id)
+    // Add red color
+    elem?.classList.add("error")
   }
 
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
-  const [passwordAgain, setPasswordAgain] = useState('')
+  function handleErrorMessages(errors: string[]) {
+    console.log(errors)
+    // Username
+    if (errors.includes("Username not long enough")) NotifyField("username")
+    if (errors.includes("Username already in use")) NotifyField("username")
 
+    // Email
+    if (errors.includes("Invalid Email address")) NotifyField("email")
+    if (errors.includes("Email Already in use")) NotifyField("email")
+  }
+
+  const registerNewUser = (event: React.FormEvent<HTMLFormElement>): void => {
+    event.preventDefault()
+    const data = {
+      username,
+      password,
+      email,
+    }
+
+    axios
+      .post("http://localhost:3000/api/register", data)
+      .then(() => {
+        setUsername("")
+        setPassword("")
+        setPasswordAgain("")
+        setEmail("")
+      })
+      .catch((e) => {
+        const response = e.response.data.errors
+        handleErrorMessages(response)
+      })
+  }
 
   return (
-    <div id='loginMaincontainer'>
-    <h1 id='loginpageHeader'>Luo uusi käyttäjätunnus</h1>
-    <form onSubmit={registerNewUser} id='loginForm'>
-      <div>
-        <input
-          className='textInput'
-          type='text'
-          placeholder='Käyttäjätunnus'
-          value={username}
-          onChange={(e) => {
-            setUsername(e.target.value)
-          }}
-        />
-      </div>
+    <div id='RegisterMainContainer'>
+      <h1 id='loginpageHeader'>Luo uusi käyttäjätunnus</h1>
+      <form onSubmit={registerNewUser} id='registerForm'>
+        <div>
+          <input
+            id='username'
+            className='textInput'
+            type='text'
+            placeholder='Käyttäjätunnus'
+            value={username}
+            onChange={(e) => {
+              setUsername(e.target.value)
+            }}
+          />
+        </div>
 
-      <div id="passwordInput">
-        <input
-          className='textInput'
-          type='password'
-          placeholder='Salasana'
-          value={password}
-          onChange={(e) => {
-            setPassword(e.target.value)
-          }}
-        />
-      </div>
+        <div>
+          <input
+            id='email'
+            className='textInput'
+            type='text'
+            placeholder='Sähköposti'
+            value={email}
+            onChange={(e) => {
+              setEmail(e.target.value)
+            }}
+          />
+        </div>
 
-      <div>
-        <input
-          className='textInput'
-          type='password'
-          placeholder='Salasana uudelleen'
-          value={passwordAgain}
-          onChange={(e) => {
-            setPasswordAgain(e.target.value)
-          }}
-        />
-      </div>
+        <div id='passwordInput'>
+          <input
+            id='password'
+            className='textInput'
+            type='password'
+            placeholder='Salasana'
+            value={password}
+            onChange={(e) => {
+              setPassword(e.target.value)
+            }}
+          />
+        </div>
 
-      <button type='submit' className='submitButton'>
-        Rekisteröidy
-      </button>
-    </form>
-  </div>
+        <div>
+          <input
+            id='passwordAgain'
+            className='textInput'
+            type='password'
+            placeholder='Salasana uudelleen'
+            value={passwordAgain}
+            onChange={(e) => {
+              setPasswordAgain(e.target.value)
+            }}
+          />
+        </div>
+
+        <button type='submit' className='submitButton'>
+          Rekisteröidy
+        </button>
+      </form>
+    </div>
   )
 }
 

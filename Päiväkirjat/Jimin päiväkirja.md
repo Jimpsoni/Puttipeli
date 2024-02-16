@@ -33,6 +33,7 @@
 1,5h 14.2 Yritin saada .env toimimaan github actionissa<br>
 1h 15.2 Jonkin syyn takia testit menee läpi lokaalisti, muttei github actionissa, tämän selvittämistä<br>
 1h 15.2 Sain korjattua, Registeration branchin merge Mainiin
+1h 16.2 Frontendin yhdistämistä Backendiin
 <br>
 
-Yhteensä 37,5h
+Yhteensä 38,5h
