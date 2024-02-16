@@ -12,3 +12,7 @@ Alustava designi sivustolle:
 
  <br>
  Backend pyörii osoitteessa: https://puttipeli.onrender.com/ping
+
+ <br> <br>
+ ### Kehittäjille muistilista:
+ - Miten mongoose Connection kannattaa hoitaa?
