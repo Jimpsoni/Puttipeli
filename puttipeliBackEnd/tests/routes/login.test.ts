@@ -49,7 +49,7 @@ describe("Login to app", () => {
 
     const res = await request(app).post("/api/login/").send(creds)
     expect(res.status).toEqual(401)
-    expect(res.body).toEqual({ error: "Incorrect username or password" })
+    expect(res.body).toEqual({ error: "Could not find user with that username" })
   }, 10000)
 
   it("Log in with correct credentials", async () => {
