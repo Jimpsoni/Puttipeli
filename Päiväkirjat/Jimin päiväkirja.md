@@ -32,9 +32,11 @@
 1,5h 12.2 Yritin saada pull requestia menemään register branchissa läpi<br>
 1,5h 14.2 Yritin saada .env toimimaan github actionissa<br>
 1h 15.2 Jonkin syyn takia testit menee läpi lokaalisti, muttei github actionissa, tämän selvittämistä<br>
-1h 15.2 Sain korjattua, Registeration branchin merge Mainiin
-1h 16.2 Frontendin yhdistämistä Backendiin
-1h 17.2 Salasanojen Hashays ennen tietokantaan tallentamista
-<br>
+1h 15.2 Sain korjattua, Registeration branchin merge Mainiin<br>
+1h 16.2 Frontendin yhdistämistä Backendiin<br>
+1,5h 17.2 Salasanojen Hashays ennen tietokantaan tallentamista, Login servicen refactor<br>
 
-Yhteensä 39,5h
+10h
+
+
+Yhteensä 40h
