@@ -38,5 +38,6 @@
 
 10h
 
+0,5 17.2 Login servicen refactoria
 
-Yhteensä 40h
+Yhteensä 40,5h
