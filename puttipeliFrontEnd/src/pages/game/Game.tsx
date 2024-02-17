@@ -67,6 +67,7 @@ const Game = () => {
   if (current >= 10) {
     openModal(true)
   }
+
   return (
     <>
       <Modal open={modal} setOpen={openModal} />
@@ -75,43 +76,44 @@ const Game = () => {
         <h2 className='infoHeader'>Points: {points}</h2>
         <h2 className='infoHeader'>Throw from: {distance}</h2>
         <table>
-          <tr>
-            <td>1</td>
-            <td>2</td>
-            <td>3</td>
-            <td>4</td>
-            <td>5</td>
-            <td>6</td>
-            <td>7</td>
-            <td>8</td>
-            <td>9</td>
-            <td>10</td>
-          </tr>
-          <tr id='distance'>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr id='successfulShots'>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>2</td>
+              <td>3</td>
+              <td>4</td>
+              <td>5</td>
+              <td>6</td>
+              <td>7</td>
+              <td>8</td>
+              <td>9</td>
+              <td>10</td>
+            </tr>
+            <tr id='distance'>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr id='successfulShots'>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
             {}
             <td>11</td>
             <td>12</td>
@@ -148,6 +150,7 @@ const Game = () => {
             <td></td>
             <td></td>
           </tr>
+          </tbody>
         </table>
 
         <div>
