@@ -1,5 +1,5 @@
 import express from "express"
-import { checkLoginCredit } from "../services/UserService/loginService"
+import { checkLoginCredit } from "../services/UserService/userService"
 
 const router = express.Router()
 
