@@ -3,6 +3,10 @@ import { NewUserType, UserType } from "../../types"
 import { HashPassword, checkPassword } from "../helperFunctions"
 import mongoose from "mongoose"
 
+interface ResponseCode {
+  status: string
+  error?: string
+}
 
 mongoose.set("strictQuery", false)
 type Result<T> = { status: "ok" } | { status: "error"; errors: T[] }
@@ -98,32 +102,35 @@ export const getAllUsers = async (): Promise<UserType[]> => {
   return users
 }
 
-
 export const checkLoginCredit = async (
   username: string,
   password: string
-): Promise<boolean> => {
+): Promise<ResponseCode> => {
   await mongoose.connect(process.env.DB_URI as string)
+
+  // Find user
   return User.findOne({ username: `${username}` })
     .then( async (user: unknown) => {
       if (!user) {
-        await mongoose.connection.close()
-        return false
+        return {status: 'error', error: 'No user with that username'}
       }
 
+      // Check password
       if (typeof user ==='object' && 'password' in user && typeof user.password == 'string') {
         if (await checkPassword(user.password, password)) {
-          await mongoose.connection.close()
-          return true
+          return {status: 'ok'}
         }
       }
 
-      await mongoose.connection.close()
-      return false
+      // If password fails
+      return {status: 'error', error: "Password didn't match"}
     })
     .catch(async () => {
+      return {status: 'error', error: "Internal Server Error"}
+    })
+    .finally(async () => {
       await mongoose.connection.close()
-      return false
+      console.log("This should run everytime")
     })
 }
 
