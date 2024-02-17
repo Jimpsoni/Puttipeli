@@ -1,12 +1,17 @@
+import { useNavigate } from "react-router-dom"
 import { useState } from "react"
-import "./styles.css"
 import axios from "axios"
+import "./styles.css"
 
 const Register = () => {
+  // Form control
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
   const [passwordAgain, setPasswordAgain] = useState("")
   const [email, setEmail] = useState("")
+  
+  // Navigation
+  const navigate = useNavigate()
 
   function NotifyField(id: string) {
     const elem = document.getElementById(id)
@@ -15,7 +20,6 @@ const Register = () => {
   }
 
   function handleErrorMessages(errors: string[]) {
-    console.log(errors)
     // Username
     if (errors.includes("Username not long enough")) NotifyField("username")
     if (errors.includes("Username already in use")) NotifyField("username")
@@ -40,6 +44,8 @@ const Register = () => {
         setPassword("")
         setPasswordAgain("")
         setEmail("")
+
+        navigate('/puttipeli')
       })
       .catch((e) => {
         const response = e.response.data.errors
