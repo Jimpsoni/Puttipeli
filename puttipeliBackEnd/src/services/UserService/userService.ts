@@ -112,25 +112,25 @@ export const checkLoginCredit = async (
   return User.findOne({ username: `${username}` })
     .then( async (user: unknown) => {
       if (!user) {
+        await mongoose.connection.close()
         return {status: 'error', error: 'No user with that username'}
       }
 
       // Check password
       if (typeof user ==='object' && 'password' in user && typeof user.password == 'string') {
         if (await checkPassword(user.password, password)) {
+          await mongoose.connection.close()
           return {status: 'ok'}
         }
       }
 
       // If password fails
+      await mongoose.connection.close()
       return {status: 'error', error: "Password didn't match"}
     })
     .catch(async () => {
-      return {status: 'error', error: "Internal Server Error"}
-    })
-    .finally(async () => {
       await mongoose.connection.close()
-      console.log("This should run everytime")
+      return {status: 'error', error: "Internal Server Error"}
     })
 }
 

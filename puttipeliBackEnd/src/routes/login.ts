@@ -23,14 +23,14 @@ router.post("/", (req, res) => {
 
   checkLoginCredit(username, password)
     .then(response => {
-      console.log(response)
-      if (response.status === 'ok') res.sendStatus(200)
+      if (response.status === 'ok') {
+        res.sendStatus(200).json
+      }
       else if (response.status === 'error') {
         if (response.error === 'Internal Server Error') res.status(500).json({ error: response.error })
         if (response.error === "No user with that username") res.status(401).json({ error: "Could not find user with that username" })
         if (response.error === "Password didn't match") res.status(401).json({ error: "Incorrect username or password" })
       }
-
     })
     .catch(() => res.status(500).json({ error: "Something wrong with server" }))
 })
