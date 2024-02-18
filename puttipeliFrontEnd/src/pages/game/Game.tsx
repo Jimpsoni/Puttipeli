@@ -45,13 +45,29 @@ const Game = () => {
   }
 
   const submitScore = (shotsInBasket: number) => {
-    const shots =
-      document.getElementById("successfulShots")?.childNodes[current]
-    const d = document.getElementById("distance")?.childNodes[current]
+    if (current < 10) {
+      const shots =
+        document.getElementById("successfulShots")?.childNodes[current]
+      const d = document.getElementById("distance")?.childNodes[current]
 
-    if (d && shots) {
-      d.textContent = `${distance}`
-      shots.textContent = `${shotsInBasket}`
+      console.log(current)
+
+      if (d && shots) {
+        d.textContent = `${distance}`
+        shots.textContent = `${shotsInBasket}`
+      }
+    }
+    else {
+      const shots =
+        document.getElementById("successfulShots2")?.childNodes[current - 10]
+      const d = document.getElementById("distance2")?.childNodes[current - 10]
+
+      console.log(current)
+
+      if (d && shots) {
+        d.textContent = `${distance}`
+        shots.textContent = `${shotsInBasket}`
+      }
     }
 
     // So that js doesn't rewrite the values before calculation
@@ -64,7 +80,42 @@ const Game = () => {
     setCurrent(current + 1)
   }
 
-  if (current >= 10) {
+  const prevScore = () => {
+    if (current > 0) {
+      setCurrent(current - 1)
+    }
+    
+    if (current < 10) {
+      const shots =
+        document.getElementById("successfulShots")?.childNodes[current]
+      const d = document.getElementById("distance")?.childNodes[current]
+
+      console.log(current)
+
+      setDistance(Number(d?.textContent))
+
+      if (d && shots) {
+        d.textContent = ``
+        shots.textContent = ``
+      }
+    }
+    else {
+      const shots =
+        document.getElementById("successfulShots2")?.childNodes[current - 10]
+      const d = document.getElementById("distance2")?.childNodes[current - 10]
+
+      console.log(current)
+
+      setDistance(Number(d?.textContent))
+
+      if (d && shots) {
+        d.textContent = ``
+        shots.textContent = ``
+      }
+    }
+  }
+
+  if (current >= 20) {
     openModal(true)
   }
 
@@ -126,7 +177,7 @@ const Game = () => {
               <td>19</td>
               <td>20</td>
             </tr>
-            <tr id='distance'>
+            <tr id='distance2'>
               <td></td>
               <td></td>
               <td></td>
@@ -138,7 +189,7 @@ const Game = () => {
               <td></td>
               <td></td>
             </tr>
-            <tr id='successfulShots'>
+            <tr id='successfulShots2'>
               <td></td>
               <td></td>
               <td></td>
@@ -154,6 +205,7 @@ const Game = () => {
         </table>
 
         <div>
+          <button onClick={() => prevScore()}>takaisin</button>
           <button onClick={() => submitScore(0)}>0</button>
           <button onClick={() => submitScore(1)}>1</button>
           <button onClick={() => submitScore(2)}>2</button>
@@ -163,8 +215,8 @@ const Game = () => {
         </div>
 
         <div>
-          <div onClick={goBack}>Takaisin</div>
-          {current >= 9 && (
+          <div onClick={goBack}>Palaa päävalikkoon</div>
+          {current >= 20 && (
             <>
               <div onClick={saveScoreToUser}>Tallenna Tulos</div>
             </>
