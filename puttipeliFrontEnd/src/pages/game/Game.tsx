@@ -52,8 +52,6 @@ const Game = () => {
   }
 
   const submitScore = (shotsInBasket: number) => {
-    console.log(distance, shotsInBasket)
-
     if (current < 10) {
       const shots =
         document.getElementById("successfulShots")?.childNodes[current]
@@ -87,33 +85,47 @@ const Game = () => {
   }
 
   const prevScore = () => {
-    if (current > 0) {
-      setCurrent(current - 1)
-    }
-    
-    if (current < 10) {
-      const shots =
-        document.getElementById("successfulShots")?.childNodes[current]
-      const d = document.getElementById("distance")?.childNodes[current]
+    console.log(current)
 
-      setDistance(Number(d?.textContent))
+    if (current <= 10) {
+      const shots =
+        document.getElementById("successfulShots")?.childNodes[current - 1]
+      const d = document.getElementById("distance")?.childNodes[current - 1]
 
       if (d && shots) {
         d.textContent = ``
         shots.textContent = ``
       }
+
     }
     else {
       const shots =
-        document.getElementById("successfulShots2")?.childNodes[current - 10]
-      const d = document.getElementById("distance2")?.childNodes[current - 10]
-
-      setDistance(Number(d?.textContent))
+        document.getElementById("successfulShots2")?.childNodes[current - 11]
+      const d = document.getElementById("distance2")?.childNodes[current  - 11]
 
       if (d && shots) {
         d.textContent = ``
         shots.textContent = ``
       }
+    }
+
+    if (results.length > 1) {
+      setDistance(results[results.length-1].distance)
+    } else {
+      setDistance(10)
+    }
+
+    results.pop()
+    setResults(results)
+    
+    let points = 0
+    for (let i = 0; i < results.length; i++) {
+      points += results[i].distance * results[i].shotsInBasket
+    }
+    setPoints(points)
+
+    if (current > 0) {
+      setCurrent(current - 1)
     }
   }
 
@@ -218,7 +230,7 @@ const Game = () => {
 
         <div>
           <div onClick={goBack}>Palaa päävalikkoon</div>
-          {current >= 20 && (
+          {current >= 1 && (
             <>
               <div onClick={() => saveScoreToUser(results)}>Tallenna Tulos</div>
             </>
