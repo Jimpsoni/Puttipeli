@@ -2,8 +2,9 @@ import { useNavigate } from "react-router-dom"
 import "./styles.css"
 import { Dispatch, useState } from "react"
 
-const saveScoreToUser = () => {
+const saveScoreToUser = (results: Results[]) => {
   console.log("Sending scores to database")
+  console.log(results)
 }
 
 interface ModalTypes {
@@ -24,14 +25,20 @@ const Modal = (props: ModalTypes) => {
       <div id='overlay' onClick={closeModal}></div>
       <div id='popup'>
         <h2>Tallennetaanko?</h2>
-        <div onClick={saveScoreToUser}>Kyllä</div>
+        <div onClick={() => saveScoreToUser}>Kyllä</div>
         <div onClick={closeModal}>Ei</div>
       </div>
     </>
   )
 }
 
+interface Results {
+  distance: number,
+  shotsInBasket: number
+}
+
 const Game = () => {
+  const [results, setResults] = useState<Results[]>([])
   const [distance, setDistance] = useState(10)
   const [points, setPoints] = useState(0)
   const [current, setCurrent] = useState(0)
@@ -45,12 +52,12 @@ const Game = () => {
   }
 
   const submitScore = (shotsInBasket: number) => {
+    console.log(distance, shotsInBasket)
+
     if (current < 10) {
       const shots =
         document.getElementById("successfulShots")?.childNodes[current]
       const d = document.getElementById("distance")?.childNodes[current]
-
-      console.log(current)
 
       if (d && shots) {
         d.textContent = `${distance}`
@@ -62,8 +69,6 @@ const Game = () => {
         document.getElementById("successfulShots2")?.childNodes[current - 10]
       const d = document.getElementById("distance2")?.childNodes[current - 10]
 
-      console.log(current)
-
       if (d && shots) {
         d.textContent = `${distance}`
         shots.textContent = `${shotsInBasket}`
@@ -74,9 +79,10 @@ const Game = () => {
     const addPoints = distance * shotsInBasket
     const nextDistance = defaultDistance + shotsInBasket
 
+    setResults(results.concat({distance, shotsInBasket}))
+
     setDistance(nextDistance)
     setPoints(points + addPoints)
-
     setCurrent(current + 1)
   }
 
@@ -90,8 +96,6 @@ const Game = () => {
         document.getElementById("successfulShots")?.childNodes[current]
       const d = document.getElementById("distance")?.childNodes[current]
 
-      console.log(current)
-
       setDistance(Number(d?.textContent))
 
       if (d && shots) {
@@ -104,8 +108,6 @@ const Game = () => {
         document.getElementById("successfulShots2")?.childNodes[current - 10]
       const d = document.getElementById("distance2")?.childNodes[current - 10]
 
-      console.log(current)
-
       setDistance(Number(d?.textContent))
 
       if (d && shots) {
@@ -115,7 +117,7 @@ const Game = () => {
     }
   }
 
-  if (current >= 20) {
+  if (current >= 22) {
     openModal(true)
   }
 
@@ -218,7 +220,7 @@ const Game = () => {
           <div onClick={goBack}>Palaa päävalikkoon</div>
           {current >= 20 && (
             <>
-              <div onClick={saveScoreToUser}>Tallenna Tulos</div>
+              <div onClick={() => saveScoreToUser(results)}>Tallenna Tulos</div>
             </>
           )}
         </div>
