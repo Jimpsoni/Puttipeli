@@ -16,9 +16,9 @@ beforeAll(async () => {
     await User.collection.drop()
     await AddNewUser({ ...user })
   } catch (e) {
-    throw Error('Something wrong with MongoDB')
+    throw Error("Something wrong with MongoDB")
   }
-})
+}, 30000)
 
 describe("Login to app", () => {
   it("Trying to log in without username", async () => {
@@ -49,7 +49,9 @@ describe("Login to app", () => {
 
     const res = await request(app).post("/api/login/").send(creds)
     expect(res.status).toEqual(401)
-    expect(res.body).toEqual({ error: "Could not find user with that username" })
+    expect(res.body).toEqual({
+      error: "Could not find user with that username",
+    })
   }, 10000)
 
   it("Log in with correct credentials", async () => {

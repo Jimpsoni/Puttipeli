@@ -4,6 +4,8 @@ import mongoose from "mongoose"
 import { User } from "../../src/services/UserService/userSchema"
 import { AddNewUser } from "../../src/services/UserService/userService"
 
+let saved_user
+
 beforeAll(async () => {
   // Add user to database
   const user = {
@@ -15,10 +17,14 @@ beforeAll(async () => {
     await mongoose.connect(process.env.DB_URI as string)
     await User.collection.drop()
     await AddNewUser({ ...user })
+    .then(user => { 
+      saved_user = user 
+      console.log(saved_user)
+    })
   } catch (e) {
     throw Error("Something wrong with MongoDB")
   }
-})
+}, 30000)
 
 describe("Returning users from Database", () => {
   test("Get all users", async () => {
