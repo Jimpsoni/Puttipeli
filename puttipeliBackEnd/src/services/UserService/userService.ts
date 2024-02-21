@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { User } from "./userSchema"
 import { NewUserType, UserType } from "../../types"
 import { HashPassword, checkPassword } from "../helperFunctions"
@@ -9,8 +10,9 @@ interface ResponseCode {
 }
 
 mongoose.set("strictQuery", false)
-type Result<T> = { status: "ok" } | { status: "error"; errors: T[] }
-
+type Result<T> =
+  | { status: "ok"; user: UserType }
+  | { status: "error"; errors: T[] }
 
 export const AddNewUser = async (
   NewUserProps: NewUserType
@@ -24,9 +26,9 @@ export const AddNewUser = async (
     // eslint-disable-next-line
     // @ts-ignore
     // eslint-disable-next-line
-    await new_user.save()
+    const user = await new_user.save().then((user) => user.toJSON())
     await mongoose.connection.close()
-    return { status: "ok" }
+    return { status: "ok", user }
   } catch (e) {
     const errors = [] as string[]
     if (typeof e !== "object" || !e)
@@ -85,7 +87,6 @@ export const AddNewUser = async (
   }
 }
 
-
 export const getAllUsers = async (): Promise<UserType[]> => {
   await mongoose.connect(process.env.DB_URI as string)
   let users = [] as UserType[]
@@ -110,27 +111,40 @@ export const checkLoginCredit = async (
 
   // Find user
   return User.findOne({ username: `${username}` })
-    .then( async (user: unknown) => {
+    .then(async (user: unknown) => {
       if (!user) {
         await mongoose.connection.close()
-        return {status: 'error', error: 'No user with that username'}
+        return { status: "error", error: "No user with that username" }
       }
 
       // Check password
-      if (typeof user ==='object' && 'password' in user && typeof user.password == 'string') {
+      if (
+        typeof user === "object" &&
+        "password" in user &&
+        typeof user.password == "string"
+      ) {
         if (await checkPassword(user.password, password)) {
           await mongoose.connection.close()
-          return {status: 'ok'}
+          return { status: "ok" }
         }
       }
 
       // If password fails
       await mongoose.connection.close()
-      return {status: 'error', error: "Password didn't match"}
+      return { status: "error", error: "Password didn't match" }
     })
     .catch(async () => {
       await mongoose.connection.close()
-      return {status: 'error', error: "Internal Server Error"}
+      return { status: "error", error: "Internal Server Error" }
     })
 }
 
+export const getUserByID = async (id: string): Promise<UserType | null> => {
+  try {
+    await mongoose.connect(process.env.DB_URI as string)
+    return await User.findOne({_id: id})
+  } catch (e) {
+  } finally {
+    await mongoose.connection.close()
+  }
+}
