@@ -39,5 +39,6 @@
 10h
 
 0,5 17.2 Login servicen refactoria
+1h  21.2 User servicen tekoa
 
 Yhteensä 40,5h
