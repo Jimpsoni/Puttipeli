@@ -40,5 +40,5 @@
 
 0,5 17.2 Login servicen refactoria
 1h  21.2 User servicen tekoa
-
-Yhteensä 40,5h
+1h  2.3 Tyypittämistä, CheckIfUser funktio
+Yhteensä 42,5h
