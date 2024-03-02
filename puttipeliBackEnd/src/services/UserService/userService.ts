@@ -1,7 +1,7 @@
-// @ts-nocheck
+
 import { User } from "./userSchema"
 import { NewUserType, UserType } from "../../types"
-import { HashPassword, checkPassword } from "../helperFunctions"
+import { HashPassword, checkIfObjectIsUser, checkPassword } from "../helperFunctions"
 import mongoose from "mongoose"
 
 interface ResponseCode {
@@ -28,7 +28,12 @@ export const AddNewUser = async (
     // eslint-disable-next-line
     const user = await new_user.save().then((user) => user.toJSON())
     await mongoose.connection.close()
-    return { status: "ok", user }
+    const isUser = checkIfObjectIsUser(user)
+    if (isUser) {
+      return { status: "ok", user: isUser}
+    } else {
+      return { status: 'error', errors: ["Mongoose didn't return usertype"]}
+    }
   } catch (e) {
     const errors = [] as string[]
     if (typeof e !== "object" || !e)
@@ -144,6 +149,7 @@ export const getUserByID = async (id: string): Promise<UserType | null> => {
     await mongoose.connect(process.env.DB_URI as string)
     return await User.findOne({_id: id})
   } catch (e) {
+    return null
   } finally {
     await mongoose.connection.close()
   }
