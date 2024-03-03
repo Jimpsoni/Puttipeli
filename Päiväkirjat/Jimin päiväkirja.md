@@ -38,7 +38,9 @@
 
 10h
 
-0,5 17.2 Login servicen refactoria
-1h  21.2 User servicen tekoa
-1h  2.3 Tyypittämistä, CheckIfUser funktio
-Yhteensä 42,5h
+0,5 17.2 Login servicen refactoria<br>
+1h  21.2 User servicen tekoa<br>
+1h  2.3 Tyypittämistä, CheckIfUser funktio<br>
+3h  3.3 Fronttiin ja backiin kirjautumislogiikan tekoa<br>
+
+Yhteensä 45,5h
