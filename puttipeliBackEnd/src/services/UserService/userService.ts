@@ -1,11 +1,16 @@
 import { User } from "./userSchema"
 import { NewUserType, UserType } from "../../types"
-import { HashPassword, checkIfObjectIsUser, checkPassword } from "../helperFunctions"
+import {
+  HashPassword,
+  checkIfObjectIsUser,
+  checkPassword,
+} from "../helperFunctions"
 import mongoose from "mongoose"
 
 interface ResponseCode {
   status: string
   error?: string
+  user?: UserType
 }
 
 type Result<T> =
@@ -26,14 +31,13 @@ export const AddNewUser = async (
     // eslint-disable-next-line
     // @ts-ignore
     // eslint-disable-next-line
-    const user = await new_user.save().then((user) => user.toJSON())
+    const user = await new_user.save().then((user) => user)
     await mongoose.connection.close()
-    console.log(user)
     const isUser = checkIfObjectIsUser(user)
     if (isUser) {
-      return { status: "ok", user: isUser}
+      return { status: "ok", user: isUser }
     } else {
-      return { status: 'error', errors: ["Mongoose didn't return usertype"]}
+      return { status: "error", errors: ["Mongoose didn't return usertype"] }
     }
   } catch (e) {
     const errors = [] as string[]
@@ -117,22 +121,19 @@ export const checkLoginCredit = async (
 
   // Find user
   return User.findOne({ username: `${username}` })
-    .then(async (user: unknown) => {
+    .then(async (u: unknown) => {
+      // @ts-ignore
+      const user = checkIfObjectIsUser(u)
+
       if (!user) {
         await mongoose.connection.close()
         return { status: "error", error: "No user with that username" }
       }
 
       // Check password
-      if (
-        typeof user === "object" &&
-        "password" in user &&
-        typeof user.password == "string"
-      ) {
-        if (await checkPassword(user.password, password)) {
-          await mongoose.connection.close()
-          return { status: "ok" }
-        }
+      if (await checkPassword(user.password, password)) {
+        await mongoose.connection.close()
+        return { status: "ok", user }
       }
 
       // If password fails
@@ -148,7 +149,7 @@ export const checkLoginCredit = async (
 export const getUserByID = async (id: string): Promise<UserType | null> => {
   try {
     await mongoose.connect(process.env.DB_URI as string)
-    return await User.findOne({_id: id})
+    return await User.findOne({ _id: id })
   } catch (e) {
     return null
   } finally {
