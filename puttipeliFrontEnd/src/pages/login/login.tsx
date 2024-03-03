@@ -7,17 +7,22 @@ import { useNavigate } from "react-router-dom"
 const LoginPage = () => {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
-  const navigate = useNavigate(); 
+  const navigate = useNavigate()
 
+  const highlightError = (e: string[]) => {
+    for(const error in e) {
+      console.log(error)
+    }
+  }
 
-  const login = (event: React.SyntheticEvent) => {
+  const login = async (event: React.SyntheticEvent) => {
     event.preventDefault()
-    if (submitLogin(username, password)) {
-      console.log("logged in!")
-      navigate('/puttipeli')
+    const res = await submitLogin(username, password)
 
+    if (res.status == "ok") {
+      navigate("/puttipeli")
     } else {
-      console.log("not logged in...")
+      highlightError(res.error)
     }
   }
 

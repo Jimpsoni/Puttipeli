@@ -48,7 +48,7 @@ router.post("/", (req, res) => {
 
   AddNewUser({ ...data })
     .then((response) => {
-      if (response.status === "ok") res.status(201).send()
+      if (response.status === "ok") res.status(201).json({status: "ok", user: response.user})
       if (response.status === "error") {
         res.status(400).json({ errors: response.errors })
       }

@@ -28,6 +28,7 @@ export const AddNewUser = async (
     // eslint-disable-next-line
     const user = await new_user.save().then((user) => user.toJSON())
     await mongoose.connection.close()
+    console.log(user)
     const isUser = checkIfObjectIsUser(user)
     if (isUser) {
       return { status: "ok", user: isUser}
