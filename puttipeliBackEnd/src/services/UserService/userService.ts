@@ -1,4 +1,3 @@
-
 import { User } from "./userSchema"
 import { NewUserType, UserType } from "../../types"
 import { HashPassword, checkIfObjectIsUser, checkPassword } from "../helperFunctions"
@@ -9,10 +8,11 @@ interface ResponseCode {
   error?: string
 }
 
-mongoose.set("strictQuery", false)
 type Result<T> =
   | { status: "ok"; user: UserType }
   | { status: "error"; errors: T[] }
+
+mongoose.set("strictQuery", false)
 
 export const AddNewUser = async (
   NewUserProps: NewUserType
