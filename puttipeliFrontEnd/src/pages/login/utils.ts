@@ -2,21 +2,21 @@ import axios from "axios"
 
 const URL = "http://localhost:3000/api/login"
 
-type Result<T> =
+type Result =
   | { status: "ok"; user: string }
-  | { status: "error"; error: T[] }
+  | { status: "error"; error: string }
 
 export const submitLogin = async (
   username: string,
   password: string
-): Promise<Result<string>> => {
+): Promise<Result> => {
   const loginCred = { username, password }
 
   const response = await axios
     .post(URL, loginCred)
     .then((res) => {
-      if ('response' in res) {
-        console.log(res.response)
+      if ('data' in res) {
+        return res.data.user
       }
     })
     .catch((res) => {
