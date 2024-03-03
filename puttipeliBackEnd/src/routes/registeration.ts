@@ -35,8 +35,8 @@ function ValidateRequest(props: unknown): NewUserType {
   }
 }
 
-// CREATE NEW USER
 router.post("/", (req, res) => {
+  // TODO don't send password hash to user
   let data
   try {
     data = ValidateRequest(req.body)
