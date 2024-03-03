@@ -1,5 +1,5 @@
 import bcrypt from "bcrypt"
-import { UserType } from "../types"
+import { UserType, Game } from "../types"
 
 export async function HashPassword(pass: string): Promise<string> {
   if (pass.length < 6) return ""
