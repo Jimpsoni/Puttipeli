@@ -1,4 +1,3 @@
-// @ts-nocheck
 import bcrypt from "bcrypt"
 import { UserType, Game } from "../types"
 
@@ -22,14 +21,15 @@ export function checkIfObjectIsUser(o: unknown): UserType | null {
   if (!("id" in o && typeof o.id == "string")) return null
   if (!("username" in o && typeof o.username == "string")) return null
   if (!("email" in o && typeof o.email == "string")) return null
+  if (!("password" in o && typeof o.password == "string")) return null
   if (!("registered" in o && o.registered instanceof Date)) return null
   if (!("games" in o)) return null
 
   return {
     id: o.id,
     username: o.username,
-    password: o.password,
     email: o.email,
+    password: o.password,
     registered: o.registered,
     games: o.games as Game[],
   }
