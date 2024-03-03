@@ -9,19 +9,42 @@ const LoginPage = () => {
   const [password, setPassword] = useState("")
   const navigate = useNavigate()
 
-  const highlightError = (e: string[]) => {
-    for(const error in e) {
-      console.log(error)
+  const highlightError = (e: string) => {
+    /*
+
+    TODO Better error handling
+
+    */
+
+    if (e === "Missing username") {
+      alert(e)
+      return
+    }
+
+    if (e === "Missing password") {
+      alert(e)
+      return
+    }
+
+    if (e === "Could not find user with that username") {
+      alert(e)
+      return
+    }
+
+    if (e === "Incorrect username or password") {
+      alert(e)
+      return
     }
   }
 
   const login = async (event: React.SyntheticEvent) => {
     event.preventDefault()
     const res = await submitLogin(username, password)
-
+    console.log(res)
     if (res.status == "ok") {
       navigate("/puttipeli")
     } else {
+      console.log(res)
       highlightError(res.error)
     }
   }
