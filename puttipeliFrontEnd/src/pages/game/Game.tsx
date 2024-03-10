@@ -130,7 +130,7 @@ const Game = () => {
   }
 
   if (current >= 22) {
-    openModal(true)
+    //openModal(true)
   }
 
   return (
@@ -139,7 +139,7 @@ const Game = () => {
       <div>
         <h1>Game Page</h1>
         <h2 className='infoHeader'>Points: {points}</h2>
-        <h2 className='infoHeader'>Throw from: {distance}</h2>
+        <h2 className='infoHeader'>Throw from: {distance} m</h2>
         <table>
           <tbody>
             <tr>
@@ -220,19 +220,23 @@ const Game = () => {
 
         <div>
           <button onClick={() => prevScore()}>takaisin</button>
-          <button onClick={() => submitScore(0)}>0</button>
-          <button onClick={() => submitScore(1)}>1</button>
-          <button onClick={() => submitScore(2)}>2</button>
-          <button onClick={() => submitScore(3)}>3</button>
-          <button onClick={() => submitScore(4)}>4</button>
-          <button onClick={() => submitScore(5)}>5</button>
+          {current <= 19 && (
+            <>
+              <button onClick={() => submitScore(0)}>0</button>
+              <button onClick={() => submitScore(1)}>1</button>
+              <button onClick={() => submitScore(2)}>2</button>
+              <button onClick={() => submitScore(3)}>3</button>
+              <button onClick={() => submitScore(4)}>4</button>
+              <button onClick={() => submitScore(5)}>5</button>
+            </>
+          )}
         </div>
 
         <div>
           <div onClick={goBack}>Palaa päävalikkoon</div>
           {current >= 1 && (
             <>
-              <div onClick={() => saveScoreToUser(results)}>Tallenna Tulos</div>
+              <div onClick={() => saveScoreToUser(results)}>Tallenna kierros</div>
             </>
           )}
         </div>
