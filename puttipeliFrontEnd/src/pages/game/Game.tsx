@@ -1,11 +1,9 @@
 import { useNavigate } from "react-router-dom"
 import "./styles.css"
 import { Dispatch, useState } from "react"
-
-const saveScoreToUser = (results: Results[]) => {
-  console.log("Sending scores to database")
-  console.log(results)
-}
+import { GameResult } from "../../types"
+import { postGameResult } from "../../services/gameService"
+import axios from "axios"
 
 interface ModalTypes {
   open: boolean,
@@ -25,24 +23,20 @@ const Modal = (props: ModalTypes) => {
       <div id='overlay' onClick={closeModal}></div>
       <div id='popup'>
         <h2>Tallennetaanko?</h2>
-        <div onClick={() => saveScoreToUser}>Kyllä</div>
+        <div onClick={closeModal}>Kyllä</div>
         <div onClick={closeModal}>Ei</div>
       </div>
     </>
   )
 }
 
-interface Results {
-  distance: number,
-  shotsInBasket: number
-}
-
 const Game = () => {
-  const [results, setResults] = useState<Results[]>([])
+  const [results, setResults] = useState<GameResult[]>([])
   const [distance, setDistance] = useState(10)
   const [points, setPoints] = useState(0)
   const [current, setCurrent] = useState(0)
   const [modal, openModal] = useState<boolean>(false)
+  const [message, setMessage] = useState<string>('')
   const nav = useNavigate()
 
   const defaultDistance = 5
@@ -129,6 +123,26 @@ const Game = () => {
     }
   }
 
+  const saveScoreToUser = async (results: GameResult[]) => {
+    console.log("Sending scores to database")
+    setMessage('saving scores')
+    setTimeout(() => setMessage(''), 5000)
+  
+    try {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const response = await postGameResult(results)
+      //aseta ilmoitus onnistuneesta tallennuksesta sivun ylälaitaan
+    }
+    catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.log(error.message)
+        setMessage(error.message)
+        setTimeout(() => setMessage(''), 5000)
+        // virheviesti punaiseksi?
+      }
+    }
+  }
+
   if (current >= 22) {
     //openModal(true)
   }
@@ -137,9 +151,15 @@ const Game = () => {
     <>
       <Modal open={modal} setOpen={openModal} />
       <div>
+        {message.length > 0 && ( 
+          <>
+            {message}
+          </>
+        )
+        }
         <h1>Game Page</h1>
-        <h2 className='infoHeader'>Points: {points}</h2>
-        <h2 className='infoHeader'>Throw from: {distance} m</h2>
+        <h2 className='infoHeader' data-testid="points">Points: {points}</h2>
+        <h2 className='infoHeader' data-testid="distance">Throw from: {distance} m</h2>
         <table>
           <tbody>
             <tr>
@@ -219,15 +239,15 @@ const Game = () => {
         </table>
 
         <div>
-          <button onClick={() => prevScore()}>takaisin</button>
+          <button data-testid="prevButton" onClick={() => prevScore()}>takaisin</button>
           {current <= 19 && (
             <>
-              <button onClick={() => submitScore(0)}>0</button>
-              <button onClick={() => submitScore(1)}>1</button>
-              <button onClick={() => submitScore(2)}>2</button>
-              <button onClick={() => submitScore(3)}>3</button>
-              <button onClick={() => submitScore(4)}>4</button>
-              <button onClick={() => submitScore(5)}>5</button>
+              <button data-testid="button0" onClick={() => submitScore(0)}>0</button>
+              <button data-testid="button1" onClick={() => submitScore(1)}>1</button>
+              <button data-testid="button2" onClick={() => submitScore(2)}>2</button>
+              <button data-testid="button3" onClick={() => submitScore(3)}>3</button>
+              <button data-testid="button4" onClick={() => submitScore(4)}>4</button>
+              <button data-testid="button5" onClick={() => submitScore(5)}>5</button>
             </>
           )}
         </div>
@@ -236,7 +256,7 @@ const Game = () => {
           <div onClick={goBack}>Palaa päävalikkoon</div>
           {current >= 1 && (
             <>
-              <div onClick={() => saveScoreToUser(results)}>Tallenna kierros</div>
+              <div data-testid="saveScoreButton" onClick={() => saveScoreToUser(results)}>Tallenna kierros</div>
             </>
           )}
         </div>
