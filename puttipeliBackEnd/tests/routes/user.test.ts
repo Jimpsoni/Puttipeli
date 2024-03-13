@@ -3,6 +3,7 @@ import app from "../../src/app"
 import mongoose from "mongoose"
 import { User } from "../../src/services/UserService/userSchema"
 import { AddNewUser } from "../../src/services/UserService/userService"
+import { checkIfObjectIsUser } from "../../src/services/helperFunctions"
 
 // It is not possible that saved_user is anything else than usertype
 // eslint-disable-next-line
@@ -20,12 +21,14 @@ beforeAll(async () => {
     await mongoose.connect(process.env.DB_URI as string)
     await User.collection.drop()
     await AddNewUser({ ...user }).then((response) => {
-      if (response.status == "ok") {
-        saved_user = response.user
+      if (checkIfObjectIsUser(response)) {
+        saved_user = response
+      } else {
+        throw new Error()
       }
     })
   } catch (e) {
-    throw Error("Something wrong with MongoDB..")
+    throw new Error("Issues with MongoDB")
   }
 }, 30000)
 
@@ -46,7 +49,9 @@ describe("Returning users from Database", () => {
   })
 
   test("Wrong id returns 404", async () => {
-    const res = await request(app).get("/api/users/hessuhopo")
+    // Create new id
+    const id = new mongoose.Types.ObjectId()
+    const res = await request(app).get(`/api/users/${id}`)
     expect(res.status).toEqual(404)
   })
 

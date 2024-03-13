@@ -78,7 +78,7 @@ export const AddNewUser = async (
         else if (e.errors.email.kind === "unique")
           errors.push("Email Already in use")
     }
-    
+
     return errors
   } finally {
     await mongoose.connection.close()
@@ -128,6 +128,7 @@ export const checkLoginCredit = async (
 export const getUserByID = async (id: string): Promise<UserType> => {
   try {
     await mongoose.connect(process.env.DB_URI as string)
+    // TODO check if object sent is an ID
     const query = await User.findOne({ _id: id })
     const user = checkIfObjectIsUser(query as unknown)
     if (!user) throw new Error("No user with that ID")
@@ -138,6 +139,7 @@ export const getUserByID = async (id: string): Promise<UserType> => {
 }
 
 export const deleteUserByID = async (id: string): Promise<null> => {
+  // TODO check if object sent is an ID
   console.log(id)
   return null
 }
