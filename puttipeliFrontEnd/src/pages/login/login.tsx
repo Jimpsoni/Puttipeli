@@ -1,59 +1,48 @@
 import { useState } from "react"
 import React from "react"
 import "./loginpageStyles.css"
-import { submitLogin } from "./utils"
+import axios from "axios"
 import { useNavigate } from "react-router-dom"
+
+const URL = "http://localhost:3000/api/login"
 
 const LoginPage = () => {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
   const navigate = useNavigate()
 
-  const highlightError = (e: string) => {
+  const highlightError = (e) => {
     /*
 
     TODO Better error handling
 
     */
-
-    if (e === "Missing username") {
-      alert(e)
-      return
-    }
-
-    if (e === "Missing password") {
-      alert(e)
-      return
-    }
-
-    if (e === "Could not find user with that username") {
-      alert(e)
-      return
-    }
-
-    if (e === "Incorrect username or password") {
-      alert(e)
-      return
-    }
+    alert(e.error)
   }
 
-  const login = async (event: React.SyntheticEvent) => {
+  const submitLogin = (event: React.SyntheticEvent) => {
     event.preventDefault()
-    const res = await submitLogin(username, password)
-    console.log(res)
-    if (res.status == "ok") {
-      navigate("/puttipeli")
-    } else {
-      console.log(res)
-      highlightError(res.error)
-    }
+    const loginCred = { username, password }
+    axios
+      .post(URL, loginCred)
+      .then((res) => {
+        if ("data" in res) {
+          navigate("/puttipeli")
+        } else {
+          highlightError("Server error")
+        }
+      })
+      .catch((res) => {
+        
+        highlightError(res.response.data.error)
+      })
   }
 
   return (
     <>
       <div id='loginMaincontainer'>
         <h1 id='loginpageHeader'>Kirjaudu sisään</h1>
-        <form onSubmit={login} id='loginForm'>
+        <form onSubmit={submitLogin} id='loginForm'>
           <div>
             <input
               className='textInput'
