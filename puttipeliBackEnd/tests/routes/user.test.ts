@@ -5,6 +5,14 @@ import { User } from "../../src/services/UserService/userSchema"
 import { AddNewUser } from "../../src/services/UserService/userService"
 import { checkIfObjectIsUser } from "../../src/services/helperFunctions"
 
+
+/*
+Tests to implement:
+  - If id is not in right format, send a message about that
+  - Check that returned user object doesn't have password with it
+*/
+
+
 // It is not possible that saved_user is anything else than usertype
 // eslint-disable-next-line
 // @ts-ignore
