@@ -7,24 +7,15 @@ import {
 } from "../helperFunctions"
 import mongoose from "mongoose"
 
-interface ResponseCode {
-  status: string
-  error?: string
-  user?: UserType
-}
-
-type Result<T> =
-  | { status: "ok"; user: UserType }
-  | { status: "error"; errors: T[] }
-
 mongoose.set("strictQuery", false)
 
 export const AddNewUser = async (
   NewUserProps: NewUserType
-): Promise<Result<string>> => {
+): Promise<UserType | string[]> => {
   try {
     await mongoose.connect(process.env.DB_URI as string)
     await mongoose.connection.syncIndexes()
+
     NewUserProps.password = await HashPassword(NewUserProps.password)
     const new_user = new User({ ...NewUserProps })
 
@@ -32,19 +23,15 @@ export const AddNewUser = async (
     // @ts-ignore
     // eslint-disable-next-line
     const user = await new_user.save().then((user) => user)
-    await mongoose.connection.close()
     const isUser = checkIfObjectIsUser(user)
-    if (isUser) {
-      return { status: "ok", user: isUser }
-    } else {
-      return { status: "error", errors: ["Mongoose didn't return usertype"] }
-    }
+    if (isUser) return isUser
+    else throw new Error("Internal Server Error")
   } catch (e) {
     const errors = [] as string[]
-    if (typeof e !== "object" || !e)
-      return { status: "error", errors: ["Internal Server Error"] }
-    if (!("errors" in e) || typeof e.errors !== "object" || !e.errors)
-      return { status: "error", errors: ["Internal Server Error"] }
+    if (typeof e !== "object" || !e) throw new Error("Internal Server Error")
+    if (!("errors" in e) || typeof e.errors !== "object" || !e.errors) {
+      throw new Error("Internal Server Error")
+    }
 
     // Check the username
     if (
@@ -91,68 +78,66 @@ export const AddNewUser = async (
         else if (e.errors.email.kind === "unique")
           errors.push("Email Already in use")
     }
-
+    
+    return errors
+  } finally {
     await mongoose.connection.close()
-    return { status: "error", errors }
   }
 }
 
 export const getAllUsers = async (): Promise<UserType[]> => {
-  await mongoose.connect(process.env.DB_URI as string)
-  let users = [] as UserType[]
-
   try {
+    await mongoose.connect(process.env.DB_URI as string)
+    let users = [] as UserType[]
     users = await User.find({})
-  } catch (e) {
-    console.log("Something wrong with mongo")
-    console.log(e)
+    return users
   } finally {
     await mongoose.connection.close()
   }
-
-  return users
 }
 
 export const checkLoginCredit = async (
   username: string,
   password: string
-): Promise<ResponseCode> => {
-  await mongoose.connect(process.env.DB_URI as string)
-
-  // Find user
-  return User.findOne({ username: `${username}` })
-    .then(async (u: unknown) => {
-      // @ts-ignore
-      const user = checkIfObjectIsUser(u)
-
-      if (!user) {
-        await mongoose.connection.close()
-        return { status: "error", error: "No user with that username" }
-      }
-
-      // Check password
-      if (await checkPassword(user.password, password)) {
-        await mongoose.connection.close()
-        return { status: "ok", user }
-      }
-
-      // If password fails
-      await mongoose.connection.close()
-      return { status: "error", error: "Password didn't match" }
-    })
-    .catch(async () => {
-      await mongoose.connection.close()
-      return { status: "error", error: "Internal Server Error" }
-    })
-}
-
-export const getUserByID = async (id: string): Promise<UserType | null> => {
+): Promise<UserType> => {
   try {
     await mongoose.connect(process.env.DB_URI as string)
-    return await User.findOne({ _id: id })
-  } catch (e) {
-    return null
+
+    // Try to find user
+    const dbRes = await User.findOne({ username: `${username}` })
+    const user = checkIfObjectIsUser(dbRes)
+
+    // No user found
+    if (!user) {
+      throw new Error("Username or password incorrect")
+    }
+
+    // Password is correct
+    if (await checkPassword(user.password, password)) {
+      return user
+    }
+
+    // Password was incorrect
+    throw new Error("Username or password incorrect")
+  } finally {
+    // Close the connection
+    await mongoose.connection.close()
+  }
+}
+
+export const getUserByID = async (id: string): Promise<UserType> => {
+  try {
+    await mongoose.connect(process.env.DB_URI as string)
+    const query = await User.findOne({ _id: id })
+    const user = checkIfObjectIsUser(query as unknown)
+    if (!user) throw new Error("No user with that ID")
+    return user
   } finally {
     await mongoose.connection.close()
   }
+}
+
+export const deleteUserByID = async (id: string): Promise<null> => {
+  console.log(id)
+  return null
 }

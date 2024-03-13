@@ -1,6 +1,7 @@
 import express from "express"
 import { AddNewUser } from "../services/UserService/userService"
 import { NewUserType } from "../types"
+import { checkIfObjectIsUser } from "../services/helperFunctions"
 
 const router = express.Router()
 
@@ -37,25 +38,23 @@ function ValidateRequest(props: unknown): NewUserType {
 
 router.post("/", (req, res) => {
   // TODO don't send password hash to user
-  let data
   try {
-    data = ValidateRequest(req.body)
-  } catch (e) {
-    if (e instanceof Error && "message" in e) res.status(400).json({error: e.message}).send()
-    else res.status(400).json({error: 'Something happened while parsing request'}).send()
-    return
-  }
+    const data = ValidateRequest(req.body)
 
-  AddNewUser({ ...data })
+    AddNewUser({ ...data })
     .then((response) => {
-      if (response.status === "ok") res.status(201).json({status: "ok", user: response.user})
-      if (response.status === "error") {
-        res.status(400).json({ errors: response.errors })
-      }
+      if (checkIfObjectIsUser(response)) res.status(201).json({"user": response})
+      else res.status(400).json({errors: response})
     })
     .catch(() => {
       res.status(500).json({ errors: 'Internal Server Error' })
     })
+    return
+  } catch (e) {
+    if (e instanceof Error && "message" in e) res.status(400).json({error: e.message}).send()
+    else res.status(500).json({error: 'Something happened while parsing request'}).send()
+    return
+  }
 })
 
 export default router

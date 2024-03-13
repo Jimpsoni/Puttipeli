@@ -1,5 +1,12 @@
 import express from "express"
 import { checkLoginCredit } from "../services/UserService/userService"
+import { UserType } from "../types"
+
+/*
+
+REMOVE ALL THE DEBUGGING CONSOLE LOGS
+
+*/
 
 const router = express.Router()
 
@@ -13,38 +20,28 @@ router.post("/", (req, res) => {
   const password = req.body.password as string
 
   if (!username) {
-    res.status(200).json({ status: 200, error: "Missing username" })
+    res.status(401).json({ error: "Missing username" })
     return
   }
 
   if (!password) {
-    res.status(401).json({ status: "error", error: "Missing password" })
+    res.status(401).json({ error: "Missing password" })
     return
   }
 
   checkLoginCredit(username, password)
-    .then((response) => {
-      if (response.status === "ok") {
-        res.status(200).send({ status: "ok", user: response.user })
-      } else if (response.status === "error") {
-        if (response.error === "Internal Server Error")
-          res.status(500).json({ status: "error", error: response.error })
-        if (response.error === "No user with that username")
-          res.status(401).json({
-            status: "error",
-            error: "Could not find user with that username",
-          })
-        if (response.error === "Password didn't match")
-          res
-            .status(401)
-            .json({ status: "error", error: "Incorrect username or password" })
-      }
+    .then((user: UserType) => {
+      res.status(200).json({ user: user })
+      return
     })
-    .catch(() =>
-      res
-        .status(500)
-        .json({ status: "error", error: "Something wrong with server" })
-    )
+    .catch((error: Error) => {
+      // If not expected error, send server error
+      if (error.message == "Username or password incorrect") res.status(401)
+      else { res.status(500).json({ error: "Internal Server Error" }); return }
+
+      res.json({ error: error.message })
+      return
+    })
 })
 
 export default router
