@@ -160,7 +160,7 @@ const Game = () => {
         <h1>Game Page</h1>
         <h2 className='infoHeader' data-testid="points">Points: {points}</h2>
         <h2 className='infoHeader' data-testid="distance">Throw from: {distance} m</h2>
-        <table>
+        <table className="round_table">
           <tbody>
             <tr>
               <td>1</td>
@@ -174,7 +174,7 @@ const Game = () => {
               <td>9</td>
               <td>10</td>
             </tr>
-            <tr id='distance'>
+            <tr id='distance' className="round_data">
               <td></td>
               <td></td>
               <td></td>
@@ -186,7 +186,7 @@ const Game = () => {
               <td></td>
               <td></td>
             </tr>
-            <tr id='successfulShots'>
+            <tr id='successfulShots' className="round_data">
               <td></td>
               <td></td>
               <td></td>
@@ -211,7 +211,7 @@ const Game = () => {
               <td>19</td>
               <td>20</td>
             </tr>
-            <tr id='distance2'>
+            <tr id='distance2' className="round_data">
               <td></td>
               <td></td>
               <td></td>
@@ -223,7 +223,7 @@ const Game = () => {
               <td></td>
               <td></td>
             </tr>
-            <tr id='successfulShots2'>
+            <tr id='successfulShots2' className="round_data">
               <td></td>
               <td></td>
               <td></td>
@@ -238,21 +238,21 @@ const Game = () => {
           </tbody>
         </table>
 
-        <div>
-          <button data-testid="prevButton" onClick={() => prevScore()}>takaisin</button>
+        <div id="buttons">
+          <button className="scorebutton" data-testid="prevButton" onClick={() => prevScore()}>takaisin</button>
           {current <= 19 && (
             <>
-              <button data-testid="button0" onClick={() => submitScore(0)}>0</button>
-              <button data-testid="button1" onClick={() => submitScore(1)}>1</button>
-              <button data-testid="button2" onClick={() => submitScore(2)}>2</button>
-              <button data-testid="button3" onClick={() => submitScore(3)}>3</button>
-              <button data-testid="button4" onClick={() => submitScore(4)}>4</button>
-              <button data-testid="button5" onClick={() => submitScore(5)}>5</button>
+              <button className="scorebutton" data-testid="button0" onClick={() => submitScore(0)}>0</button>
+              <button className="scorebutton"data-testid="button1" onClick={() => submitScore(1)}>1</button>
+              <button className="scorebutton" data-testid="button2" onClick={() => submitScore(2)}>2</button>
+              <button className="scorebutton" data-testid="button3" onClick={() => submitScore(3)}>3</button>
+              <button className="scorebutton" data-testid="button4" onClick={() => submitScore(4)}>4</button>
+              <button className="scorebutton" data-testid="button5" onClick={() => submitScore(5)}>5</button>
             </>
           )}
         </div>
 
-        <div>
+        <div id="returnToMenu"> 
           <div onClick={goBack}>Palaa päävalikkoon</div>
           {current >= 1 && (
             <>

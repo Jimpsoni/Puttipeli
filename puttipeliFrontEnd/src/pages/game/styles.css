@@ -1,5 +1,34 @@
-#successfulShots, #successfulShots2, #distance, #distance2 {
+body {
+  -webkit-text-size-adjust: none;
+}
+
+.round_data td {
+  height: 20px;
+  width: 100%;
   background-color: grey;
+}
+
+.round_table {
+  width: 100%;
+  height: 100%;
+  table-layout: fixed;
+  text-align: center;
+}
+
+#returnToMenu {
+  background-color: orange;
+}
+
+#buttons {
+  margin: 5px;
+  text-align: center;
+}
+
+.scorebutton {
+  background-color: rgb(255, 177, 33);
+  padding: 20px;
+  margin: 3px;
+  font-size: larger;
 }
 
 #popup {
