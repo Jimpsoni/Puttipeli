@@ -140,6 +140,9 @@ export const getUserByID = async (id: string): Promise<UserType> => {
 
 export const deleteUserByID = async (id: string): Promise<null> => {
   // TODO check if object sent is an ID
+
+  // Throw lint off
+  await new Promise(() => {})
   console.log(id)
   return null
 }

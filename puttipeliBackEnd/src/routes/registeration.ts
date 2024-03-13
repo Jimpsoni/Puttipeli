@@ -42,17 +42,23 @@ router.post("/", (req, res) => {
     const data = ValidateRequest(req.body)
 
     AddNewUser({ ...data })
-    .then((response) => {
-      if (checkIfObjectIsUser(response)) res.status(201).json({"user": response})
-      else res.status(400).json({errors: response})
-    })
-    .catch(() => {
-      res.status(500).json({ errors: 'Internal Server Error' })
-    })
+      .then((response) => {
+        if (checkIfObjectIsUser(response))
+          res.status(201).json({ user: response })
+        else res.status(400).json({ errors: response })
+      })
+      .catch(() => {
+        res.status(500).json({ errors: "Internal Server Error" })
+      })
     return
   } catch (e) {
-    if (e instanceof Error && "message" in e) res.status(400).json({error: e.message}).send()
-    else res.status(500).json({error: 'Something happened while parsing request'}).send()
+    if (e instanceof Error && "message" in e)
+      res.status(400).json({ error: e.message }).send()
+    else
+      res
+        .status(500)
+        .json({ error: "Something happened while parsing request" })
+        .send()
     return
   }
 })

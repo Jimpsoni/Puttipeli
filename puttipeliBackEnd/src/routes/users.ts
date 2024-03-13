@@ -44,7 +44,7 @@ router.delete("/:id", (req, res) => {
         return
       }
       res.status(500).send("Internal Server Error")
-  })
+    })
 })
 
 export default router
