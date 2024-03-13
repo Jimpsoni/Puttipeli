@@ -15,4 +15,4 @@ Alustava designi sivustolle:
 
  <br> <br>
  ### Kehittäjille muistilista:
- - Miten mongoose Connection kannattaa hoitaa?
+ - All good tähän mennessä
