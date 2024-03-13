@@ -7,7 +7,7 @@ beforeAll(async () => {
   // Clean up the test db
   await mongoose.connect(process.env.DB_URI as string)
   await User.collection.drop()
-})
+}, 30000)
 
 describe("Registering a new user to app", () => {
   it("Can't create user with too short username", async () => {

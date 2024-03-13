@@ -1,5 +1,12 @@
 import express from "express"
 import { checkLoginCredit } from "../services/UserService/userService"
+import { UserType } from "../types"
+
+/*
+
+REMOVE ALL THE DEBUGGING CONSOLE LOGS
+
+*/
 
 const router = express.Router()
 
@@ -8,6 +15,7 @@ router.get("/", (_req, res) => {
 })
 
 router.post("/", (req, res) => {
+  // TODO don't send password hash to user
   const username = req.body.username as string
   const password = req.body.password as string
 
@@ -22,17 +30,18 @@ router.post("/", (req, res) => {
   }
 
   checkLoginCredit(username, password)
-    .then(response => {
-      if (response.status === 'ok') {
-        res.sendStatus(200).json
-      }
-      else if (response.status === 'error') {
-        if (response.error === 'Internal Server Error') res.status(500).json({ error: response.error })
-        if (response.error === "No user with that username") res.status(401).json({ error: "Could not find user with that username" })
-        if (response.error === "Password didn't match") res.status(401).json({ error: "Incorrect username or password" })
-      }
+    .then((user: UserType) => {
+      res.status(200).json({ user: user })
+      return
     })
-    .catch(() => res.status(500).json({ error: "Something wrong with server" }))
+    .catch((error: Error) => {
+      // If not expected error, send server error
+      if (error.message == "Username or password incorrect") res.status(401)
+      else { res.status(500).json({ error: "Internal Server Error" }); return }
+
+      res.json({ error: error.message })
+      return
+    })
 })
 
 export default router

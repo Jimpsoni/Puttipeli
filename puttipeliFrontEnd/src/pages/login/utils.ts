@@ -2,15 +2,26 @@ import axios from "axios"
 
 const URL = "http://localhost:3000/api/login"
 
-export const submitLogin = (username: string, password: string): boolean => {
-  const loginCred = {
-    username,
-    password,
-  }
+type Result =
+  | { status: "ok"; user: string }
+  | { status: "error"; error: string }
 
-  axios.put(URL, loginCred)
-  .then(res => console.log(res.statusText))
-  .catch(e => console.log(e.response.data))
+export const submitLogin = async (
+  username: string,
+  password: string
+): Promise<Result> => {
+  const loginCred = { username, password }
 
-  return true
+  const response = await axios
+    .post(URL, loginCred)
+    .then((res) => {
+      if ('data' in res) {
+        return res.data.user
+      }
+    })
+    .catch((res) => {
+      return res.response.data
+    })
+
+  return response
 }
