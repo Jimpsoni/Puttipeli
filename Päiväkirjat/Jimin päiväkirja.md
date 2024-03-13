@@ -42,5 +42,7 @@
 1h  21.2 User servicen tekoa<br>
 1h  2.3 Tyypittämistä, CheckIfUser funktio<br>
 3h  3.3 Fronttiin ja backiin kirjautumislogiikan tekoa<br>
+1h  8.3 Debugaamista<br>
+2,5h 13.3 perusteellinen backendin funktioiden uudelleen toteutus paljon tehokkaampaan muotoon <br>
 
-Yhteensä 45,5h
+Yhteensä 49h
