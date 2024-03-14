@@ -90,6 +90,11 @@ export const getAllUsers = async (): Promise<UserType[]> => {
     await mongoose.connect(process.env.DB_URI as string)
     let users = [] as UserType[]
     users = await User.find({})
+    users.map((u) => {
+      // @ts-ignore
+      delete u.password
+    })
+
     return users
   } finally {
     await mongoose.connection.close()
@@ -139,10 +144,15 @@ export const getUserByID = async (id: string): Promise<UserType> => {
 }
 
 export const deleteUserByID = async (id: string): Promise<null> => {
-  // TODO check if object sent is an ID
+  try {
+    await mongoose.connect(process.env.DB_URI as string)
+    const userInDB = await User.findOne({ _id: id })
+    if (!userInDB) throw new Error("No user with that ID")
 
-  // Throw lint off
-  await new Promise(() => {})
-  console.log(id)
+    await User.deleteOne({ _id: id })
+  } finally {
+    await mongoose.connection.close()
+  }
+
   return null
 }
