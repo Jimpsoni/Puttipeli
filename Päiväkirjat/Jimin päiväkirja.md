@@ -43,6 +43,11 @@
 1h  2.3 Tyypittämistä, CheckIfUser funktio<br>
 3h  3.3 Fronttiin ja backiin kirjautumislogiikan tekoa<br>
 1h  8.3 Debugaamista<br>
-2,5h 13.3 perusteellinen backendin funktioiden uudelleen toteutus paljon tehokkaampaan muotoon <br>
+2,5h 13.3 perusteellinen backendin funktioiden uudelleentoteutus paljon tehokkaampaan muotoon <br>
+1h 14.3 Routejen parantelua <br>
 
-Yhteensä 49h
+10h
+
+0,5h 14.3 deleten teko <br>
+
+Yhteensä 50,5h
