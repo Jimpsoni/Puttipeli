@@ -2,12 +2,6 @@ import express from "express"
 import { checkLoginCredit } from "../services/UserService/userService"
 import {  UserType } from "../types"
 
-/*
-
-REMOVE ALL THE DEBUGGING CONSOLE LOGS
-
-*/
-
 const router = express.Router()
 
 router.get("/", (_req, res) => {
