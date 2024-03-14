@@ -1,6 +1,6 @@
 import express from "express"
 import { checkLoginCredit } from "../services/UserService/userService"
-import { UserType } from "../types"
+import {  UserType } from "../types"
 
 /*
 
@@ -15,7 +15,6 @@ router.get("/", (_req, res) => {
 })
 
 router.post("/", (req, res) => {
-  // TODO don't send password hash to user
   const username = req.body.username as string
   const password = req.body.password as string
 
@@ -31,13 +30,20 @@ router.post("/", (req, res) => {
 
   checkLoginCredit(username, password)
     .then((user: UserType) => {
+      // Don't send password hash to user
+      // @ts-ignore We only use the userobject to send the data
+      delete user['password']
+
       res.status(200).json({ user: user })
       return
     })
     .catch((error: Error) => {
       // If not expected error, send server error
       if (error.message == "Username or password incorrect") res.status(401)
-      else { res.status(500).json({ error: "Internal Server Error" }); return }
+      else {
+        res.status(500).json({ error: "Internal Server Error" })
+        return
+      }
 
       res.json({ error: error.message })
       return
