@@ -54,7 +54,7 @@ describe("Login to app", () => {
     })
   }, 10000)
 
-  it("Log in with correct credentials", async () => {
+  it("Log in succeeds with correct credentials", async () => {
     const creds = {
       username: "Jimi",
       password: "salainen",
