@@ -91,7 +91,7 @@ export const getAllUsers = async (): Promise<UserType[]> => {
     let users = [] as UserType[]
     users = await User.find({})
     users.map((u) => {
-      // @ts-ignore
+      // @ts-expect-error: This line can't throw error
       delete u.password
     })
 

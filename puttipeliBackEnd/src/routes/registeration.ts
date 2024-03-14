@@ -44,7 +44,8 @@ router.post("/", (req, res) => {
     AddNewUser({ ...data })
       .then((response) => {
         if (checkIfObjectIsUser(response)) {
-          // @ts-ignore We only use the userobject to send the data
+          // Don't send password hash to user
+          // @ts-expect-error: This line can't throw error
           delete response['password']
           res.status(201).json({ user: response })
         }

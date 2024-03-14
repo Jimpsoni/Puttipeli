@@ -24,7 +24,7 @@ router.get("/:id", (req, res) => {
   getUserByID(id)
     .then((user) => {
       // Don't send password hash to user
-      // @ts-ignore We only use the userobject to send the data
+      // @ts-expect-error: This line can't throw error
       delete user["password"]
       res.status(200).json(user)
     })
