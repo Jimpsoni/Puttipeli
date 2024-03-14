@@ -48,6 +48,6 @@
 
 10h
 
-0,5h 14.3 deleten teko <br>
+1h 14.3 deleten teko, testien teko sille <br>
 
-Yhteensä 50,5h
+Yhteensä 51h
