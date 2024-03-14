@@ -45,7 +45,6 @@ router.delete("/:id", (req, res) => {
       res.status(204).send()
     })
     .catch((error: Error) => {
-      console.log(error)
       if (error.message == "No user with that ID") {
         res.status(404).send(error.message)
         return
