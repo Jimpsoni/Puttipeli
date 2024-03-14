@@ -43,8 +43,11 @@ router.post("/", (req, res) => {
 
     AddNewUser({ ...data })
       .then((response) => {
-        if (checkIfObjectIsUser(response))
+        if (checkIfObjectIsUser(response)) {
+          // @ts-ignore We only use the userobject to send the data
+          delete response['password']
           res.status(201).json({ user: response })
+        }
         else res.status(400).json({ errors: response })
       })
       .catch(() => {
