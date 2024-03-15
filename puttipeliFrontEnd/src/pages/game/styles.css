@@ -1,9 +1,54 @@
-#successfulShots {
-  background-color: grey;
+body {
+  -webkit-text-size-adjust: none;
 }
 
-#distance {
-  background-color: grey;
+.round_table {
+  width: 100%;
+  height: fit-content;
+  table-layout: fixed;
+  text-align: center;
+}
+
+#buttons {
+  text-align: center;
+  margin-top: 10vh;
+}
+
+.scorebutton {
+  background-color: #FF914D;
+  padding: 20px;
+  margin: 5px;
+  font-size: larger;
+}
+
+.returnbutton {
+  background-color: #FF914D;
+  padding-block: 20px;
+  padding-inline: 18.85px;
+  margin: 5px;
+  font-size: 17px;
+}
+
+.round_data td {
+  height: 2em;
+  width: 100%;
+  background-color: #FF914D;
+  border-style: outset;
+  border-width: 2px;
+  border-color: black;
+  font-size: large;
+}
+
+.empty_cells {
+  height: 2em;
+}
+
+#savingScore.scorebutton {
+  background-color: yellow;
+}
+
+#savingError.scorebutton {
+  background-color: crimson
 }
 
 #popup {
