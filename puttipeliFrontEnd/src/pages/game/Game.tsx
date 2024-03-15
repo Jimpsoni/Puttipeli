@@ -4,7 +4,9 @@ import { Dispatch, useState } from "react"
 import { GameResult } from "../../types.ts"
 import { postGameResult } from "../../services/gameService"
 import axios from "axios"
-import { TbArrowBackUp } from "react-icons/tb";
+
+// @ts-expect-error: For some reason throws "Not found" but still works expected
+import { TbArrowBackUp } from "react-icons";
 
 
 interface ModalTypes {
@@ -135,6 +137,7 @@ const Game = () => {
     try {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const response = await postGameResult(results)
+      console.log(response)
     }
     catch (error) {
       if (axios.isAxiosError(error)) {
