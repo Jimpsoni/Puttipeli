@@ -11,6 +11,7 @@ const LoginPage = () => {
   const [password, setPassword] = useState("")
   const navigate = useNavigate()
 
+  // @ts-expect-error: Placeholder
   const highlightError = (e) => {
     /*
 
