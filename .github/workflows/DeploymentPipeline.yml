@@ -46,6 +46,9 @@ jobs:
       
       - name: Check style
         run: npm run lint
+        
+      - name: Build product
+        run: tsc && vite build
   
   Deploy:
     needs: [Check_backend_tests_and_style, Check_frontend_tests_and_style]
