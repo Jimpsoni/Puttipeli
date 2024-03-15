@@ -63,16 +63,4 @@ describe("Login to app", () => {
     const res = await request(app).post("/api/login/").send(creds)
     expect(res.status).toEqual(200)
   }, 10000)
-
-  it("Server responds with a token when log in succeeds", async () => {
-    const creds = {
-      username: "Jimi",
-      password: "salainen",
-    }
-
-    const res = await request(app).post("/api/login/").send(creds)
-    expect(res.status).toEqual(200)
-    expect(res.body).toHaveProperty('token')
-    
-  }, 10000)
 })

@@ -133,9 +133,8 @@ const Game = () => {
     setMessage('Saving round')
   
     try {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const response = await postGameResult(results)
-      console.log(response)
+      console.log(response) // Place holder
     }
     catch (error) {
       if (axios.isAxiosError(error)) {
