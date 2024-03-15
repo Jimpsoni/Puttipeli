@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom"
 import "./styles.css"
 import { Dispatch, useState } from "react"
-import { GameResult } from "../../types"
+import { GameResult } from "../../Types.ts"
 import { postGameResult } from "../../services/gameService"
 import axios from "axios"
 import { TbArrowBackUp } from "react-icons/tb";
