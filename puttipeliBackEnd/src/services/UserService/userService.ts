@@ -1,32 +1,37 @@
 import { User } from "./userSchema"
 import { NewUserType, UserType } from "../../types"
+import {
+  HashPassword,
+  checkIfObjectIsUser,
+  checkPassword,
+} from "../helperFunctions"
 import mongoose from "mongoose"
-import { HashPassword } from "../helperFunctions"
 
 mongoose.set("strictQuery", false)
-type Result<T> = { status: "ok" } | { status: "error"; errors: T[] }
 
 export const AddNewUser = async (
   NewUserProps: NewUserType
-): Promise<Result<string>> => {
+): Promise<UserType | string[]> => {
   try {
     await mongoose.connect(process.env.DB_URI as string)
     await mongoose.connection.syncIndexes()
+
     NewUserProps.password = await HashPassword(NewUserProps.password)
     const new_user = new User({ ...NewUserProps })
 
     // eslint-disable-next-line
     // @ts-ignore
     // eslint-disable-next-line
-    await new_user.save()
-    await mongoose.connection.close()
-    return { status: "ok" }
+    const user = await new_user.save().then((user) => user)
+    const isUser = checkIfObjectIsUser(user)
+    if (isUser) return isUser
+    else throw new Error("Internal Server Error")
   } catch (e) {
     const errors = [] as string[]
-    if (typeof e !== "object" || !e)
-      return { status: "error", errors: ["Internal Server Error"] }
-    if (!("errors" in e) || typeof e.errors !== "object" || !e.errors)
-      return { status: "error", errors: ["Internal Server Error"] }
+    if (typeof e !== "object" || !e) throw new Error("Internal Server Error")
+    if (!("errors" in e) || typeof e.errors !== "object" || !e.errors) {
+      throw new Error("Internal Server Error")
+    }
 
     // Check the username
     if (
@@ -74,23 +79,80 @@ export const AddNewUser = async (
           errors.push("Email Already in use")
     }
 
+    return errors
+  } finally {
     await mongoose.connection.close()
-    return { status: "error", errors }
   }
 }
 
 export const getAllUsers = async (): Promise<UserType[]> => {
-  await mongoose.connect(process.env.DB_URI as string)
-  let users = [] as UserType[]
-
   try {
+    await mongoose.connect(process.env.DB_URI as string)
+    let users = [] as UserType[]
     users = await User.find({})
-  } catch (e) {
-    console.log("Something wrong with mongo")
-    console.log(e)
+    users.map((u) => {
+      // @ts-expect-error: This line can't throw error
+      delete u.password
+    })
+
+    return users
+  } finally {
+    await mongoose.connection.close()
+  }
+}
+
+export const checkLoginCredit = async (
+  username: string,
+  password: string
+): Promise<UserType> => {
+  try {
+    await mongoose.connect(process.env.DB_URI as string)
+
+    // Try to find user
+    const dbRes = await User.findOne({ username: `${username}` })
+    const user = checkIfObjectIsUser(dbRes)
+
+    // No user found
+    if (!user) {
+      throw new Error("Username or password incorrect")
+    }
+
+    // Password is correct
+    if (await checkPassword(user.password, password)) {
+      return user
+    }
+
+    // Password was incorrect
+    throw new Error("Username or password incorrect")
+  } finally {
+    // Close the connection
+    await mongoose.connection.close()
+  }
+}
+
+export const getUserByID = async (id: string): Promise<UserType> => {
+  try {
+    await mongoose.connect(process.env.DB_URI as string)
+    // TODO check if object sent is an ID
+    const query = await User.findOne({ _id: id })
+    const user = checkIfObjectIsUser(query as unknown)
+    if (!user) throw new Error("No user with that ID")
+    return user
+  } finally {
+    await mongoose.connection.close()
+  }
+}
+
+export const deleteUserByID = async (id: string): Promise<null> => {
+  try {
+    await mongoose.connect(process.env.DB_URI as string)
+    const userInDB = await User.findOne({ _id: id })
+    if (!userInDB) throw new Error("No user with that ID")
+
+    await User.deleteOne({ _id: id })
   } finally {
     await mongoose.connection.close()
   }
 
-  return users
+  return null
 }

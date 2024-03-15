@@ -1,7 +1,7 @@
+import { useNavigate } from "react-router-dom"
 import Logo from "./components/Logo"
 import Button from "./components/Button"
 import "./mainpagestyles.css"
-import { useNavigate } from "react-router-dom"
 
 const MainPage = () => {
   const navigate = useNavigate() // Used for routing

@@ -16,9 +16,9 @@ beforeAll(async () => {
     await User.collection.drop()
     await AddNewUser({ ...user })
   } catch (e) {
-    throw Error('Something wrong with MongoDB')
+    throw Error("Something wrong with MongoDB")
   }
-})
+}, 30000)
 
 describe("Login to app", () => {
   it("Trying to log in without username", async () => {
@@ -38,7 +38,7 @@ describe("Login to app", () => {
 
     const res = await request(app).post("/api/login/").send(creds)
     expect(res.status).toEqual(401)
-    expect(res.body).toEqual({ error: "Missing password" })
+    expect(res.body).toEqual({error: "Missing password" })
   }, 10000)
 
   it("Trying to log in with incorrect credentials", async () => {
@@ -49,10 +49,12 @@ describe("Login to app", () => {
 
     const res = await request(app).post("/api/login/").send(creds)
     expect(res.status).toEqual(401)
-    expect(res.body).toEqual({ error: "Incorrect username or password" })
+    expect(res.body).toEqual({
+      error: "Username or password incorrect",
+    })
   }, 10000)
 
-  it("Log in with correct credentials", async () => {
+  it("Log in succeeds with correct credentials", async () => {
     const creds = {
       username: "Jimi",
       password: "salainen",

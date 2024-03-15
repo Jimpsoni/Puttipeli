@@ -1,5 +1,6 @@
 import express from "express"
-import { checkLoginCredit } from "../services/UserService/loginService"
+import { checkLoginCredit } from "../services/UserService/userService"
+import {  UserType } from "../types"
 
 const router = express.Router()
 
@@ -22,11 +23,25 @@ router.post("/", (req, res) => {
   }
 
   checkLoginCredit(username, password)
-    .then(credsCorrect => {
-      if (credsCorrect) res.sendStatus(200)
-      else res.status(401).json({ error: "Incorrect username or password" })
+    .then((user: UserType) => {
+      // Don't send password hash to user
+      // @ts-expect-error: This line can't throw error
+      delete user['password']
+
+      res.status(200).json({ user: user })
+      return
     })
-    .catch(() => res.status(500).json({ error: "Something wrong with server" }))
+    .catch((error: Error) => {
+      // If not expected error, send server error
+      if (error.message == "Username or password incorrect") res.status(401)
+      else {
+        res.status(500).json({ error: "Internal Server Error" })
+        return
+      }
+
+      res.json({ error: error.message })
+      return
+    })
 })
 
 export default router
