@@ -39,6 +39,7 @@ const Game = () => {
   const [current, setCurrent] = useState(0)
   const [modal, openModal] = useState<boolean>(false)
   const [message, setMessage] = useState<string>('')
+  const [isError, setIsError] = useState<boolean>(false)
   const nav = useNavigate()
 
   const defaultDistance = 5
@@ -130,19 +131,20 @@ const Game = () => {
   const saveScoreToUser = async (results: GameResult[]) => {
     console.log("Sending scores to database")
     setMessage('Saving round')
-    setTimeout(() => setMessage(''), 5000)
   
     try {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const response = await postGameResult(results)
-      //aseta ilmoitus onnistuneesta tallennuksesta sivun ylälaitaan
     }
     catch (error) {
       if (axios.isAxiosError(error)) {
         console.log(error.message)
         setMessage(error.message)
-        setTimeout(() => setMessage(''), 5000)
-        // virheviesti punaiseksi?
+        setIsError(true)
+        setTimeout(() => {
+          setMessage('')
+          setIsError(false)
+        }, 5000)
       }
     }
   }
@@ -155,11 +157,6 @@ const Game = () => {
     <>
       <Modal open={modal} setOpen={openModal} />
       <div style={{display: "grid"}}>
-        {message.length > 0 && ( 
-          <h3>
-            {message}
-          </h3>
-        )}
         <div className="stats">
           <h1>Game Page</h1>
           <h2 className='infoHeader' data-testid="points">Points: {points}</h2>
@@ -282,7 +279,22 @@ const Game = () => {
           )}
           {current > 19 && (
             <>
-              <button className="scorebutton" data-testid="saveScoreButton" onClick={() => saveScoreToUser(results)}>Tallenna kierros</button>
+              {message.length > 1 && !isError && (
+                <button className="scorebutton" id="savingScore" data-testid="saveScoreButton">
+                  {message} 
+                </button>
+              )}
+              {message.length < 1 && (
+                <button className="scorebutton" data-testid="saveScoreButton" 
+                  onClick={() => saveScoreToUser(results)}>
+                    Tallenna tulos
+                </button>
+              )}
+              {isError && (
+                <button className="scorebutton" id="savingError" data-testid="saveScoreButton">
+                  {message}
+                </button>
+              )}
             </>
           )}
         </div>

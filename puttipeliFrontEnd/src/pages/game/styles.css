@@ -43,9 +43,12 @@ body {
   height: 2em;
 }
 
-#returnToMenu {
-  background-color: #FF914D;
-  font-weight: bold;
+#savingScore.scorebutton {
+  background-color: yellow;
+}
+
+#savingError.scorebutton {
+  background-color: crimson
 }
 
 #popup {

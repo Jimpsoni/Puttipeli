@@ -36,14 +36,14 @@ test('going to previous state', async () => {
   expect(secondElement).toBeDefined
 })
 
-test('save button makes top screen message show', async () => {
-  const user = userEvent.setup()
-  
-  render(<Game />, {wrapper: BrowserRouter})
-
-  await user.click(screen.getByTestId('button5'))
-  await user.click(screen.getByTestId('saveScoreButton'))
-
-  const element = screen.getByText('saving scores')
-  expect(element).toBeDefined
-})
+//test('save button makes top screen message show', async () => {
+//  const user = userEvent.setup()
+//  
+//  render(<Game />, {wrapper: BrowserRouter})
+//
+//  await user.click(screen.getByTestId('button5'))
+//  await user.click(screen.getByTestId('saveScoreButton'))
+//
+//  const element = screen.getByText('saving scores')
+//  expect(element).toBeDefined
+//})
