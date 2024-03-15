@@ -4,9 +4,7 @@ import { Dispatch, useState } from "react"
 import { GameResult } from "../../types.ts"
 import { postGameResult } from "../../services/gameService"
 import axios from "axios"
-
-// @ts-expect-error: For some reason throws "Not found" but still works expected
-import { TbArrowBackUp } from "react-icons";
+import { TbArrowBackUp } from "react-icons/tb";
 
 
 interface ModalTypes {
