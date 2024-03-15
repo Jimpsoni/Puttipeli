@@ -4,6 +4,8 @@ import { Dispatch, useState } from "react"
 import { GameResult } from "../../types"
 import { postGameResult } from "../../services/gameService"
 import axios from "axios"
+import { TbArrowBackUp } from "react-icons/tb";
+
 
 interface ModalTypes {
   open: boolean,
@@ -41,10 +43,6 @@ const Game = () => {
 
   const defaultDistance = 5
 
-  const goBack = () => {
-    nav("/puttipeli")
-  }
-
   const submitScore = (shotsInBasket: number) => {
     if (current < 10) {
       const shots =
@@ -79,8 +77,12 @@ const Game = () => {
   }
 
   const prevScore = () => {
-    console.log(current)
-
+    //if current is zero, go back to main menu
+    if (current === 0) {
+      nav("/puttipeli")
+    }
+    
+    //if current is over 10, remove score from upper row
     if (current <= 10) {
       const shots =
         document.getElementById("successfulShots")?.childNodes[current - 1]
@@ -92,6 +94,7 @@ const Game = () => {
       }
 
     }
+    //if current is over 10, remove score from lower row
     else {
       const shots =
         document.getElementById("successfulShots2")?.childNodes[current - 11]
@@ -103,6 +106,7 @@ const Game = () => {
       }
     }
 
+    //if on any other round, get last distance from array. Else -> default distance
     if (results.length > 1) {
       setDistance(results[results.length-1].distance)
     } else {
@@ -125,7 +129,7 @@ const Game = () => {
 
   const saveScoreToUser = async (results: GameResult[]) => {
     console.log("Sending scores to database")
-    setMessage('saving scores')
+    setMessage('Saving round')
     setTimeout(() => setMessage(''), 5000)
   
     try {
@@ -150,16 +154,18 @@ const Game = () => {
   return (
     <>
       <Modal open={modal} setOpen={openModal} />
-      <div>
+      <div style={{display: "grid"}}>
         {message.length > 0 && ( 
-          <>
+          <h3>
             {message}
-          </>
-        )
-        }
-        <h1>Game Page</h1>
-        <h2 className='infoHeader' data-testid="points">Points: {points}</h2>
-        <h2 className='infoHeader' data-testid="distance">Throw from: {distance} m</h2>
+          </h3>
+        )}
+        <div className="stats">
+          <h1>Game Page</h1>
+          <h2 className='infoHeader' data-testid="points">Points: {points}</h2>
+          <h2 className='infoHeader' data-testid="distance">Throw from: {distance} m</h2>
+        </div>
+
         <table className="round_table">
           <tbody>
             <tr>
@@ -187,6 +193,18 @@ const Game = () => {
               <td></td>
             </tr>
             <tr id='successfulShots' className="round_data">
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr className="empty_cells">
               <td></td>
               <td></td>
               <td></td>
@@ -235,28 +253,36 @@ const Game = () => {
               <td></td>
               <td></td>
             </tr>
+            <tr className="empty_cells">
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
           </tbody>
         </table>
 
         <div id="buttons">
-          <button className="scorebutton" data-testid="prevButton" onClick={() => prevScore()}>takaisin</button>
+          <button className="returnbutton" data-testid="prevButton" onClick={() => prevScore()}>{<TbArrowBackUp />}</button>
           {current <= 19 && (
             <>
               <button className="scorebutton" data-testid="button0" onClick={() => submitScore(0)}>0</button>
-              <button className="scorebutton"data-testid="button1" onClick={() => submitScore(1)}>1</button>
+              <button className="scorebutton" data-testid="button1" onClick={() => submitScore(1)}>1</button>
               <button className="scorebutton" data-testid="button2" onClick={() => submitScore(2)}>2</button>
               <button className="scorebutton" data-testid="button3" onClick={() => submitScore(3)}>3</button>
               <button className="scorebutton" data-testid="button4" onClick={() => submitScore(4)}>4</button>
               <button className="scorebutton" data-testid="button5" onClick={() => submitScore(5)}>5</button>
             </>
           )}
-        </div>
-
-        <div id="returnToMenu"> 
-          <div onClick={goBack}>Palaa päävalikkoon</div>
-          {current >= 1 && (
+          {current > 19 && (
             <>
-              <div data-testid="saveScoreButton" onClick={() => saveScoreToUser(results)}>Tallenna kierros</div>
+              <button className="scorebutton" data-testid="saveScoreButton" onClick={() => saveScoreToUser(results)}>Tallenna kierros</button>
             </>
           )}
         </div>

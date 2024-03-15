@@ -2,33 +2,50 @@ body {
   -webkit-text-size-adjust: none;
 }
 
-.round_data td {
-  height: 20px;
-  width: 100%;
-  background-color: grey;
-}
-
 .round_table {
   width: 100%;
-  height: 100%;
+  height: fit-content;
   table-layout: fixed;
   text-align: center;
 }
 
-#returnToMenu {
-  background-color: orange;
-}
-
 #buttons {
-  margin: 5px;
   text-align: center;
+  margin-top: 10vh;
 }
 
 .scorebutton {
-  background-color: rgb(255, 177, 33);
+  background-color: #FF914D;
   padding: 20px;
-  margin: 3px;
+  margin: 5px;
   font-size: larger;
+}
+
+.returnbutton {
+  background-color: #FF914D;
+  padding-block: 20px;
+  padding-inline: 18.85px;
+  margin: 5px;
+  font-size: 17px;
+}
+
+.round_data td {
+  height: 2em;
+  width: 100%;
+  background-color: #FF914D;
+  border-style: outset;
+  border-width: 2px;
+  border-color: black;
+  font-size: large;
+}
+
+.empty_cells {
+  height: 2em;
+}
+
+#returnToMenu {
+  background-color: #FF914D;
+  font-weight: bold;
 }
 
 #popup {
