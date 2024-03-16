@@ -4,10 +4,6 @@ import {  UserType } from "../types"
 
 const router = express.Router()
 
-router.get("/", (_req, res) => {
-  res.send("This is the login router")
-})
-
 router.post("/", (req, res) => {
   const username = req.body.username as string
   const password = req.body.password as string
