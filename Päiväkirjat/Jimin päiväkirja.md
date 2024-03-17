@@ -49,5 +49,7 @@
 10h
 
 1h 14.3 deleten teko, testien teko sille <br>
+1h 15.3 Kävin läpi kaverin pull requestin, Korjasin virheen CICD:ssä ja korjasin koodia, että se menee läpi CICD:stä <br>
+1h 17.3 GameServicen Tekoa <br>
 
-Yhteensä 51h
+Yhteensä 53h
