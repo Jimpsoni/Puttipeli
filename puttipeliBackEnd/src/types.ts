@@ -18,3 +18,9 @@ export interface Game {
   gamemode: string
   score: number
 }
+
+// Incoming data from frontend
+export interface GameRequest {
+  userid: string,
+  game: Game
+}
