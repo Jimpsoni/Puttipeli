@@ -6,6 +6,7 @@ import path from "path"
 import loginRouter from "./routes/login"
 import userRouter from "./routes/users"
 import registerRoute from "./routes/registeration"
+import gameRoute from "./routes/games"
 
 // To use env variables
 import dotenv from 'dotenv'
@@ -23,6 +24,7 @@ app.use(cors())
 app.use("/api/login", loginRouter)
 app.use("/api/users", userRouter)
 app.use("/api/register", registerRoute)
+app.use("/api/game", gameRoute)
 
 // HealthCheck
 app.get("/health", (_req, res) => {
