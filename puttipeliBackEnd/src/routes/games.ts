@@ -14,7 +14,7 @@ function ValidateRequest(props: unknown): GameRequest {
   if (!("game" in props)) {
     throw new TypeError("Could not find 'game' in request")
   }
-
+  // @ts-expect-error: Place holder
   return props
 }
 
