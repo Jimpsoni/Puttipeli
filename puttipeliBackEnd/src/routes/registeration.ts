@@ -37,7 +37,6 @@ function ValidateRequest(props: unknown): NewUserType {
 }
 
 router.post("/", (req, res) => {
-  // TODO don't send password hash to user
   try {
     const data = ValidateRequest(req.body)
 
