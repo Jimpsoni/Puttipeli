@@ -15,10 +15,12 @@ TODO
 */
 
 
-export const postGameResult = async (object: GameResult[]) => {
+export const postGameResult = async (userid: string, game: GameResult[]) => {
+  console.log(userid)
+  
   const data = {
-    userid: "Placeholder value",
-    game: object
+    userid,
+    game
   }
   
   await axios.post<GameResult[]>(baseUrl, data)
