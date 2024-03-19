@@ -1,16 +1,18 @@
-import { useState } from "react"
+import { useContext, useState } from "react"
 import React from "react"
 import "./loginpageStyles.css"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
+import userContext from "../../services/userContext"
 
 const URL = "http://localhost:3000/api/login"
 
 const LoginPage = () => {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
-  const navigate = useNavigate()
+  const [user, setUser] = useContext(userContext)
 
+  const navigate = useNavigate()
   // @ts-expect-error: Placeholder
   const highlightError = (e) => {
     /*
@@ -28,6 +30,7 @@ const LoginPage = () => {
       .post(URL, loginCred)
       .then((res) => {
         if ("data" in res) {
+          setUser(res.data.user)
           navigate("/puttipeli")
         } else {
           highlightError("Server error")
