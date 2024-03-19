@@ -1,6 +1,8 @@
 import Header from '../../utilitycomponents/Header'  // Utility component
 import GameTab from '../../utilitycomponents/GameTab/GameTab'
 import { useNavigate } from 'react-router-dom'
+import { useContext } from 'react'
+import userContext from '../../services/userContext'
 import "./styles.css"
 
 /*
@@ -12,7 +14,6 @@ import "./styles.css"
     - Viikon parhaat pisteet laatikkoon saa itse valita minkä ajan parhaat pisteet haluaa
       siihen (vko, kk, vv, alltime)?
 */
-
 
 
 const recentGame = {
@@ -27,13 +28,9 @@ const bestGame = {
   hitpercent: 76
 }
 
-
-
 const WelcomePage = () => {
-  const currentUser = "Admin"
   const nav = useNavigate()
-
-
+  const [user, setUser] = useContext(userContext)
   const StartNewGame = () => {
     nav('/uusi_peli')
   }
@@ -41,7 +38,7 @@ const WelcomePage = () => {
   return (
     <div id='mainContainer'>
       <Header/>
-      <h2>Hei {currentUser}!</h2>
+      <h2>Hei {user.username}!</h2>
 
       <div className='tabContainer'>
         <div className="button">Aiemmat pelit</div>
