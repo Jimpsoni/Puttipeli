@@ -51,5 +51,7 @@
 1h 14.3 deleten teko, testien teko sille <br>
 1h 15.3 Kävin läpi kaverin pull requestin, Korjasin virheen CICD:ssä ja korjasin koodia, että se menee läpi CICD:stä <br>
 1h 17.3 GameServicen Tekoa <br>
+1,5h 19.3 Loin useContexting jonka avulla jokainen komponentti näkee käyttäjän <br>
 
-Yhteensä 53h
+
+Yhteensä 54,5h
