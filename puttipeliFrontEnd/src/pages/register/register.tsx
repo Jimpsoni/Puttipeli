@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom"
-import { useState } from "react"
+import { useContext, useState } from "react"
+import userContext from "../../services/userContext"
 import axios from "axios"
 import "./styles.css"
 
@@ -8,6 +9,7 @@ const Register = () => {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
   const [passwordAgain, setPasswordAgain] = useState("")
+  const [user, setUser] = useContext(userContext)
   const [email, setEmail] = useState("")
   
   // Navigation
@@ -39,12 +41,16 @@ const Register = () => {
 
     axios
       .post("http://localhost:3000/api/register", data)
-      .then(() => {
+      .then((res) => {
+        // Clear the form 
         setUsername("")
         setPassword("")
         setPasswordAgain("")
         setEmail("")
-
+        // Login the user
+        setUser(res.data.user)
+        
+        // navigate
         navigate('/puttipeli')
       })
       .catch((e) => {
