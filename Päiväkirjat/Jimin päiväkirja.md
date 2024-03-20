@@ -52,6 +52,6 @@
 1h 15.3 Kävin läpi kaverin pull requestin, Korjasin virheen CICD:ssä ja korjasin koodia, että se menee läpi CICD:stä <br>
 1h 17.3 GameServicen Tekoa <br>
 1,5h 19.3 Loin useContexting jonka avulla jokainen komponentti näkee käyttäjän <br>
+1 20.3 Testien päivittelyä "Login" komponentille backendissä, Frontendin edistämistä <br>
 
-
-Yhteensä 54,5h
+Yhteensä 55,5h
