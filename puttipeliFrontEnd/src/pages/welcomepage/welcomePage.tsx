@@ -3,12 +3,13 @@ import GameTab from "../../utilitycomponents/GameTab/GameTab"
 import { useNavigate } from "react-router-dom"
 import { useContext, useEffect } from "react"
 import userContext from "../../services/userContext"
+import { Game } from "../../types"
 import "./styles.css"
 
 /*
   Muistilista
   TODO:
-    - Tervehdys currentUser käyttää käyttäjän omaa nimeä
+    - Jos käyttäjä ei ole kirjautunut, ohjaa kirjautumis sivulle
 
   ehdotuksia:
     - Viikon parhaat pisteet laatikkoon saa itse valita minkä ajan parhaat pisteet haluaa
@@ -16,7 +17,7 @@ import "./styles.css"
 */
 
 interface ShowGameInterface {
-  games: string[]
+  games: Game[]
 }
 
 const ShowGames = (props: ShowGameInterface) => {
@@ -54,7 +55,7 @@ const ShowGames = (props: ShowGameInterface) => {
 
 const WelcomePage = () => {
   const nav = useNavigate()
-  const [user, setUser] = useContext(userContext)
+  const { user } = useContext(userContext)
   const StartNewGame = () => {
     nav("/uusi_peli")
   }
@@ -63,7 +64,7 @@ const WelcomePage = () => {
     if (user == null) {
       nav("/login")
     }
-  }, [])
+  })
 
   return (
     <div id='mainContainer'>
@@ -77,7 +78,7 @@ const WelcomePage = () => {
         </div>
       </div>
 
-      <ShowGames games={user.games} />
+      {user && <ShowGames games={user.games} />}
     </div>
   )
 }
