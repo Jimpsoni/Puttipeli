@@ -10,6 +10,13 @@ import { TbArrowBackUp } from "react-icons/tb"
 import "./styles.css"
 import userContext from "../../services/userContext.ts"
 
+/*
+TODO
+  - Make sure user is logged in before entering
+
+*/ 
+
+
 
 const Game = () => {
   const [results, setResults] = useState<GameResult[]>([])
@@ -20,7 +27,7 @@ const Game = () => {
   const [isError, setIsError] = useState<boolean>(false)
   const nav = useNavigate()
 
-  const [user, setUser] = useContext(userContext)
+  const { user } = useContext(userContext)
 
   const defaultDistance = 5
 
@@ -113,6 +120,7 @@ const Game = () => {
     setMessage('Saving round')
   
     try {
+      // @ts-expect-error: User cannot be null, we route to login if it is
       const response = await postGameResult(user.id, results)
       console.log(response) // Place holder
     }

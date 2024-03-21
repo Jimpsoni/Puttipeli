@@ -9,7 +9,8 @@ const Register = () => {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
   const [passwordAgain, setPasswordAgain] = useState("")
-  const [user, setUser] = useContext(userContext)
+
+  const { setUser } = useContext(userContext)
   const [email, setEmail] = useState("")
   
   // Navigation

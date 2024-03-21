@@ -10,7 +10,7 @@ const URL = "http://localhost:3000/api/login"
 const LoginPage = () => {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
-  const [user, setUser] = useContext(userContext)
+  const { setUser } = useContext(userContext)
 
   const navigate = useNavigate()
   // @ts-expect-error: Placeholder
