@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom"
-import { useState } from "react"
+import { useContext, useState } from "react"
+import userContext from "../../services/userContext"
 import axios from "axios"
 import "./styles.css"
 
@@ -8,25 +9,27 @@ const Register = () => {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
   const [passwordAgain, setPasswordAgain] = useState("")
+
+  const { setUser } = useContext(userContext)
   const [email, setEmail] = useState("")
   
   // Navigation
   const navigate = useNavigate()
 
-  function NotifyField(id: string) {
+  function NotifyField(id: string, _message: string) {
+    // Highlights the field that has invalid values
     const elem = document.getElementById(id)
-    // Add red color
     elem?.classList.add("error")
   }
 
   function handleErrorMessages(errors: string[]) {
     // Username
-    if (errors.includes("Username not long enough")) NotifyField("username")
-    if (errors.includes("Username already in use")) NotifyField("username")
+    if (errors.includes("Username not long enough")) NotifyField("username", "Käyttäjänimen tulee olla vähintään n merkin pitkä")
+    if (errors.includes("Username already in use")) NotifyField("username", "Tämä käyttäjä nimi on jo käytössä")
 
     // Email
-    if (errors.includes("Invalid Email address")) NotifyField("email")
-    if (errors.includes("Email Already in use")) NotifyField("email")
+    if (errors.includes("Invalid Email address")) NotifyField("email", "Sähköposti ei ole kelvollinen")
+    if (errors.includes("Email Already in use")) NotifyField("email", "Sähköposti on jo käytössä")
   }
 
   const registerNewUser = (event: React.FormEvent<HTMLFormElement>): void => {
@@ -39,12 +42,16 @@ const Register = () => {
 
     axios
       .post("http://localhost:3000/api/register", data)
-      .then(() => {
+      .then((res) => {
+        // Clear the form 
         setUsername("")
         setPassword("")
         setPasswordAgain("")
         setEmail("")
-
+        // Login the user
+        setUser(res.data.user)
+        
+        // navigate
         navigate('/puttipeli')
       })
       .catch((e) => {

@@ -38,7 +38,7 @@ describe("Login to app", () => {
 
     const res = await request(app).post("/api/login/").send(creds)
     expect(res.status).toEqual(401)
-    expect(res.body).toEqual({error: "Missing password" })
+    expect(res.body).toEqual({ error: "Missing password" })
   }, 10000)
 
   it("Trying to log in with incorrect credentials", async () => {
@@ -62,5 +62,18 @@ describe("Login to app", () => {
 
     const res = await request(app).post("/api/login/").send(creds)
     expect(res.status).toEqual(200)
+  }, 10000)
+
+  it("User is send after successful login", async () => {
+    const creds = {
+      username: "Jimi",
+      password: "salainen",
+    }
+
+    const res = await request(app).post("/api/login/").send(creds)
+    expect(res.status).toEqual(200)
+    expect(res.body).toHaveProperty("user")
+    expect(res.body.user).toHaveProperty("id")
+    expect(res.body.user).toHaveProperty("username")
   }, 10000)
 })

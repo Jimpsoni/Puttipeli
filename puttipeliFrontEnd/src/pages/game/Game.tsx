@@ -1,46 +1,33 @@
 import { useNavigate } from "react-router-dom"
-import "./styles.css"
-import { Dispatch, useState } from "react"
+import { useContext, useState } from "react"
+
 import { GameResult } from "../../types.ts"
 import { postGameResult } from "../../services/gameService"
 import axios from "axios"
-import { TbArrowBackUp } from "react-icons/tb";
+
+// Styles
+import { TbArrowBackUp } from "react-icons/tb"
+import "./styles.css"
+import userContext from "../../services/userContext.ts"
+
+/*
+TODO
+  - Make sure user is logged in before entering
+
+*/ 
 
 
-interface ModalTypes {
-  open: boolean,
-  setOpen: Dispatch<boolean>
-}
-
-const Modal = (props: ModalTypes) => {
-  console.log("Open modal")
-  if (!props.open) return
-
-  const closeModal = () => {
-    props.setOpen(false)
-  }
-
-  return (
-    <>
-      <div id='overlay' onClick={closeModal}></div>
-      <div id='popup'>
-        <h2>Tallennetaanko?</h2>
-        <div onClick={closeModal}>Kyllä</div>
-        <div onClick={closeModal}>Ei</div>
-      </div>
-    </>
-  )
-}
 
 const Game = () => {
   const [results, setResults] = useState<GameResult[]>([])
   const [distance, setDistance] = useState(10)
   const [points, setPoints] = useState(0)
   const [current, setCurrent] = useState(0)
-  const [modal, openModal] = useState<boolean>(false)
   const [message, setMessage] = useState<string>('')
   const [isError, setIsError] = useState<boolean>(false)
   const nav = useNavigate()
+
+  const { user } = useContext(userContext)
 
   const defaultDistance = 5
 
@@ -133,7 +120,8 @@ const Game = () => {
     setMessage('Saving round')
   
     try {
-      const response = await postGameResult(results)
+      // @ts-expect-error: User cannot be null, we route to login if it is
+      const response = await postGameResult(user.id, results)
       console.log(response) // Place holder
     }
     catch (error) {
@@ -155,7 +143,6 @@ const Game = () => {
 
   return (
     <>
-      <Modal open={modal} setOpen={openModal} />
       <div style={{display: "grid"}}>
         <div className="stats">
           <h1>Game Page</h1>
