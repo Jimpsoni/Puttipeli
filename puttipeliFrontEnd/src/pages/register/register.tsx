@@ -15,20 +15,20 @@ const Register = () => {
   // Navigation
   const navigate = useNavigate()
 
-  function NotifyField(id: string) {
+  function NotifyField(id: string, _message: string) {
+    // Highlights the field that has invalid values
     const elem = document.getElementById(id)
-    // Add red color
     elem?.classList.add("error")
   }
 
   function handleErrorMessages(errors: string[]) {
     // Username
-    if (errors.includes("Username not long enough")) NotifyField("username")
-    if (errors.includes("Username already in use")) NotifyField("username")
+    if (errors.includes("Username not long enough")) NotifyField("username", "Käyttäjänimen tulee olla vähintään n merkin pitkä")
+    if (errors.includes("Username already in use")) NotifyField("username", "Tämä käyttäjä nimi on jo käytössä")
 
     // Email
-    if (errors.includes("Invalid Email address")) NotifyField("email")
-    if (errors.includes("Email Already in use")) NotifyField("email")
+    if (errors.includes("Invalid Email address")) NotifyField("email", "Sähköposti ei ole kelvollinen")
+    if (errors.includes("Email Already in use")) NotifyField("email", "Sähköposti on jo käytössä")
   }
 
   const registerNewUser = (event: React.FormEvent<HTMLFormElement>): void => {
