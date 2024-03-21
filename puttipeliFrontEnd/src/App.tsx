@@ -8,14 +8,15 @@ import LoginPage from "./pages/login/login"
 import Register from "./pages/register/register"
 import WelcomePage from "./pages/welcomepage/welcomePage"
 import Game from "./pages/game/Game"
-import { useState } from "react"
+import { useState  } from "react"
+import { UserType } from "./types.ts"
 
 function App() {
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState<UserType | null>(null)
 
   return (
     <>
-      <userContext.Provider value={[user, setUser]}>
+      <userContext.Provider value={{user, setUser}}>
         <Routes>
           <Route path='/' Component={MainPage} />
           <Route path='/login' Component={LoginPage} />
