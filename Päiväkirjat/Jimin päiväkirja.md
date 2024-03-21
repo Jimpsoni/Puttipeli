@@ -53,5 +53,6 @@
 1h 17.3 GameServicen Tekoa <br>
 1,5h 19.3 Loin useContexting jonka avulla jokainen komponentti näkee käyttäjän <br>
 1 20.3 Testien päivittelyä "Login" komponentille backendissä, Frontendin edistämistä <br>
+1h 21.3 Frontin tyypitystä ja branchin merge mainiin.<br>
 
-Yhteensä 55,5h
+Yhteensä 56,5h
