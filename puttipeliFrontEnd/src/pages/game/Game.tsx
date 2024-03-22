@@ -122,7 +122,7 @@ const Game = () => {
     try {
       // @ts-expect-error: User cannot be null, we route to login if it is
       const response = await postGameResult(user.id, results)
-      console.log(response) // Place holder
+      console.log(response) // Placeholder
     }
     catch (error) {
       if (axios.isAxiosError(error)) {
