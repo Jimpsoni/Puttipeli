@@ -258,7 +258,6 @@ describe("Saving games to db", () => {
     }
 
     const res = await request(app).post("/api/game/submit").send(game)
-    console.log(res.text)
     expect(res.status).toEqual(201)
     expect(res.text).toEqual("Saved game to user")
   }, 10000)

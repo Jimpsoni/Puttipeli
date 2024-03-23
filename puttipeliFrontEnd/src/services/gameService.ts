@@ -14,15 +14,15 @@ TODO
   }
 */
 
+export interface Props {
+  userid: string // Who this belongs to
+  points: number // Overall score, calculated from rounds
+  rounds: GameResult[]
+  date: Date
+}
 
-export const postGameResult = async (userid: string, game: GameResult[]) => {
-  console.log(userid)
-  
-  const data = {
-    userid,
-    game
-  }
-  
+
+export const postGameResult = async (data: Props) => {
   await axios.post<GameResult[]>(baseUrl, data)
     .then(res => console.log(res))
     .catch(res => console.log(res))
