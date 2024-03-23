@@ -52,8 +52,13 @@
 1h 15.3 Kävin läpi kaverin pull requestin, Korjasin virheen CICD:ssä ja korjasin koodia, että se menee läpi CICD:stä <br>
 1h 17.3 GameServicen Tekoa <br>
 1,5h 19.3 Loin useContexting jonka avulla jokainen komponentti näkee käyttäjän <br>
-1 20.3 Testien päivittelyä "Login" komponentille backendissä, Frontendin edistämistä <br>
+1h 20.3 Testien päivittelyä "Login" komponentille backendissä, Frontendin edistämistä <br>
 1h 21.3 Frontin tyypitystä ja branchin merge mainiin.<br>
 1,5h 22.3 Backend pystyy vastaanottamaan pelejä, testejä sille<br>
+2h 23.3 Refaktoroin checkIfObjectIsUser funktion pois, frontin ja backendin yhdistämistä <br>
 
-Yhteensä 58h
+10h
+
+0,5h 23.3 gameScheman alustaminen<br>
+
+Yhteensä 60,5h
