@@ -1,13 +1,9 @@
 import { User } from "./userSchema"
 import { NewUserType, UserType } from "../../types"
-import {
-  HashPassword,
-  checkIfObjectIsUser,
-  checkPassword,
-} from "../helperFunctions"
+import { HashPassword, checkPassword } from "../helperFunctions"
 import mongoose from "mongoose"
 
-mongoose.set("strictQuery", false)
+mongoose.set("strictQuery", true)
 
 export const AddNewUser = async (
   NewUserProps: NewUserType
@@ -18,14 +14,10 @@ export const AddNewUser = async (
 
     NewUserProps.password = await HashPassword(NewUserProps.password)
     const new_user = new User({ ...NewUserProps })
-
-    // eslint-disable-next-line
-    // @ts-ignore
-    // eslint-disable-next-line
     const user = await new_user.save().then((user) => user)
-    const isUser = checkIfObjectIsUser(user)
-    if (isUser) return isUser
-    else throw new Error("Internal Server Error")
+
+    if (user) return user
+    throw new Error("Internal Server Error")
   } catch (e) {
     const errors = [] as string[]
     if (typeof e !== "object" || !e) throw new Error("Internal Server Error")
@@ -91,6 +83,7 @@ export const getAllUsers = async (): Promise<UserType[]> => {
     let users = [] as UserType[]
     users = await User.find({})
     users.map((u) => {
+      // This object is only used to send to frontend
       // @ts-expect-error: This line can't throw error
       delete u.password
     })
@@ -109,8 +102,7 @@ export const checkLoginCredit = async (
     await mongoose.connect(process.env.DB_URI as string)
 
     // Try to find user
-    const dbRes = await User.findOne({ username: `${username}` })
-    const user = checkIfObjectIsUser(dbRes)
+    const user = await User.findOne({ username: `${username}` })
 
     // No user found
     if (!user) {
@@ -134,8 +126,7 @@ export const getUserByID = async (id: string): Promise<UserType> => {
   try {
     await mongoose.connect(process.env.DB_URI as string)
     // TODO check if object sent is an ID
-    const query = await User.findOne({ _id: id })
-    const user = checkIfObjectIsUser(query as unknown)
+    const user = await User.findOne({ _id: id })
     if (!user) throw new Error("No user with that ID")
     return user
   } finally {
