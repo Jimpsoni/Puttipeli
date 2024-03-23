@@ -48,7 +48,5 @@ userSchema.set("toJSON", {
   },
 })
 
-
-
 userSchema.plugin(uniqueValidator)
-export const User = mongoose.model("User", userSchema)
+export const User = mongoose.model<UserType>("User", userSchema)
