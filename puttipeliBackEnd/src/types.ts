@@ -13,14 +13,14 @@ export interface NewUserType {
   email: string
 }
 
-// For now, games only have scores and gamemodes
-export interface Game {
-  gamemode: string
-  score: number
-}
-
 // Incoming data from frontend
 export interface GameRequest {
-  userid: string,
-  game: Game
+  userid: string // Who this belongs to
+  points: Number // Overall score, calculated from rounds
+  rounds: Array<{ distance: Number; shotsInTheBasket: Number }>
+  date: Date
+}
+
+export interface Game extends GameRequest {
+  id: string // Unique to each game
 }
