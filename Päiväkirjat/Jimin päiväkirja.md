@@ -60,6 +60,6 @@
 60h
 
 23.3 (0,5h) gameScheman alustaminen<br>
-24.3 (1h)   GameScheman tekeminen, pelit tallentuu käyttäjälle nyt <br>
+24.3 (2h)   GameScheman tekeminen, pelit tallentuu käyttäjälle nyt <br>
 
-Yhteensä 61,5h
+Yhteensä 62,5h
