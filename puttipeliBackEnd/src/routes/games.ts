@@ -15,13 +15,13 @@ function ValidateRequest(props: unknown): GameRequest {
     throw new TypeError("Could not find 'userid' in request")
   }
   if (!("date" in props)) {
-    throw new TypeError("Could not find 'date in request")
+    throw new TypeError("Could not find 'date' in request")
   }
   if (!("points" in props)) {
-    throw new TypeError("Could not find 'date in request")
+    throw new TypeError("Could not find 'points' in request")
   }
   if (!("rounds" in props)) {
-    throw new TypeError("Could not find 'game' in request")
+    throw new TypeError("Could not find 'rounds' in request")
   }
   if (!Array.isArray(props.rounds) || props.rounds.length != 20)
     throw new TypeError("Game is not array of size 20")
@@ -33,7 +33,7 @@ function ValidateRequest(props: unknown): GameRequest {
       throw new TypeError("Game array has illegal values")
   })
 
-  // @ts-expect-error: Place holder
+  // @ts-expect-error: Placeholder
   return props
 }
 
@@ -44,7 +44,6 @@ router.get("/", (_req, res) => {
 router.post("/submit", (req, res) => {
   try {
     const data = ValidateRequest(req.body)
-    console.log(data)
     saveGameToUser(data)
       .then(() => res.status(201).send("Saved game to user"))
       .catch((e: Error) => {
@@ -60,9 +59,11 @@ router.post("/submit", (req, res) => {
   }
 })
 
-router.get("/user/:id", (req, _res) => {
+router.get("/user/:id", (req, res) => {
   const id = req.params.id
-  getUsersGames(id).then((data) => console.log(data))
+  getUsersGames(id)
+    .then((data) => res.json({ Games: data }))
+    .catch((e: Error) => res.status(400).send(e.message))
 })
 
 export default router
