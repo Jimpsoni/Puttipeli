@@ -32,12 +32,12 @@ const ShowGames = (props: ShowGameInterface) => {
   }
 
   // Finds the largest point and returns the object
-  const bestGame = props.games.reduce(function(prev, current) {
-    return (prev && prev.points > current.points) ? prev : current
+  const bestGame = props.games.reduce(function (prev, current) {
+    return prev && prev.points > current.points ? prev : current
   })
 
   // Modify the date to be a date object
-  bestGame['date'] = new Date(bestGame['date'])
+  bestGame["date"] = new Date(bestGame["date"])
 
   const latestGame = props.games[props.games.length - 1]
 
@@ -45,7 +45,6 @@ const ShowGames = (props: ShowGameInterface) => {
     date: new Date(latestGame.date),
     points: latestGame.points,
   }
-
 
   return (
     <div className='tabContainer games'>
@@ -72,8 +71,8 @@ const WelcomePage = () => {
       return
     }
     getUserGames(user.id).then((g) => {
-      if (!g) return
       console.log(g)
+      if (!g) return
       setUserGames(g)
     })
   }, [user, nav])
