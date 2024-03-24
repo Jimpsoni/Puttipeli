@@ -60,6 +60,6 @@
 60h
 
 23.3 (0,5h) gameScheman alustaminen<br>
-24.3 (2h)   GameScheman tekeminen, pelit tallentuu käyttäjälle nyt <br>
+24.3 (3h)   GameScheman tekeminen, pelit tallentuu käyttäjälle nyt, Frontti hakee käyttäjän pelit ja näyttää ne käyttäjälle <br>
 
-Yhteensä 62,5h
+Yhteensä 63,5h
