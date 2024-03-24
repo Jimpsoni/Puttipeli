@@ -3,7 +3,6 @@ import uniqueValidator from 'mongoose-unique-validator'
 import { UserType } from "../../types";
 
 const validateEmail = function(email: string): boolean {
-  // eslint-disable-next-line
   const re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
   return re.test(email)
 };
@@ -37,10 +36,8 @@ const userSchema = new mongoose.Schema<UserType>({
   games: []
 })
 
-
 userSchema.set("toJSON", {
   transform: (_document, returnedObject) => {
-    // eslint-disable-next-line
     returnedObject.id = returnedObject._id.toString()
     delete returnedObject._id
     delete returnedObject.password
