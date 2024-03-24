@@ -4,8 +4,13 @@ interface GameTabProps {
   data: {
     date: Date
     points: number
-    hitpercent: number
   }
+}
+
+const ParseDate = (date: Date): string => {
+  const pvm = date.toLocaleDateString()
+  const klo = date.toLocaleTimeString()
+  return pvm + ' ' + klo
 }
 
 const GameTab = (props: GameTabProps) => {
@@ -13,9 +18,8 @@ const GameTab = (props: GameTabProps) => {
   return (
     <div className='gameContainer'>
       <ul className='gameList'>
-        <li>14.12.23 klo 13:35</li>
+        <li>{ParseDate(data.date)}</li>
         <li>pisteet: {data.points}</li>
-        <li>Osumis%: {data.hitpercent}%</li>
       </ul>
     </div>
   )
