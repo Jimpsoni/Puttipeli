@@ -1,8 +1,7 @@
-// @ts-nocheck
-
 import mongoose from "mongoose"
 import { GameRequest } from "../../types"
 import { User } from "../UserService/userSchema"
+import { Game } from "../GameService/gameSchema"
 
 mongoose.set("strictQuery", true)
 
@@ -14,17 +13,12 @@ export const saveGameToUser = async (props: GameRequest) => {
     const userQuery = await User.findOne({ _id: props.userid })
     if (!userQuery) throw new Error("No user with that ID")
 
-    /*
-    TODO
-      Save new game to db and get its ID
-      then save that id to users games
-    */
+    const new_game = new Game({ ...props })
+    const saved_game = await new_game.save().then((u) => u)
 
-    const newGameID = "New Game ID"
+    userQuery.games = userQuery.games.concat(saved_game.id)
 
-    userQuery.games = userQuery.games.concat(newGameID)
     await userQuery.save()
-
     return
   } finally {
     await mongoose.connection.close()
