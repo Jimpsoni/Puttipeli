@@ -3,7 +3,8 @@ import { GameType } from "../../types"
 
 const gameSchema = new mongoose.Schema<GameType>({
   userid: {
-    type: Schema.Types.ObjectId
+    type: Schema.Types.ObjectId,
+    ref: 'User'
   },
   points: {
     type: Number,
