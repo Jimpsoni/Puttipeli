@@ -9,8 +9,10 @@ export interface UserType {
 }
 
 export interface Game {
-  gamemode: string
-  score: number
+  date: Date
+  points: number
+  rounds: GameResult[]
+  userid: string
 }
 
 export interface GameResult {
