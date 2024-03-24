@@ -15,4 +15,4 @@ Alustava designi sivustolle:
 
  <br> <br>
  ### Kehittäjille muistilista:
- - All good tähän mennessä
+ - Olisi kätevä, jos loginin yhteydessä tuotaisiin myös kaikki pelit
