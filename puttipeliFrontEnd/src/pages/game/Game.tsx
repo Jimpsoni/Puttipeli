@@ -116,13 +116,19 @@ const Game = () => {
   }
 
   const saveScoreToUser = async (results: GameResult[]) => {
-    console.log("Sending scores to database")
     setMessage('Saving round')
-  
     try {
-      // @ts-expect-error: User cannot be null, we route to login if it is
-      const response = await postGameResult(user.id, results)
-      console.log(response) // Place holder
+      const data = {
+        // @ts-expect-error: User cannot be null, we route to login if it is
+        userid: user.id,
+        points,
+        rounds: results,
+        date: new Date(Date.now())
+      }
+
+
+      const response = await postGameResult(data)
+      console.log(response) // Placeholder
     }
     catch (error) {
       if (axios.isAxiosError(error)) {

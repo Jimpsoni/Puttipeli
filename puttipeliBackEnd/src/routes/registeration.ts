@@ -1,7 +1,6 @@
 import express from "express"
 import { AddNewUser } from "../services/UserService/userService"
 import { NewUserType } from "../types"
-import { checkIfObjectIsUser } from "../services/helperFunctions"
 
 const router = express.Router()
 
@@ -42,13 +41,13 @@ router.post("/", (req, res) => {
 
     AddNewUser({ ...data })
       .then((response) => {
-        if (checkIfObjectIsUser(response)) {
+
+        if (!Array.isArray(response)) {
           // Don't send password hash to user
           // @ts-expect-error: This line can't throw error
-          delete response['password']
+          delete response["password"]
           res.status(201).json({ user: response })
-        }
-        else res.status(400).json({ errors: response })
+        } else res.status(400).json({ errors: response })
       })
       .catch(() => {
         res.status(500).json({ errors: "Internal Server Error" })

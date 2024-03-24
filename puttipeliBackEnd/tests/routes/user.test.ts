@@ -3,7 +3,6 @@ import app from "../../src/app"
 import mongoose from "mongoose"
 import { User } from "../../src/services/UserService/userSchema"
 import { AddNewUser } from "../../src/services/UserService/userService"
-import { checkIfObjectIsUser } from "../../src/services/helperFunctions"
 
 /*
 Tests to implement:
@@ -26,13 +25,8 @@ beforeAll(async () => {
   try {
     await mongoose.connect(process.env.DB_URI as string)
     await User.collection.drop()
-    await AddNewUser({ ...user }).then((response) => {
-      if (checkIfObjectIsUser(response)) {
-        saved_user = response
-      } else {
-        throw new Error()
-      }
-    })
+    saved_user = await AddNewUser({ ...user })
+    if (Array.isArray(saved_user)) throw new Error("Something went wrong with running tests")
   } catch (e) {
     throw new Error("Issues with MongoDB")
   }

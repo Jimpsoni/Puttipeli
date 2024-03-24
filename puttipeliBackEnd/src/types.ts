@@ -1,10 +1,17 @@
+import { Schema } from "mongoose"
+
 export interface UserType {
   id: string
   username: string
   password: string
   email: string
   registered: Date
-  games: Game[]
+  games: Schema.Types.ObjectId[]
+}
+
+export interface GameResult {
+  distance: number,
+  shotsInBasket: number
 }
 
 export interface NewUserType {
@@ -13,14 +20,14 @@ export interface NewUserType {
   email: string
 }
 
-// For now, games only have scores and gamemodes
-export interface Game {
-  gamemode: string
-  score: number
-}
-
 // Incoming data from frontend
 export interface GameRequest {
-  userid: string,
-  game: Game
+  userid: Schema.Types.ObjectId // Who this belongs to
+  points: number // Overall score, calculated from rounds
+  rounds: Array<{ distance: number; shotsInTheBasket: number }>
+  date: Date
+}
+
+export interface GameType extends GameRequest {
+  id: Schema.Types.ObjectId // Unique to each game
 }
