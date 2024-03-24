@@ -1,4 +1,4 @@
-import mongoose from "mongoose"
+import mongoose, { Schema } from "mongoose"
 import uniqueValidator from 'mongoose-unique-validator'
 import { UserType } from "../../types";
 
@@ -33,7 +33,9 @@ const userSchema = new mongoose.Schema<UserType>({
     default: Date.now
   },
 
-  games: []
+  games: {
+    type: [{ type: Schema.Types.ObjectId, ref: 'Game' }],
+  }
 })
 
 userSchema.set("toJSON", {
