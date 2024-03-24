@@ -76,7 +76,7 @@ const WelcomePage = () => {
       console.log(g)
       setUserGames(g)
     })
-  }, [user])
+  }, [user, nav])
 
   return (
     <div id='mainContainer'>
