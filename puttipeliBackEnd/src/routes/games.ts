@@ -38,7 +38,7 @@ function ValidateRequest(props: unknown): GameRequest {
 }
 
 router.get("/", (_req, res) => {
-  res.send("This is the Game router")
+  res.send("Ping pong, I am the game router")
 })
 
 router.post("/submit", (req, res) => {
