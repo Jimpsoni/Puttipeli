@@ -1,10 +1,11 @@
 import Header from "../../utilitycomponents/Header" // Utility component
 import GameTab from "../../utilitycomponents/GameTab/GameTab"
 import { useNavigate } from "react-router-dom"
-import { useContext, useEffect } from "react"
+import { useContext, useEffect, useState } from "react"
 import userContext from "../../services/userContext"
 import { Game } from "../../types"
 import "./styles.css"
+import { getUserGames } from "../../services/gameService"
 
 /*
   Muistilista
@@ -17,10 +18,11 @@ import "./styles.css"
 */
 
 interface ShowGameInterface {
-  games: Game[]
+  games: Game[] | null
 }
 
 const ShowGames = (props: ShowGameInterface) => {
+  if (!props.games) return <div className='tabContainer games'>Loading...</div>
   if (props.games.length < 1) {
     return (
       <div className='tabContainer games'>
@@ -28,26 +30,28 @@ const ShowGames = (props: ShowGameInterface) => {
       </div>
     )
   }
-  
-  // TODO hae käyttäjältä pelin tiedot
+
+  // Finds the largest point and returns the object
+  const bestGame = props.games.reduce(function(prev, current) {
+    return (prev && prev.points > current.points) ? prev : current
+  })
+
+  // Modify the date to be a date object
+  bestGame['date'] = new Date(bestGame['date'])
+
+  const latestGame = props.games[props.games.length - 1]
+
   const recentGame = {
-    date: new Date(),
-    points: 339,
-    hitpercent: 59,
+    date: new Date(latestGame.date),
+    points: latestGame.points,
   }
 
-  // TODO hae käyttäjältä pelin tiedot
-  const bestGame = {
-    date: new Date(),
-    points: 459,
-    hitpercent: 76,
-  }
 
   return (
     <div className='tabContainer games'>
       <h3 className='gamesSubHeader'>Viimeisin</h3>
       <GameTab data={recentGame} />
-      <h3 className='gamesSubHeader'>Viikon paras</h3>
+      <h3 className='gamesSubHeader'>Paras pelisi</h3>
       <GameTab data={bestGame} />
     </div>
   )
@@ -56,6 +60,8 @@ const ShowGames = (props: ShowGameInterface) => {
 const WelcomePage = () => {
   const nav = useNavigate()
   const { user } = useContext(userContext)
+  const [userGames, setUserGames] = useState<Game[] | null>(null)
+
   const StartNewGame = () => {
     nav("/uusi_peli")
   }
@@ -63,8 +69,14 @@ const WelcomePage = () => {
   useEffect(() => {
     if (user == null) {
       nav("/login")
+      return
     }
-  })
+    getUserGames(user.id).then((g) => {
+      if (!g) return
+      console.log(g)
+      setUserGames(g)
+    })
+  }, [user])
 
   return (
     <div id='mainContainer'>
@@ -78,7 +90,7 @@ const WelcomePage = () => {
         </div>
       </div>
 
-      {user && <ShowGames games={user.games} />}
+      {user && <ShowGames games={userGames} />}
     </div>
   )
 }
