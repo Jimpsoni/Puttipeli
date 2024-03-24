@@ -23,11 +23,11 @@ export interface NewUserType {
 // Incoming data from frontend
 export interface GameRequest {
   userid: Schema.Types.ObjectId // Who this belongs to
-  points: Number // Overall score, calculated from rounds
-  rounds: Array<{ distance: Number; shotsInTheBasket: Number }>
+  points: number // Overall score, calculated from rounds
+  rounds: Array<{ distance: number; shotsInTheBasket: number }>
   date: Date
 }
 
 export interface GameType extends GameRequest {
-  id: string // Unique to each game
+  id: Schema.Types.ObjectId // Unique to each game
 }

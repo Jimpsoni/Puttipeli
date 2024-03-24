@@ -1,18 +1,19 @@
 import mongoose, { Schema } from "mongoose"
-import uniqueValidator from 'mongoose-unique-validator'
-import { UserType } from "../../types";
+import uniqueValidator from "mongoose-unique-validator"
+import { UserType } from "../../types"
 
-const validateEmail = function(email: string): boolean {
-  const re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+const validateEmail = function (email: string): boolean {
+  // eslint-disable-next-line
+  const re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
   return re.test(email)
-};
+}
 
 const userSchema = new mongoose.Schema<UserType>({
   username: {
     type: String,
     minlength: 3,
     required: true,
-    unique: true
+    unique: true,
   },
 
   password: {
@@ -25,21 +26,22 @@ const userSchema = new mongoose.Schema<UserType>({
     unique: true,
     lowercase: true,
     required: true,
-    validate: [validateEmail, 'Invalid Email address'],
+    validate: [validateEmail, "Invalid Email address"],
   },
 
   registered: {
     type: Date,
-    default: Date.now
+    default: Date.now,
   },
 
   games: {
-    type: [{ type: Schema.Types.ObjectId, ref: 'Game' }],
-  }
+    type: [{ type: Schema.Types.ObjectId, ref: "Game" }],
+  },
 })
 
 userSchema.set("toJSON", {
   transform: (_document, returnedObject) => {
+    // eslint-disable-next-line
     returnedObject.id = returnedObject._id.toString()
     delete returnedObject._id
     delete returnedObject.password

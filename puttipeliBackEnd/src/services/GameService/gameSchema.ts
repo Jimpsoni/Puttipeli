@@ -20,6 +20,7 @@ const gameSchema = new mongoose.Schema<GameType>({
 
 gameSchema.set("toJSON", {
   transform: (_document, returnedObject) => {
+    // eslint-disable-next-line 
     returnedObject.id = returnedObject._id.toString()
     delete returnedObject._id
     delete returnedObject.__v

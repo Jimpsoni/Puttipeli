@@ -1,10 +1,10 @@
-// @ts-nocheck
 import request from "supertest"
 import app from "../../src/app"
 import mongoose from "mongoose"
 import { User } from "../../src/services/UserService/userSchema"
 import { AddNewUser } from "../../src/services/UserService/userService"
 
+// @ts-expect-error: We don't run tests if saved_user is not UserType
 let saved_user
 
 beforeAll(async () => {
@@ -28,7 +28,7 @@ describe("Sending request to save game to db", () => {
     const game = {
       points: 250,
       rounds: [],
-      date: new Date(Date.now())
+      date: new Date(Date.now()),
     }
     const res = await request(app).post("/api/game/submit").send(game)
 
@@ -40,7 +40,7 @@ describe("Sending request to save game to db", () => {
     const game = {
       userid: "NewID",
       points: 250,
-      date: new Date(Date.now())
+      date: new Date(Date.now()),
     }
     const res = await request(app).post("/api/game/submit").send(game)
 
@@ -74,7 +74,7 @@ describe("Sending request to save game to db", () => {
 
   it("Sending game that is not array", async () => {
     const game = {
-      userid: saved_user.id,
+      userid: "NewID",
       date: new Date(Date.now()),
       points: 200,
       rounds: "Score: 200",
@@ -88,7 +88,7 @@ describe("Sending request to save game to db", () => {
 
   it("Sending game that not length 20", async () => {
     const game = {
-      userid: saved_user.id,
+      userid: "NewID",
       date: new Date(Date.now()),
       points: 200,
       rounds: [{ distance: 2, shotsInBasket: 2 }],
@@ -102,7 +102,7 @@ describe("Sending request to save game to db", () => {
 
   it("Sending game that is longer than 20", async () => {
     const game = {
-      userid: saved_user.id,
+      userid: "NewID",
       date: new Date(Date.now()),
       points: 200,
       rounds: [
@@ -138,7 +138,7 @@ describe("Sending request to save game to db", () => {
 
   it("Sending game that string instead of int", async () => {
     const game = {
-      userid: saved_user.id,
+      userid: "NewID",
       date: new Date(Date.now()),
       points: 200,
       rounds: [
@@ -172,7 +172,7 @@ describe("Sending request to save game to db", () => {
 
   it("Sending game that has illegal key", async () => {
     const game = {
-      userid: saved_user.id,
+      userid: "NewID",
       date: new Date(Date.now()),
       points: 200,
       rounds: [
@@ -206,7 +206,7 @@ describe("Sending request to save game to db", () => {
 
   it("Sending game that has illegal key", async () => {
     const game = {
-      userid: saved_user.id,
+      userid: "NewID",
       date: new Date(Date.now()),
       points: 200,
       rounds: [
@@ -274,7 +274,9 @@ describe("Sending request to save game to db", () => {
 
   it("Game with correct values is accepted", async () => {
     const game = {
-      userid: saved_user.id,
+      // @ts-expect-error: We don't run tests if user is not usertype
+      // eslint-disable-next-line
+      userid: saved_user.id, //
       date: new Date(Date.now()),
       points: 200,
       rounds: [
