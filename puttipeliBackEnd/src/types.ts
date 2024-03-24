@@ -6,7 +6,7 @@ export interface UserType {
   password: string
   email: string
   registered: Date
-  games: GameType[]
+  games: Schema.Types.ObjectId[]
 }
 
 export interface GameResult {
