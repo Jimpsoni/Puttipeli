@@ -30,7 +30,12 @@ export const getUsersGames = async (userid: string) => {
     await mongoose.connect(process.env.DB_URI as string)
     await mongoose.connection.syncIndexes()
 
-    const userQuery = await User.findOne({ _id: userid })
+    const userQuery = await User
+    .findOne({ _id: userid })
+    .populate('games')
+    console.log(userQuery)
+
+
     if (!userQuery) throw new Error("No user with that ID")
     return userQuery.games
   } finally {
