@@ -45,7 +45,7 @@ router.post("/submit", (req, res) => {
   try {
     const data = ValidateRequest(req.body)
     saveGameToUser(data)
-      .then(() => res.status(201).send("Saved game to user"))
+      .then((response) => res.status(201).json(response))
       .catch((e: Error) => {
         if (e.message == "No user with that ID") {
           res.status(400).send(e.message)
