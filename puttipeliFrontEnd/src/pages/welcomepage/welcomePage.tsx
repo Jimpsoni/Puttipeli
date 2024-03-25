@@ -1,11 +1,10 @@
 import Header from "../../utilitycomponents/Header" // Utility component
 import GameTab from "../../utilitycomponents/GameTab/GameTab"
 import { useNavigate } from "react-router-dom"
-import { useContext, useEffect, useState } from "react"
+import { useContext, useEffect } from "react"
 import userContext from "../../services/userContext"
 import { Game } from "../../types"
 import "./styles.css"
-import { getUserGames } from "../../services/gameService"
 
 /*
   Muistilista
@@ -18,11 +17,10 @@ import { getUserGames } from "../../services/gameService"
 */
 
 interface ShowGameInterface {
-  games: Game[] | null
+  games: Game[]
 }
 
 const ShowGames = (props: ShowGameInterface) => {
-  if (!props.games) return <div className='tabContainer games'>Loading...</div>
   if (props.games.length < 1) {
     return (
       <div className='tabContainer games'>
@@ -59,7 +57,6 @@ const ShowGames = (props: ShowGameInterface) => {
 const WelcomePage = () => {
   const nav = useNavigate()
   const { user } = useContext(userContext)
-  const [userGames, setUserGames] = useState<Game[] | null>(null)
 
   const StartNewGame = () => {
     nav("/uusi_peli")
@@ -68,13 +65,7 @@ const WelcomePage = () => {
   useEffect(() => {
     if (user == null) {
       nav("/login")
-      return
     }
-    getUserGames(user.id).then((g) => {
-      console.log(g)
-      if (!g) return
-      setUserGames(g)
-    })
   }, [user, nav])
 
   return (
@@ -89,7 +80,7 @@ const WelcomePage = () => {
         </div>
       </div>
 
-      {user && <ShowGames games={userGames} />}
+      {user && <ShowGames games={user.games} />}
     </div>
   )
 }
