@@ -5,7 +5,7 @@ import { Game } from "../GameService/gameSchema"
 
 mongoose.set("strictQuery", true)
 
-export const saveGameToUser = async (props: GameRequest) => {
+export const saveGameToUser = async (props: GameRequest): Promise<GameType> => {
   try {
     await mongoose.connect(process.env.DB_URI as string)
     await mongoose.connection.syncIndexes()
@@ -21,7 +21,7 @@ export const saveGameToUser = async (props: GameRequest) => {
     userQuery.games = userQuery.games.concat(saved_game.id)
 
     await userQuery.save()
-    return
+    return saved_game
   } finally {
     await mongoose.connection.close()
   }
