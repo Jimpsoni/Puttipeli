@@ -8,6 +8,7 @@ import axios from "axios"
 // Styles
 import { TbArrowBackUp } from "react-icons/tb"
 import "./styles.css"
+
 import userContext from "../../services/userContext.ts"
 
 /*
@@ -15,8 +16,6 @@ TODO
   - Make sure user is logged in before entering
 
 */ 
-
-
 
 const Game = () => {
   const [results, setResults] = useState<GameResult[]>([])
@@ -116,19 +115,26 @@ const Game = () => {
   }
 
   const saveScoreToUser = async (results: GameResult[]) => {
+    if (!user) {
+      console.log("Somehow, user not logged in...") 
+      return
+    }
+
     setMessage('Saving round')
     try {
       const data = {
-        // @ts-expect-error: User cannot be null, we route to login if it is
         userid: user.id,
         points,
         rounds: results,
         date: new Date(Date.now())
       }
 
-
       const response = await postGameResult(data)
-      console.log(response) // Placeholder
+      // @ts-expect-error: Placeholder
+      user.games = user?.games.concat(response.data)
+
+      setMessage('Round saved!')
+      setTimeout(() => {nav(-1)}, 3000)
     }
     catch (error) {
       if (axios.isAxiosError(error)) {
