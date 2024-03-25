@@ -102,7 +102,7 @@ export const checkLoginCredit = async (
     await mongoose.connect(process.env.DB_URI as string)
 
     // Try to find user
-    const user = await User.findOne({ username: `${username}` })
+    const user = await User.findOne({ username: `${username}` }).populate("games")
 
     // No user found
     if (!user) {
