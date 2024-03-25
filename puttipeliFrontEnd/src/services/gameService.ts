@@ -14,10 +14,8 @@ interface Request {
   Games: Game[]
 }
 
-
-
 export const postGameResult = async (data: Props) => {
-  await axios.post<GameResult[]>(baseUrl + '/game/submit', data)
+  return await axios.post<GameResult[]>(baseUrl + '/game/submit', data)
     .then(res => res)
     .catch(res => console.log(res))
 }
