@@ -2,6 +2,7 @@ import request from "supertest"
 import app from "../../src/app"
 import mongoose from "mongoose"
 import { User } from "../../src/services/UserService/userSchema"
+import { Game } from "../../src/services/GameService/gameSchema"
 import { AddNewUser } from "../../src/services/UserService/userService"
 
 // @ts-expect-error: We don't run tests if saved_user is not UserType
@@ -39,6 +40,7 @@ beforeAll(async () => {
   try {
     await mongoose.connect(process.env.DB_URI as string)
     await User.collection.drop()
+    await Game.collection.drop()
     saved_user = await AddNewUser({ ...user })
   } catch (e) {
     throw Error("Something wrong with MongoDB")
