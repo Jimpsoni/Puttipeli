@@ -3,16 +3,19 @@ import { GameType } from "../../types"
 
 const gameSchema = new mongoose.Schema<GameType>({
   userid: {
+    required: true,
     type: Schema.Types.ObjectId,
     ref: 'User'
   },
   points: {
+    required: true,
     type: Number,
     min: 0,
     max: 1000,
   },
   rounds: [Object],
   date: {
+    required: true,
     type: Date,
     default: Date.now,
   },
