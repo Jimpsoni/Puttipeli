@@ -344,6 +344,8 @@ describe("Database works accordingly", () => {
     expect(res2.status).toEqual(200)
     expect(res2.body).toHaveProperty("Games")
     expect(res2.body.Games.length).toBe(2)
+    
+    // eslint-disable-next-line 
     gameID = res2.body.Games[0].id
   })
 
