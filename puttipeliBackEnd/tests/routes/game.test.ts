@@ -6,6 +6,28 @@ import { AddNewUser } from "../../src/services/UserService/userService"
 
 // @ts-expect-error: We don't run tests if saved_user is not UserType
 let saved_user
+const roundsObject = [
+  { distance: 10, shotsInBasket: 5 },
+  { distance: 10, shotsInBasket: 5 },
+  { distance: 10, shotsInBasket: 5 },
+  { distance: 10, shotsInBasket: 5 },
+  { distance: 10, shotsInBasket: 5 },
+  { distance: 10, shotsInBasket: 5 },
+  { distance: 10, shotsInBasket: 5 },
+  { distance: 10, shotsInBasket: 5 },
+  { distance: 10, shotsInBasket: 5 },
+  { distance: 10, shotsInBasket: 5 },
+  { distance: 10, shotsInBasket: 5 },
+  { distance: 10, shotsInBasket: 5 },
+  { distance: 10, shotsInBasket: 5 },
+  { distance: 10, shotsInBasket: 5 },
+  { distance: 10, shotsInBasket: 5 },
+  { distance: 10, shotsInBasket: 5 },
+  { distance: 10, shotsInBasket: 5 },
+  { distance: 10, shotsInBasket: 5 },
+  { distance: 10, shotsInBasket: 5 },
+  { distance: 10, shotsInBasket: 5 },
+]
 
 beforeAll(async () => {
   // Add user to database
@@ -279,28 +301,7 @@ describe("Sending request to save game to db", () => {
       userid: saved_user.id, //
       date: new Date(Date.now()),
       points: 200,
-      rounds: [
-        { distance: 10, shotsInBasket: 5 },
-        { distance: 10, shotsInBasket: 5 },
-        { distance: 10, shotsInBasket: 5 },
-        { distance: 10, shotsInBasket: 5 },
-        { distance: 10, shotsInBasket: 5 },
-        { distance: 10, shotsInBasket: 5 },
-        { distance: 10, shotsInBasket: 5 },
-        { distance: 10, shotsInBasket: 5 },
-        { distance: 10, shotsInBasket: 5 },
-        { distance: 10, shotsInBasket: 5 },
-        { distance: 10, shotsInBasket: 5 },
-        { distance: 10, shotsInBasket: 5 },
-        { distance: 10, shotsInBasket: 5 },
-        { distance: 10, shotsInBasket: 5 },
-        { distance: 10, shotsInBasket: 5 },
-        { distance: 10, shotsInBasket: 5 },
-        { distance: 10, shotsInBasket: 5 },
-        { distance: 10, shotsInBasket: 5 },
-        { distance: 10, shotsInBasket: 5 },
-        { distance: 10, shotsInBasket: 5 },
-      ],
+      rounds: roundsObject,
     }
 
     const res = await request(app).post("/api/game/submit").send(game)
@@ -310,4 +311,63 @@ describe("Sending request to save game to db", () => {
     expect(res.body).toHaveProperty("rounds")
     expect(res.body).toHaveProperty("date")
   }, 10000)
+})
+
+describe("Database works accordingly", () => {
+  // Delete this game from db
+  // @ts-expect-error: We don't run tests if user is not usertype
+  let gameID
+
+  it("Sending game to database", async () => {
+    const game = {
+      // @ts-expect-error: We don't run tests if user is not usertype
+      // eslint-disable-next-line
+      userid: saved_user.id,
+      points: 250,
+      rounds: roundsObject,
+      date: new Date(Date.now()),
+    }
+
+    const res = await request(app).post("/api/game/submit").send(game)
+
+    expect(res.status).toEqual(201)
+    expect(res.body).toHaveProperty("userid")
+    expect(res.body).toHaveProperty("points")
+    expect(res.body).toHaveProperty("rounds")
+    expect(res.body).toHaveProperty("date")
+
+    // @ts-expect-error: We don't run tests if user is not usertype
+    // eslint-disable-next-line
+    const res2 = await request(app).get(`/api/game/user/${saved_user.id}`)
+    expect(res2.status).toEqual(200)
+    expect(res2.body).toHaveProperty("Games")
+    expect(res2.body.Games.length).toBe(2)
+    gameID = res2.body.Games[0].id
+  })
+
+  it("Delete game from database", async () => {
+    // @ts-expect-error: We don't run tests if game is not gametype
+    // eslint-disable-next-line
+    const res = await request(app).delete(`/api/game/${gameID}`)
+    expect(res.status).toEqual(204)
+  })
+
+  it("User only has one game after deleting the other", async () => {
+    // @ts-expect-error: We don't run tests if game is not gametype
+    // eslint-disable-next-line
+    const res = await request(app).get(`/api/game/user/${saved_user.id}`)
+    expect(res.status).toEqual(200)
+    expect(res.body).toHaveProperty("Games")
+    expect(res.body.Games.length).toBe(1)
+  })
+
+  it("Wrong IDs responds accordingly", async () => {
+    const res = await request(app).delete(`/api/game/qweqwe`)
+    expect(res.status).toEqual(400)
+
+    const res2 = await request(app).get(`/api/game/user/qweqwe`)
+    expect(res2.status).toEqual(400)
+  })
+
+
 })
