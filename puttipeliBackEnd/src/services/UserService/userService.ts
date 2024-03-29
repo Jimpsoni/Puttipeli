@@ -9,7 +9,7 @@ export const AddNewUser = async (
   NewUserProps: NewUserType
 ): Promise<UserType | string[]> => {
   try {
-    await mongoose.connect(process.env.DB_URI as string)
+    await mongoose.connect(process.env.DBURI as string)
     await mongoose.connection.syncIndexes()
 
     NewUserProps.password = await HashPassword(NewUserProps.password)
@@ -79,7 +79,7 @@ export const AddNewUser = async (
 
 export const getAllUsers = async (): Promise<UserType[]> => {
   try {
-    await mongoose.connect(process.env.DB_URI as string)
+    await mongoose.connect(process.env.DBURI as string)
     let users = [] as UserType[]
     users = await User.find({})
     users.map((u) => {
@@ -99,7 +99,7 @@ export const checkLoginCredit = async (
   password: string
 ): Promise<UserType> => {
   try {
-    await mongoose.connect(process.env.DB_URI as string)
+    await mongoose.connect(process.env.DBURI as string)
 
     // Try to find user
     const user = await User.findOne({ username: `${username}` }).populate("games")
@@ -124,7 +124,7 @@ export const checkLoginCredit = async (
 
 export const getUserByID = async (id: string): Promise<UserType> => {
   try {
-    await mongoose.connect(process.env.DB_URI as string)
+    await mongoose.connect(process.env.DBURI as string)
     // TODO check if object sent is an ID
     const user = await User.findOne({ _id: id })
     if (!user) throw new Error("No user with that ID")
@@ -136,7 +136,7 @@ export const getUserByID = async (id: string): Promise<UserType> => {
 
 export const deleteUserByID = async (id: string) => {
   try {
-    await mongoose.connect(process.env.DB_URI as string)
+    await mongoose.connect(process.env.DBURI as string)
     const userInDB = await User.findOne({ _id: id })
     if (!userInDB) throw new Error("No user with that ID")
 

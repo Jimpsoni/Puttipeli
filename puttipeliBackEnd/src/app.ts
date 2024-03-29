@@ -15,6 +15,17 @@ dotenv.config();
 const app = express()
 app.use(express.json())
 
+
+
+if (process.env.DBENV == 'prod') {
+  console.log("Using production environment")
+  process.env.DBURI = process.env.DB_URI_PROD
+} else {
+  console.log("Using test environment")
+  process.env.DBURI = process.env.DB_URI_TEST
+}
+
+
 // Serve all the static files
 app.use(express.static(path.join(__dirname, "../../puttipeliFrontEnd/dist")))
 

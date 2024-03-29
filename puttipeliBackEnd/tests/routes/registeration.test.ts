@@ -3,9 +3,10 @@ import app from "../../src/app"
 import mongoose from "mongoose"
 import { User } from "../../src/services/UserService/userSchema"
 
+
 beforeAll(async () => {
   // Clean up the test db
-  await mongoose.connect(process.env.DB_URI as string)
+  await mongoose.connect(process.env.DBURI as string)
   await User.collection.drop()
 }, 30000)
 

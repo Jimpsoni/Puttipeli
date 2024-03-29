@@ -12,7 +12,7 @@ beforeAll(async () => {
     email: "validemail@gmail.com",
   }
   try {
-    await mongoose.connect(process.env.DB_URI as string)
+    await mongoose.connect(process.env.DBURI as string)
     await User.collection.drop()
     await AddNewUser({ ...user })
   } catch (e) {

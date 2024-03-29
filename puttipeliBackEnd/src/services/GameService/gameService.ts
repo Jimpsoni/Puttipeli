@@ -7,7 +7,7 @@ mongoose.set("strictQuery", true)
 
 export const saveGameToUser = async (props: GameRequest): Promise<GameType> => {
   try {
-    await mongoose.connect(process.env.DB_URI as string)
+    await mongoose.connect(process.env.DBURI as string)
     await mongoose.connection.syncIndexes()
 
     const userQuery = await User.findOne({ _id: props.userid })
@@ -28,7 +28,7 @@ export const saveGameToUser = async (props: GameRequest): Promise<GameType> => {
 
 export const getUsersGames = async (userid: string) => {
   try {
-    await mongoose.connect(process.env.DB_URI as string)
+    await mongoose.connect(process.env.DBURI as string)
     await mongoose.connection.syncIndexes()
 
     const userQuery = await User.findOne({ _id: userid }).populate("games")
@@ -42,7 +42,7 @@ export const getUsersGames = async (userid: string) => {
 
 export const deleteGame = async (gameid: string) => {
   try {
-    await mongoose.connect(process.env.DB_URI as string)
+    await mongoose.connect(process.env.DBURI as string)
     const gameinDB = await Game.findOne({ _id: gameid })
     if (!gameinDB) throw new Error("No Game with that ID")
 

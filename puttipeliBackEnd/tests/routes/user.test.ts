@@ -23,7 +23,7 @@ beforeAll(async () => {
     email: "validemail@gmail.com",
   }
   try {
-    await mongoose.connect(process.env.DB_URI as string)
+    await mongoose.connect(process.env.DBURI as string)
     await User.collection.drop()
     saved_user = await AddNewUser({ ...user })
     if (Array.isArray(saved_user)) throw new Error("Something went wrong with running tests")
