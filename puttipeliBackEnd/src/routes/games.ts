@@ -1,5 +1,6 @@
 import express from "express"
 import {
+  deleteGame,
   getUsersGames,
   saveGameToUser,
 } from "../services/GameService/gameService"
@@ -63,6 +64,13 @@ router.get("/user/:id", (req, res) => {
   const id = req.params.id
   getUsersGames(id)
     .then((data) => res.json({ Games: data }))
+    .catch((e: Error) => res.status(400).send(e.message))
+})
+
+router.delete("/:id", (req, res) => {
+  const id = req.params.id
+  deleteGame(id)
+    .then(() => res.sendStatus(204))
     .catch((e: Error) => res.status(400).send(e.message))
 })
 

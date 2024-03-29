@@ -134,7 +134,7 @@ export const getUserByID = async (id: string): Promise<UserType> => {
   }
 }
 
-export const deleteUserByID = async (id: string): Promise<null> => {
+export const deleteUserByID = async (id: string) => {
   try {
     await mongoose.connect(process.env.DB_URI as string)
     const userInDB = await User.findOne({ _id: id })
@@ -144,6 +144,4 @@ export const deleteUserByID = async (id: string): Promise<null> => {
   } finally {
     await mongoose.connection.close()
   }
-
-  return null
 }

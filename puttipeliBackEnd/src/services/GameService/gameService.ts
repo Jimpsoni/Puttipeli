@@ -16,8 +16,7 @@ export const saveGameToUser = async (props: GameRequest): Promise<GameType> => {
     const new_game = new Game({ ...props })
     const saved_game = await new_game.save().then((u) => u as GameType)
 
-
-    // eslint-disable-next-line 
+    // eslint-disable-next-line
     userQuery.games = userQuery.games.concat(saved_game.id)
 
     await userQuery.save()
@@ -36,6 +35,25 @@ export const getUsersGames = async (userid: string) => {
     if (!userQuery) throw new Error("No user with that ID")
 
     return userQuery.games
+  } finally {
+    await mongoose.connection.close()
+  }
+}
+
+export const deleteGame = async (gameid: string) => {
+  try {
+    await mongoose.connect(process.env.DB_URI as string)
+    const gameinDB = await Game.findOne({ _id: gameid })
+    if (!gameinDB) throw new Error("No Game with that ID")
+
+    await Game.deleteOne({ _id: gameid })
+
+    // Remove the game from user
+    const userinDB = await User.findOne({ _id: gameinDB.userid })
+    if (!userinDB) throw new Error("No User with that ID")
+    userinDB.games = userinDB.games.filter((v) => {
+      return String(v) != gameid
+    })
   } finally {
     await mongoose.connection.close()
   }
