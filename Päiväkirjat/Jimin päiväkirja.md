@@ -59,8 +59,9 @@
 
 60h
 
-23.3 (0,5h) gameScheman alustaminen<br>
-24.3 (3h)   GameScheman tekeminen, pelit tallentuu käyttäjälle nyt, Frontti hakee käyttäjän pelit ja näyttää ne käyttäjälle <br>
-25.3 (1h)   Käyttäjän pelit tuodaan fronttiin kirjautumisen yhteydessä, eikä niitä tarvitse erikseen hakea <br>
+23.03 (0,5h) gameScheman alustaminen<br>
+24.03 (3h)   GameScheman tekeminen, pelit tallentuu käyttäjälle nyt, Frontti hakee käyttäjän pelit ja näyttää ne käyttäjälle <br>
+25.03 (1h)   Käyttäjän pelit tuodaan fronttiin kirjautumisen yhteydessä, eikä niitä tarvitse erikseen hakea <br>
+29.03 (2h)   Pelejä pystyy nyt poistamaan tietokannasta, testit sille, testaaminen käyttää testitietokantaa nyt <br>
 
-Yhteensä 64,5h
+Yhteensä 66,5h
