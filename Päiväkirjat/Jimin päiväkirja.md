@@ -18,10 +18,10 @@
 
 20h
 
-02.02 (1h) Rekisteröimisen tekemistä<br>
-03.02 (1h) CI/CD putken tekemistä, "main" branchin suojaus, Tyylien korjausta<br>
-06.02 (1h) Backend Renderiin ja CICD putken muokkaus ajantasalle<br>
-06.02 (1h) Frontin Buildi ja Backend nyt yhdistää suoraan fronttiin renderissä<br>
+02.02 (1h)   Rekisteröimisen tekemistä<br>
+03.02 (1h)   CI/CD putken tekemistä, "main" branchin suojaus, Tyylien korjausta<br>
+06.02 (1h)   Backend Renderiin ja CICD putken muokkaus ajantasalle<br>
+06.02 (1h)   Frontin Buildi ja Backend nyt yhdistää suoraan fronttiin renderissä<br>
 08.02 (3,5h) uusi branchi, backendin yhdistämistä mongoDB:seen, uusien käyttäjien luonti ja niiden validointi<br>
 09.02 (2,5h) Testien tekoa Registeration Routelle ja Login routen teko ja sen testaus<br>
 
@@ -63,7 +63,7 @@
 24.03 (3h)   GameScheman tekeminen, pelit tallentuu käyttäjälle nyt, Frontti hakee käyttäjän pelit ja näyttää ne käyttäjälle <br>
 25.03 (1h)   Käyttäjän pelit tuodaan fronttiin kirjautumisen yhteydessä, eikä niitä tarvitse erikseen hakea <br>
 29.03 (2h)   Pelejä pystyy nyt poistamaan tietokannasta, testit sille, testaaminen käyttää testitietokantaa nyt <br>
-01.04 (0,5h) Tein loggerin, korjasin CI:n käyttämään testitietokantaa ajaessa testejä <br>
+01.04 (1h)   Tein loggerin, korjasin CI:n käyttämään testitietokantaa ajaessa testejä <br>
 
 
-Yhteensä 67h
+Yhteensä 67,5h
