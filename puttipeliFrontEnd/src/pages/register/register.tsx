@@ -8,13 +8,21 @@ const Register = () => {
   // Form control
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
-  const [passwordAgain, setPasswordAgain] = useState("")
 
   const { setUser } = useContext(userContext)
   const [email, setEmail] = useState("")
-  
+
   // Navigation
   const navigate = useNavigate()
+
+  function togglePassword(): void {
+    // Find element
+    const elem = document.getElementById("passwordRegistering")
+    // @ts-expect-error: there is type
+    if (elem.type == "password") elem.type = "text"
+    // @ts-expect-error: there is type
+    else elem.type = "password"
+  }
 
   function NotifyField(id: string, _message: string) {
     // Highlights the field that has invalid values
@@ -24,12 +32,19 @@ const Register = () => {
 
   function handleErrorMessages(errors: string[]) {
     // Username
-    if (errors.includes("Username not long enough")) NotifyField("username", "Käyttäjänimen tulee olla vähintään n merkin pitkä")
-    if (errors.includes("Username already in use")) NotifyField("username", "Tämä käyttäjä nimi on jo käytössä")
+    if (errors.includes("Username not long enough"))
+      NotifyField(
+        "username",
+        "Käyttäjänimen tulee olla vähintään n merkin pitkä"
+      )
+    if (errors.includes("Username already in use"))
+      NotifyField("username", "Tämä käyttäjä nimi on jo käytössä")
 
     // Email
-    if (errors.includes("Invalid Email address")) NotifyField("email", "Sähköposti ei ole kelvollinen")
-    if (errors.includes("Email Already in use")) NotifyField("email", "Sähköposti on jo käytössä")
+    if (errors.includes("Invalid Email address"))
+      NotifyField("email", "Sähköposti ei ole kelvollinen")
+    if (errors.includes("Email Already in use"))
+      NotifyField("email", "Sähköposti on jo käytössä")
   }
 
   const registerNewUser = (event: React.FormEvent<HTMLFormElement>): void => {
@@ -43,16 +58,15 @@ const Register = () => {
     axios
       .post("http://localhost:3000/api/register", data)
       .then((res) => {
-        // Clear the form 
+        // Clear the form
         setUsername("")
         setPassword("")
-        setPasswordAgain("")
         setEmail("")
         // Login the user
         setUser(res.data.user)
-        
+
         // navigate
-        navigate('/puttipeli')
+        navigate("/puttipeli")
       })
       .catch((e) => {
         const response = e.response.data.errors
@@ -92,7 +106,7 @@ const Register = () => {
 
         <div id='passwordInput'>
           <input
-            id='password'
+            id='passwordRegistering'
             className='textInput'
             type='password'
             placeholder='Salasana'
@@ -104,16 +118,8 @@ const Register = () => {
         </div>
 
         <div>
-          <input
-            id='passwordAgain'
-            className='textInput'
-            type='password'
-            placeholder='Salasana uudelleen'
-            value={passwordAgain}
-            onChange={(e) => {
-              setPasswordAgain(e.target.value)
-            }}
-          />
+          <input type='checkbox' onClick={togglePassword} />
+          Näytä Salasana
         </div>
 
         <button type='submit' className='submitButton'>
