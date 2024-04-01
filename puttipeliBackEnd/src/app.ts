@@ -10,22 +10,21 @@ import gameRoute from "./routes/games"
 import { log } from "./services/logger"
 
 // To use env variables
-import dotenv from 'dotenv'
-dotenv.config();
+import dotenv from "dotenv"
+dotenv.config()
 
 const app = express()
 app.use(express.json())
 
-
-
-if (process.env.DBENV == 'prod') {
+if (process.env.DBENV == "prod") {
   log("Using production environment")
   process.env.DBURI = process.env.DB_URI_PROD
 } else {
   log("Using test environment")
-  process.env.DBURI = process.env.DB_URI_TEST
+  if (process.env.DB_URI_TEST) {
+    process.env.DBURI = process.env.DB_URI_TEST
+  }
 }
-
 
 // Serve all the static files
 app.use(express.static(path.join(__dirname, "../../puttipeliFrontEnd/dist")))
