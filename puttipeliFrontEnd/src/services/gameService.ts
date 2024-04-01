@@ -4,8 +4,8 @@ import { GameResult, Game } from "../types"
 const baseUrl = 'http://localhost:3000/api'
 
 export interface Props {
-  userid: string // Who this belongs to
-  points: number // Overall score, calculated from rounds
+  userid: string
+  points: number
   rounds: GameResult[]
   date: Date
 }
