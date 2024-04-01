@@ -7,6 +7,7 @@ import loginRouter from "./routes/login"
 import userRouter from "./routes/users"
 import registerRoute from "./routes/registeration"
 import gameRoute from "./routes/games"
+import { log } from "./services/logger"
 
 // To use env variables
 import dotenv from 'dotenv'
@@ -18,10 +19,10 @@ app.use(express.json())
 
 
 if (process.env.DBENV == 'prod') {
-  console.log("Using production environment")
+  log("Using production environment")
   process.env.DBURI = process.env.DB_URI_PROD
 } else {
-  console.log("Using test environment")
+  log("Using test environment")
   process.env.DBURI = process.env.DB_URI_TEST
 }
 
