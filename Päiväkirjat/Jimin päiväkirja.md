@@ -63,5 +63,7 @@
 24.03 (3h)   GameScheman tekeminen, pelit tallentuu käyttäjälle nyt, Frontti hakee käyttäjän pelit ja näyttää ne käyttäjälle <br>
 25.03 (1h)   Käyttäjän pelit tuodaan fronttiin kirjautumisen yhteydessä, eikä niitä tarvitse erikseen hakea <br>
 29.03 (2h)   Pelejä pystyy nyt poistamaan tietokannasta, testit sille, testaaminen käyttää testitietokantaa nyt <br>
+01.04 (0,5h) Tein loggerin, korjasin CI:n käyttämään testitietokantaa ajaessa testejä <br>
 
-Yhteensä 66,5h
+
+Yhteensä 67h
